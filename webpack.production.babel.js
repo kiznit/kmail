@@ -1,13 +1,11 @@
 import path from 'path';
 import webpack from 'webpack';
 
-process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
 
 export default {
     entry: [
-        'react-hot-loader/patch',
-        'webpack-hot-middleware/client',
         './src/client/index.jsx',
     ],
 
@@ -17,18 +15,24 @@ export default {
         publicPath: '/js',
     },
 
-    devtool: 'eval-source-map',
-
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: `"${process.env.NODE_ENV}"`,
             },
         }),
-        new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoEmitOnErrorsPlugin(),
-        new webpack.NamedModulesPlugin()
+        new webpack.optimize.UglifyJsPlugin({
+            beautify: false,
+            comments: false,
+            compress: {
+                dead_code: true,
+                keep_fnames: true,
+                warnings: false,
+            },
+            mangle: {
+                keep_fnames: true,
+            },
+        })
     ],
 
     resolve: {
@@ -39,9 +43,9 @@ export default {
         rules: [
             {
                 test: /.jsx?$/,
-                loaders: ['babel-loader'],
+                loader: 'babel-loader',
                 exclude: /node_modules/,
             }
         ]
-    }
+    },
 }

@@ -3,7 +3,7 @@ import fs from 'fs';
 import http from 'http';
 import path from 'path';
 
-const indexPage = Promise.fromCallback(callback => fs.readFile(path.resolve(__dirname, '../../assets/index.html'), 'utf8', callback));
+const indexPage = Promise.fromCallback(callback => fs.readFile(path.resolve(__dirname, '../assets/index.html'), 'utf8', callback));
 
 
 const app = express();
