@@ -1,5 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
@@ -32,6 +34,11 @@ export default {
             mangle: {
                 keep_fnames: true,
             },
+        }),
+        new BundleAnalyzerPlugin({
+            analyzerMode: 'static',
+            reportFilename: 'bundle.report.html',
+            openAnalyzer: false,
         })
     ],
 
