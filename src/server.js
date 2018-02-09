@@ -3,8 +3,6 @@ import fs from 'fs';
 import http from 'http';
 import path from 'path';
 
-const indexPage = Promise.fromCallback(callback => fs.readFile(path.resolve(__dirname, '../assets/index.html'), 'utf8', callback));
-
 
 const app = express();
 
@@ -14,7 +12,7 @@ const startupPromises = [];
 if (process.env.NODE_ENV === 'development') {
     // Serve webpack bundle to client
     const webpack = require('webpack');
-    const config = require('../../webpack.development.babel').default;
+    const config = require('../webpack.development.babel').default;
     const compiler = webpack(config);
 
     startupPromises.push(new Promise(resolve => compiler.plugin('done', resolve)));
@@ -31,13 +29,11 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 
-app.use(express.static(path.resolve(__dirname, '..')));
+app.use('/', express.static(path.resolve(__dirname, './assets')));
 
 
 app.get('*', (req, res, next) => {
-    indexPage
-        .then(page => res.send(page))
-        .catch(error => next(error));
+    res.sendFile(path.resolve(__dirname, './assets/index.html'), next);
 });
 
 

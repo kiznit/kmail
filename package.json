@@ -2,17 +2,16 @@
   "name": "kmail",
   "version": "0.0.1",
   "description": "Kzinti's Mail",
-  "main": "index.js",
   "repository": "git://github.com/kiznit/kmail.git",
   "author": "Thierry Tremblay",
   "license": "MIT",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node dist/js/index.js",
+    "start": "cross-env NODE_ENV=production node dist/server.js",
     "start-dev": "cross-env NODE_ENV=development babel-node src/server",
     "clean": "rm -rf dist && mkdir dist",
     "build": "yarn run clean && yarn run build-bundle && yarn run build-server && yarn run build-static",
     "build-bundle": "cross-env NODE_ENV=production webpack --config webpack.production.babel.js",
-    "build-server": "babel -d dist/js src/server -s",
+    "build-server": "babel src/server.js -o dist/server.js -s",
     "build-static": "cp -R src/assets/ dist/"
   },
   "dependencies": {

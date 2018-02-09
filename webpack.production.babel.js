@@ -12,7 +12,7 @@ export default {
     ],
 
     output: {
-        path: path.resolve(__dirname, 'dist/js'),
+        path: path.resolve(__dirname, 'dist/assets/js'),
         filename: 'bundle.js',
         publicPath: '/js',
     },
@@ -37,7 +37,7 @@ export default {
         }),
         new BundleAnalyzerPlugin({
             analyzerMode: 'static',
-            reportFilename: 'bundle.report.html',
+            reportFilename: '../bundle.html',
             openAnalyzer: false,
         })
     ],
