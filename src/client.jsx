@@ -7,20 +7,20 @@ import App from './components/App';
 import configureStore from './store';
 
 
-const store = configureStore();
+const store = configureStore(global.REDUX_INITIAL_STORE_STATE);
 const container = document.getElementById('react-root');
 
 
-const render = (Component) => {
+const render = (App) => {
     const componentTree = (
         <AppContainer>
             <Provider store={store}>
-                <Component />
+                <App />
             </Provider>
         </AppContainer>
     );
 
-    ReactDOM.render(componentTree, container);
+    ReactDOM.hydrate(componentTree, container);
 }
 
 
