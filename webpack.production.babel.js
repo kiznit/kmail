@@ -8,11 +8,11 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
 export default {
     entry: [
-        './src/client/index.jsx',
+        './src/client.jsx',
     ],
 
     output: {
-        path: path.resolve(__dirname, 'dist/assets/js'),
+        path: path.resolve(__dirname, 'dist/public/js'),
         filename: 'bundle.js',
         publicPath: '/js',
     },

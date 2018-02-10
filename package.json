@@ -12,7 +12,7 @@
     "build": "yarn run clean && yarn run build-bundle && yarn run build-server && yarn run build-static",
     "build-bundle": "cross-env NODE_ENV=production webpack --config webpack.production.babel.js",
     "build-server": "babel src/server.js -o dist/server.js -s",
-    "build-static": "cp -R src/assets/ dist/"
+    "build-static": "cp -R src/public/ dist/"
   },
   "dependencies": {
     "bluebird": "^3.5.1",

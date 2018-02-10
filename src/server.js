@@ -29,12 +29,10 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 
-app.use('/', express.static(path.resolve(__dirname, './assets')));
+// Static path
+app.use('/', express.static(path.resolve(__dirname, 'public')));
 
 
-app.get('*', (req, res, next) => {
-    res.sendFile(path.resolve(__dirname, './assets/index.html'), next);
-});
 
 
 const server = http.createServer(app);

@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 
-import App from '../shared/components/app';
-import configureStore from '../shared/store';
+import App from './components/App';
+import configureStore from './store';
 
 
 const store = configureStore();
@@ -25,8 +25,8 @@ const render = (Component) => {
 
 
 if (module.hot) {
-    module.hot.accept('../shared/components/app.jsx', () => {
-        render(require('../shared/components/app').default);
+    module.hot.accept('./components/App.jsx', () => {
+        render(require('./components/App').default);
     });
 }
 
