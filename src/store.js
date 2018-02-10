@@ -1,13 +1,13 @@
 import { applyMiddleware, compose, createStore } from 'redux';
-import reduxThunk from 'redux-thunk';
+import { middleware as reduxPackMiddleware } from 'redux-pack'
 import reducers from './reducers';
 
 
 
 export default function configureStore(initialState) {
     const composeEnhancers = global.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-    const store = createStore(reducers, initialState, composeEnhancers(applyMiddleware(reduxThunk)));
+    const middleware = [reduxPackMiddleware];
+    const store = createStore(reducers, initialState, composeEnhancers(applyMiddleware(...middleware)));
 
     // Hot Module Reloading (HMR) support for Redux store / reducers
     if (process.env.NODE_ENV === 'development') {
