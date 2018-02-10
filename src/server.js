@@ -3,7 +3,6 @@ import http from 'http';
 import path from 'path';
 
 
-
 const app = express();
 
 const startupPromises = [];
@@ -33,7 +32,7 @@ if (process.env.NODE_ENV === 'development') {
 
     watcher.on('ready', () => {
         watcher.on('all', () => {
-            console.log("Deleting server modules from require.cache");
+            console.log("Deleting server modules from cache");
             Object.keys(require.cache).forEach((module) => {
                 const filename = path.relative(__dirname, module);
                 if (!filename.startsWith('..')) {
@@ -46,7 +45,7 @@ if (process.env.NODE_ENV === 'development') {
 
 
 // Static path
-app.use('/', express.static(path.resolve(__dirname, 'public')));
+app.use('/', express.static(path.resolve(__dirname, '../public')));
 
 
 // Render the app
