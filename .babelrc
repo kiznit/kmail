@@ -5,9 +5,19 @@
         "stage-0"
     ],
     "plugins": [
-        "react-hot-loader/babel",
         "transform-async-to-bluebird",
         "transform-promise-to-bluebird",
         "transform-runtime"
-    ]
+    ],
+    "env": {
+        "development": {
+            "plugins": [
+                "react-hot-loader/babel",
+            ],
+        },
+        "production": {
+            "plugins": [
+            ],
+        }
+    }
 }
