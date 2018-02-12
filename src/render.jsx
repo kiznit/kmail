@@ -5,27 +5,36 @@ import App from './components/App';
 import Html from './components/Html';
 import Layout from './components/Layout';
 
+import router from './router';
 import configureStore from './store';
 
 
-const render = (req, res, next) => {
+const render = async (req, res, next) => {
     const store = configureStore();
 
-    const componentTree = (
-        <Html appState={store.getState()}>
-            <App store={store}>
-                <Layout />
-            </App>
-        </Html>
-    );
+    try
+    {
+        const component = await router.resolve({ pathname: req.path });
 
-    const html = renderToStaticMarkup(componentTree);
+        const componentTree = (
+            <Html appState={store.getState()}>
+                <App store={store}>
+                    { component }
+                </App>
+            </Html>
+        );
 
-    res.setHeader('Content-Type', 'text/html');
-    res.write('<!DOCTYPE html>');
-    res.write(html);
-    res.end();
-    next();
+        const html = renderToStaticMarkup(componentTree);
+
+        res.setHeader('Content-Type', 'text/html');
+        res.write('<!DOCTYPE html>');
+        res.write(html);
+        res.end();
+        next();
+    }
+    catch(error) {
+        next(error);
+    }
 }
 
 

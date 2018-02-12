@@ -25,7 +25,8 @@
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
-    "redux-pack": "^0.1.5"
+    "redux-pack": "^0.1.5",
+    "universal-router": "^6.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

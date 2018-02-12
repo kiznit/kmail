@@ -49,7 +49,7 @@ app.use('/', express.static(path.resolve(__dirname, '../public')));
 
 
 // Render the app
-app.get('/', (req, res, next) => {
+app.get('*', (req, res, next) => {
     require('./render')(req, res, next);
 });
 
