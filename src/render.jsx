@@ -38,4 +38,4 @@ const render = async (req, res, next) => {
 }
 
 
-module.exports = render;
+export { render };
