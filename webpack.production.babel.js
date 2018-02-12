@@ -1,7 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-
+import { default as UglifyPlugin } from 'uglifyjs-webpack-plugin';
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
@@ -23,16 +23,25 @@ export default {
                 NODE_ENV: `"${process.env.NODE_ENV}"`,
             },
         }),
-        new webpack.optimize.UglifyJsPlugin({
-            beautify: false,
-            comments: false,
-            compress: {
-                dead_code: true,
-                keep_fnames: true,
-                warnings: false,
-            },
-            mangle: {
-                keep_fnames: true,
+        new UglifyPlugin({
+            sourceMap: true,
+            uglifyOptions: {
+                ie8: false,
+                compress: {
+                    dead_code: true,
+                    keep_classnames: true,
+                    keep_fnames: true,
+                    unused: true,
+                    warnings: false,
+                },
+                mangle: {
+                    keep_classnames: true,
+                    keep_fnames: true,
+                },
+                output: {
+                    beautify: false,
+                    comments: false,
+                },
             },
         }),
         new BundleAnalyzerPlugin({
