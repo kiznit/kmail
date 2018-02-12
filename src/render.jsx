@@ -1,9 +1,10 @@
 import React from 'react';
-import { renderToString } from 'react-dom/server';
-import { Provider } from 'react-redux';
+import { renderToStaticMarkup } from 'react-dom/server';
 
 import App from './components/App';
 import Html from './components/Html';
+import Layout from './components/Layout';
+
 import configureStore from './store';
 
 
@@ -11,14 +12,14 @@ const render = (req, res, next) => {
     const store = configureStore();
 
     const componentTree = (
-        <Html initialState={store.getState()}>
-            <Provider store={store}>
-                <App />
-            </Provider>
+        <Html appState={store.getState()}>
+            <App store={store}>
+                <Layout />
+            </App>
         </Html>
     );
 
-    const html = renderToString(componentTree);
+    const html = renderToStaticMarkup(componentTree);
 
     res.setHeader('Content-Type', 'text/html');
     res.write('<!DOCTYPE html>');

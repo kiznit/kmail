@@ -1,17 +1,22 @@
+import PropTypes from 'prop-types';
 import React from 'react';
-import { connect } from 'react-redux';
+import { Provider as ReduxProvider } from 'react-redux';
 
 
-const App = ({ dummy }) => (
+const App = ({ children, store }) => (
     <div>
-        <h1>This is the App component {dummy}!!!</h1>
+        <h2>This is the App component</h2>
+        <ReduxProvider store={store}>
+            { React.Children.only(children) }
+        </ReduxProvider>
     </div>
 );
 
 
-const mapStateToProps = (state) => ({
-    dummy: state.dummy,
-});
+App.propTypes = {
+    children: PropTypes.element.isRequired,
+    store: ReduxProvider.propTypes.store,
+};
 
 
-export default connect(mapStateToProps)(App);
+export default App;
