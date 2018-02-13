@@ -1,4 +1,6 @@
+import compression from 'compression';
 import express from 'express';
+import helmet from 'helmet';
 import http from 'http';
 import path from 'path';
 
@@ -44,9 +46,26 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 
+// Helmet helps you secure your Express apps by setting various HTTP headers. It's not a silver bullet, but it can help!
+app.use(helmet());
+
+// Trust proxy
+app.set('trust proxy', process.env.NODE_ENV === 'development');
+
+// Compression
+app.use(compression({
+    filter: (req, res) => {
+        if (req.headers['x-no-compression']) {
+            return false;
+        } else {
+            return compression.filter(req, res);
+        }
+    },
+}));
+
+
 // Static path
 app.use('/', express.static(path.resolve(__dirname, '../public')));
-
 
 // Render the app
 app.get('*', (req, res, next) => {
