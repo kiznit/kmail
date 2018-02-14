@@ -21,9 +21,9 @@ export default {
 
     plugins: [
         new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: `"${process.env.NODE_ENV}"`,
-            },
+            'process.env.NODE_ENV:': `"${process.env.NODE_ENV}"`,
+            __BROWSER__: true,
+            __DEV__: true,
         }),
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),

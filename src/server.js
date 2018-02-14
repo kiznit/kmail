@@ -4,13 +4,16 @@ import helmet from 'helmet';
 import http from 'http';
 import path from 'path';
 
+global.__BROWSER__ = false;
+global.__DEV__ = (process.env.NODE_ENV !== 'production');
+
 
 const app = express();
 
 const startupPromises = [];
 
 
-if (process.env.NODE_ENV === 'development') {
+if (__DEV__) {
     // Serve webpack bundle to client
     const webpack = require('webpack');
     const config = require('../webpack.development.babel').default;
@@ -50,7 +53,9 @@ if (process.env.NODE_ENV === 'development') {
 app.use(helmet());
 
 // Trust proxy
-app.set('trust proxy', process.env.NODE_ENV === 'development');
+if (__DEV__) {
+    app.enable('trust proxy');
+}
 
 // Compression
 app.use(compression({
