@@ -1,8 +1,13 @@
+import bodyParser from 'body-parser';
 import compression from 'compression';
 import express from 'express';
 import helmet from 'helmet';
 import http from 'http';
+import HttpStatus from 'http-status-codes';
 import path from 'path';
+
+import { passport } from './auth';  //todo: how to hot load this?
+
 
 global.__BROWSER__ = false;
 global.__DEV__ = (process.env.NODE_ENV !== 'production');
@@ -52,6 +57,8 @@ if (__DEV__) {
 // Helmet helps you secure your Express apps by setting various HTTP headers. It's not a silver bullet, but it can help!
 app.use(helmet());
 
+app.use(passport.initialize());
+
 // Trust proxy
 if (__DEV__) {
     app.enable('trust proxy');
@@ -71,6 +78,49 @@ app.use(compression({
 
 // Static path
 app.use('/', express.static(path.resolve(__dirname, '../public')));
+
+// Body parsing
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+// Authentication
+app.post('/login', (req, res, next) => {
+    passport.authenticate('local', (err, user, info, status) => {
+        if (err) {
+            //return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({});
+            return next(error);
+        }
+
+        if (!user) {
+            return res.status(status || HttpStatus.UNAUTHORIZED).json(info);
+        }
+
+        // req.login(user, (error) => {
+        //     if (error) {
+        //         //return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({});
+        //         return next(error);
+        //     }
+
+            // Success
+            return res.json(user);
+        //});
+    })(req, res, next);
+});
+
+
+
+
+// app.post('/login',
+//     passport.authenticate('local', {
+//         //failureRedirect: '/login',
+//         session: false,
+//     }),
+//     (req, res) => {
+//         // Success
+//         res.json({ user: req.user });
+//     },
+// );
+
 
 // Render the app
 app.get('*', (req, res, next) => {

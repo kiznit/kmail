@@ -5,7 +5,6 @@ import { Provider as ReduxProvider } from 'react-redux';
 
 const App = ({ children, store }) => (
     <div>
-        <h2>This is the App component</h2>
         <ReduxProvider store={store}>
             { React.Children.only(children) }
         </ReduxProvider>

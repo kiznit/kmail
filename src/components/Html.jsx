@@ -15,7 +15,6 @@ const Html = ({ title, description, appState, children }) => (
             <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=1" />
         </head>
         <body>
-            <h1>This is the Html component</h1>
             <div id='react-root' dangerouslySetInnerHTML={{__html: renderToString(children)}} />
             <script dangerouslySetInnerHTML={{__html: `window.INITIAL_APP_STATE=${JSON.stringify(appState)};`}} />
             <script src="/js/bundle.js"></script>

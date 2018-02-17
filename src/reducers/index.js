@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 
-const dummy = (state, action) => 'koko';
+import auth from './auth';
 
 
 export default combineReducers({
-    dummy,
+    auth,
 });
