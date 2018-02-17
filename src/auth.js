@@ -7,7 +7,7 @@ passport.use(
     new LocalStrategy(
         (username, password, done) => {
             if (username !== 'admin') {
-                return done(null, null, { message: 'Unknown user' });
+                return done(null, null, { message: 'Invalid password' });
             }
 
             if (password !== '1234') {

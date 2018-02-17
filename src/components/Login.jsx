@@ -1,11 +1,25 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import Button from 'material-ui/Button';
+import Checkbox from 'material-ui/Checkbox';
+import Dialog, { DialogActions, DialogContent, DialogContentText, DialogTitle } from 'material-ui/Dialog';
+import { LinearProgress } from 'material-ui/Progress';
+import TextField from 'material-ui/TextField';
+
 import { connect } from 'react-redux';
 import { login } from '../actions/auth';
 
 
 class Login extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            errorUsername: null,
+            errorPassword: null,
+        };
+    }
 
     onSubmit(event) {
         event.preventDefault();
@@ -13,40 +27,84 @@ class Login extends React.Component {
         const username = this.username.value.trim();
         const password = this.password.value;           // Do not trim() password, spaces are valid!
 
+        this.setState({
+            errorUsername: username ? null : "A username is required",
+            errorPassword: password ? null : "A password is required",
+        });
+
         if (username && password) {
-            this.submit.focus();
+            //ReactDOM.findDOMNode(this.submit).focus();
             this.props.dispatch(login(username, password));
         } else if (username) {
-            this.password.focus();
+            //this.password.focus();
         } else if (password) {
-            this.username.focus();
+            //this.username.focus();
+        } else {
+            //this.username.focus();
         }
     }
 
 
     render() {
-        const { rememberMe, isAuthenticating, errorMessage } = this.props;
+        const { errorMessage, isAuthenticating } = this.props;
+
+        // if (isAuthenticating) {
+        //     return (
+        //         <Dialog open={true}>
+        //             <DialogTitle id="form-dialog-title">Logging you in...</DialogTitle>
+        //             <LinearProgress></LinearProgress>
+        //         </Dialog>
+        //     );
+        // }
 
         return (
-            <div className="container" style={{ maxWidth: '330px', padding: '15px', margin: '0 auto' }}>
-                <form className="form-login" onSubmit={event => this.onSubmit(event)}>
-                    <fieldset disabled={isAuthenticating}>
-                        <h2>Please login</h2>
-
-                        <label htmlFor="username">Username</label>
-                        <input type="text" className="form-control" name="username" ref={(username) => { this.username = username; }} placeholder="Username" autoFocus />
-                        <label htmlFor="password">Password</label>
-                        <input type="password" className="form-control" name="password" ref={(password) => { this.password = password; }} placeholder="Password" />
-                        <div className="checkbox">
-                            <label htmlFor="rememberMe">
-                                <input type="checkbox" disabled checked={rememberMe} /> Remember me
-                            </label>
-                        </div>
-                        <button className="btn btn-primary btn-lg btn-block" ref={(submit) => { this.submit = submit; }}>Login</button>
-                        { errorMessage && <p>{errorMessage}</p> }
-                    </fieldset>
-                </form>
-            </div>
+            <Dialog open={true}>
+                <DialogTitle id="form-dialog-title">Login</DialogTitle>
+                <DialogContent>
+                    { /*errorMessage &&
+                        <DialogContentText>
+                            Unable to log you in: { errorMessage }.
+                        </DialogContentText>*/
+                    }
+                    <DialogContentText>
+                        Please enter your username and password to access your emails.
+                    </DialogContentText>
+                    <TextField
+                        autoFocus
+                        disabled={isAuthenticating}
+                        error={!!(this.state.errorUsername)}
+                        helperText={this.state.errorUsername}
+                        margin="dense"
+                        id="username"
+                        label="Username"
+                        type="email"
+                        fullWidth
+                        inputRef={(node) => { this.username = node; }}
+                    />
+                    <TextField
+                        disabled={isAuthenticating}
+                        error={!!(this.state.errorPassword || errorMessage)}
+                        helperText={this.state.errorPassword || errorMessage}
+                        margin="dense"
+                        id="password"
+                        label="Password"
+                        type="password"
+                        fullWidth
+                        inputRef={(node) => { this.password = node; }}
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        disabled={isAuthenticating}
+                        ref={(node) => { this.submit = node; }}
+                        onClick={(event) => this.onSubmit(event)}
+                        id="login"
+                        color="primary"
+                    >
+                        Login
+                    </Button>
+                </DialogActions>
+            </Dialog>
         );
     }
 }
@@ -55,17 +113,15 @@ class Login extends React.Component {
 
 Login.propTypes = {
     dispatch: PropTypes.func.isRequired,
-    rememberMe: PropTypes.bool,
-    isAuthenticating: PropTypes.bool,
     errorMessage: PropTypes.string,
+    isAuthenticating: PropTypes.bool,
 };
 
 
 
 const mapStateToProps = state => ({
-    rememberMe: false,  // http://stackoverflow.com/questions/14049294/change-cookie-expiration-in-express
-    isAuthenticating: state.auth.isAuthenticating,
     errorMessage: state.auth.errorMessage,
+    isAuthenticating: state.auth.isAuthenticating,
 });
 
 

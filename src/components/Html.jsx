@@ -13,6 +13,7 @@ const Html = ({ title, description, appState, children }) => (
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             <link rel="icon" href="/favicon.ico?v=1" />
             <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=1" />
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
         </head>
         <body>
             <div id='react-root' dangerouslySetInnerHTML={{__html: renderToString(children)}} />
