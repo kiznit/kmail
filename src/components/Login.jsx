@@ -3,7 +3,7 @@ import React from 'react';
 
 import Button from 'material-ui/Button';
 import Checkbox from 'material-ui/Checkbox';
-import Dialog, { DialogContent, DialogContentText, DialogTitle } from 'material-ui/Dialog';
+import Dialog, { DialogActions, DialogContent, DialogContentText, DialogTitle } from 'material-ui/Dialog';
 import { CircularProgress } from 'material-ui/Progress';
 import TextField from 'material-ui/TextField';
 
@@ -16,6 +16,7 @@ class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            showErrorDialog: true,
             errorUsername: null,
             errorPassword: null,
         };
@@ -35,6 +36,7 @@ class Login extends React.Component {
         if (username && password) {
             //ReactDOM.findDOMNode(this.submit).focus();
             this.props.dispatch(login(username, password));
+            this.setState({ showErrorDialog: true });
         } else if (username) {
             //this.password.focus();
         } else if (password) {
@@ -42,6 +44,29 @@ class Login extends React.Component {
         } else {
             //this.username.focus();
         }
+    }
+
+
+    renderError() {
+        const { errorMessage } = this.props;
+
+        const onClose = () => this.setState({ showErrorDialog: false });
+
+        return (
+            <Dialog open={this.state.showErrorDialog} onClose={onClose}>
+                <DialogTitle>Could not log you in</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        { errorMessage }
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button color="primary" onClick={onClose}>
+                        Back
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        );
     }
 
 
@@ -58,8 +83,9 @@ class Login extends React.Component {
         // }
 
         return (
+            <div>
             <Dialog open={true}>
-                <DialogTitle id="form-dialog-title">Log in</DialogTitle>
+                <DialogTitle>Log in</DialogTitle>
                 <DialogContent>
                     { /*errorMessage &&
                         <DialogContentText>
@@ -75,7 +101,6 @@ class Login extends React.Component {
                         error={!!(this.state.errorUsername)}
                         helperText={this.state.errorUsername || 'Enter your username'}
                         margin="dense"
-                        id="username"
                         label="Username"
                         type="email"
                         fullWidth
@@ -86,7 +111,6 @@ class Login extends React.Component {
                         error={!!(this.state.errorPassword || errorMessage)}
                         helperText={this.state.errorPassword || errorMessage || 'Enter your password'}
                         margin="dense"
-                        id="password"
                         label="Password"
                         type="password"
                         fullWidth
@@ -97,7 +121,6 @@ class Login extends React.Component {
                             disabled={isAuthenticating}
                             ref={(node) => { this.submit = node; }}
                             onClick={(event) => this.onSubmit(event)}
-                            id="login"
                             fullWidth
                             style={{ height: '50px' }}
                             variant="raised"
@@ -117,6 +140,8 @@ class Login extends React.Component {
                     </div>
                 </DialogContent>
             </Dialog>
+            { this.state.showErrorDialog && errorMessage && this.renderError() }
+            </div>
         );
     }
 }

@@ -9,7 +9,7 @@ import Toolbar from 'material-ui/Toolbar';
 const Header = ({ children }) => (
     <AppBar>
         <Toolbar>
-            <Button color="inherit" href="/login">Login</Button>
+            <Button color="inherit" href="/login">Log in</Button>
         </Toolbar>
     </AppBar>
 );
