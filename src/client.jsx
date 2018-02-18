@@ -1,15 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer as ReactHotLoader } from 'react-hot-loader';
+import { MuiThemeProvider } from 'material-ui/styles'
 
 import App from './components/App';
 import Layout from './components/Layout';
 
 import configureStore from './store';
+import createTheme from './theme';
+
 
 
 const store = configureStore(global.INITIAL_APP_STATE);
 const container = document.getElementById('react-root');
+const theme = createTheme();
 let router = require('./router').default;
 
 
@@ -35,11 +39,13 @@ const render = async (App) => {
 
     const componentTree = (
         <ReactHotLoader>
-            <RemoveServerCSS>
-                <App store={store}>
-                    { component }
-                </App>
-            </RemoveServerCSS>
+            <MuiThemeProvider theme={theme}>
+                <RemoveServerCSS>
+                    <App store={store}>
+                        { component }
+                    </App>
+                </RemoveServerCSS>
+            </MuiThemeProvider>
         </ReactHotLoader>
     );
 

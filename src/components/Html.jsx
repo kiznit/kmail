@@ -3,18 +3,18 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 
 // Required to generate the CSS
-import { MuiThemeProvider, createMuiTheme, createGenerateClassName } from 'material-ui/styles';
+import { MuiThemeProvider, createGenerateClassName } from 'material-ui/styles';
 import { SheetsRegistry } from 'react-jss/lib/jss';
 import JssProvider from 'react-jss/lib/JssProvider';
 
-
-const theme = createMuiTheme();
+import createTheme from '../theme';
 
 
 const Html = ({ title, description, appState, children }) => {
     // Prepare CSS generation
     const sheetsRegistry = new SheetsRegistry();
     const generateClassName = createGenerateClassName();
+    const theme = createTheme();
 
     // Generate HTML
     const html = renderToString(
