@@ -3,8 +3,8 @@ import React from 'react';
 
 import Button from 'material-ui/Button';
 import Checkbox from 'material-ui/Checkbox';
-import Dialog, { DialogActions, DialogContent, DialogContentText, DialogTitle } from 'material-ui/Dialog';
-import { LinearProgress } from 'material-ui/Progress';
+import Dialog, { DialogContent, DialogContentText, DialogTitle } from 'material-ui/Dialog';
+import { CircularProgress } from 'material-ui/Progress';
 import TextField from 'material-ui/TextField';
 
 import { connect } from 'react-redux';
@@ -59,7 +59,7 @@ class Login extends React.Component {
 
         return (
             <Dialog open={true}>
-                <DialogTitle id="form-dialog-title">Login</DialogTitle>
+                <DialogTitle id="form-dialog-title">Log in</DialogTitle>
                 <DialogContent>
                     { /*errorMessage &&
                         <DialogContentText>
@@ -73,7 +73,7 @@ class Login extends React.Component {
                         autoFocus
                         disabled={isAuthenticating}
                         error={!!(this.state.errorUsername)}
-                        helperText={this.state.errorUsername}
+                        helperText={this.state.errorUsername || 'Enter your username'}
                         margin="dense"
                         id="username"
                         label="Username"
@@ -84,7 +84,7 @@ class Login extends React.Component {
                     <TextField
                         disabled={isAuthenticating}
                         error={!!(this.state.errorPassword || errorMessage)}
-                        helperText={this.state.errorPassword || errorMessage}
+                        helperText={this.state.errorPassword || errorMessage || 'Enter your password'}
                         margin="dense"
                         id="password"
                         label="Password"
@@ -92,25 +92,30 @@ class Login extends React.Component {
                         fullWidth
                         inputRef={(node) => { this.password = node; }}
                     />
+                    <div style={{marginTop: '16px', display: 'block'}}>
+                        <Button
+                            disabled={isAuthenticating}
+                            ref={(node) => { this.submit = node; }}
+                            onClick={(event) => this.onSubmit(event)}
+                            id="login"
+                            fullWidth
+                            style={{ height: '50px' }}
+                            variant="raised"
+                            color="primary"
+                            >
+                            <span>Log in</span>
+                            { isAuthenticating &&
+                                <div style={{ display: 'inline-block', marginLeft: '5%'}}>
+                                    <div margin="4px">
+                                        <div style={{ borderWidth: '2px' }}>
+                                            <CircularProgress style={{ width: '20px', height: '20px' }}/>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </Button>
+                    </div>
                 </DialogContent>
-                <DialogActions>
-                    <Button
-                        disabled={isAuthenticating}
-                        ref={(node) => { this.submit = node; }}
-                        onClick={(event) => this.onSubmit(event)}
-                        id="login"
-                        color="primary">
-                        Cancel
-                    </Button>
-                    <Button
-                        disabled={isAuthenticating}
-                        ref={(node) => { this.submit = node; }}
-                        onClick={(event) => this.onSubmit(event)}
-                        id="login"
-                        color="primary">
-                        Login
-                    </Button>
-                </DialogActions>
             </Dialog>
         );
     }
