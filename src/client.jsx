@@ -13,15 +13,32 @@ const container = document.getElementById('react-root');
 let router = require('./router').default;
 
 
+// Remove the server-side injected CSS.
+class RemoveServerCSS extends React.Component {
+    componentDidMount() {
+        const jssStyles = document.getElementById('jss-server-side');
+        if (jssStyles && jssStyles.parentNode) {
+            jssStyles.parentNode.removeChild(jssStyles);
+        }
+    }
+
+    render() {
+        return React.Children.only(this.props.children);
+    }
+}
+
+
 const render = async (App) => {
 
     const component = await router.resolve({ pathname: window.location.pathname });
 
     const componentTree = (
         <ReactHotLoader>
-            <App store={store}>
-                { component }
-            </App>
+            <RemoveServerCSS>
+                <App store={store}>
+                    { component }
+                </App>
+            </RemoveServerCSS>
         </ReactHotLoader>
     );
 
