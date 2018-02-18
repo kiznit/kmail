@@ -73,25 +73,11 @@ class Login extends React.Component {
     render() {
         const { errorMessage, isAuthenticating } = this.props;
 
-        // if (isAuthenticating) {
-        //     return (
-        //         <Dialog open={true}>
-        //             <DialogTitle id="form-dialog-title">Logging you in...</DialogTitle>
-        //             <LinearProgress></LinearProgress>
-        //         </Dialog>
-        //     );
-        // }
-
         return (
             <div>
             <Dialog open={true}>
                 <DialogTitle>Log in</DialogTitle>
                 <DialogContent>
-                    { /*errorMessage &&
-                        <DialogContentText>
-                            Unable to log you in: { errorMessage }.
-                        </DialogContentText>*/
-                    }
                     <DialogContentText>
                         Please enter your username and password to access your emails.
                     </DialogContentText>
@@ -105,16 +91,26 @@ class Login extends React.Component {
                         type="email"
                         fullWidth
                         inputRef={(node) => { this.username = node; }}
+                        onBlur={() => {
+                            this.setState({
+                                errorUsername: this.username.value.trim() ? null : "A username is required",
+                            });
+                        }}
                     />
                     <TextField
                         disabled={isAuthenticating}
-                        error={!!(this.state.errorPassword || errorMessage)}
-                        helperText={this.state.errorPassword || errorMessage || 'Enter your password'}
+                        error={!!(this.state.errorPassword)}
+                        helperText={this.state.errorPassword || 'Enter your password'}
                         margin="dense"
                         label="Password"
                         type="password"
                         fullWidth
                         inputRef={(node) => { this.password = node; }}
+                        onBlur={() => {
+                            this.setState({
+                                errorPassword: this.password.value ? null : "A password is required",
+                            });
+                        }}
                     />
                     <div style={{marginTop: '16px', display: 'block'}}>
                         <Button
