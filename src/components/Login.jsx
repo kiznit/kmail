@@ -99,8 +99,15 @@ class Login extends React.Component {
                         ref={(node) => { this.submit = node; }}
                         onClick={(event) => this.onSubmit(event)}
                         id="login"
-                        color="primary"
-                    >
+                        color="primary">
+                        Cancel
+                    </Button>
+                    <Button
+                        disabled={isAuthenticating}
+                        ref={(node) => { this.submit = node; }}
+                        onClick={(event) => this.onSubmit(event)}
+                        id="login"
+                        color="primary">
                         Login
                     </Button>
                 </DialogActions>
