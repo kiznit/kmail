@@ -14,7 +14,8 @@ const render = async (req, res, next) => {
 
     try
     {
-        const component = await router.resolve({ pathname: req.path });
+        const route = await router.resolve({ pathname: req.path });
+        const component = route.component || route;
 
         const componentTree = (
             <Html appState={store.getState()}>
@@ -26,6 +27,7 @@ const render = async (req, res, next) => {
 
         const html = renderToStaticMarkup(componentTree);
 
+        res.status(route.status || 200);
         res.setHeader('Content-Type', 'text/html');
         res.write('<!DOCTYPE html>');
         res.write(html);

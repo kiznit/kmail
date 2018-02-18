@@ -11,7 +11,7 @@ const routes = [
             <Layout>
                 <h1>This is the index page</h1>
             </Layout>
-        )
+        ),
     },
     {
         path: '/login',
@@ -19,7 +19,20 @@ const routes = [
             <Layout>
                 <Login />
             </Layout>
-        )
+        ),
+    },
+    {
+        path: '(.*)',
+        action: () => {
+            return {
+                component: (
+                    <Layout>
+                        <h1>Page not found</h1>
+                    </Layout>
+                ),
+                status: 404,
+            };
+        },
     },
 ];
 

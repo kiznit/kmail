@@ -30,7 +30,8 @@ class RemoveServerCSS extends React.Component {
 
 const render = async (App) => {
 
-    const component = await router.resolve({ pathname: window.location.pathname });
+    const route = await router.resolve({ pathname: window.location.pathname });
+    const component = route.component || route;
 
     const componentTree = (
         <ReactHotLoader>
