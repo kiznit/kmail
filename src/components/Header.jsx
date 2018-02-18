@@ -6,8 +6,8 @@ import Button from 'material-ui/Button';
 import Toolbar from 'material-ui/Toolbar';
 
 
-const NavBar = ({ children }) => (
-    <AppBar position="static">
+const Header = ({ children }) => (
+    <AppBar>
         <Toolbar>
             <Button color="inherit" href="/login">Login</Button>
         </Toolbar>
@@ -15,4 +15,4 @@ const NavBar = ({ children }) => (
 );
 
 
-export default NavBar;
+export default Header;
