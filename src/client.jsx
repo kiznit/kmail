@@ -18,47 +18,44 @@ let router = require('./router').default;
 let currentLocation = history.location;
 
 
-// Remove the server-side injected CSS.
-class RemoveServerCSS extends React.Component {
-    componentDidMount() {
-        const jssStyles = document.getElementById('jss-server-side');
-        if (jssStyles && jssStyles.parentNode) {
-            jssStyles.parentNode.removeChild(jssStyles);
-        }
+let onRenderComplete = () => {
+    // Remove the server-side injected CSS.
+    const jssStyles = document.getElementById('jss-server-side');
+    if (jssStyles && jssStyles.parentNode) {
+        jssStyles.parentNode.removeChild(jssStyles);
     }
 
-    render() {
-        return React.Children.only(this.props.children);
+    onRenderComplete = (route, location) => {
+        // TODO: update tags in <head> here - title, meta, ...
     }
-}
+};
 
 
-const render = async (App) => {
-
-    const route = await router.resolve({ pathname: window.location.pathname });
-    const component = route.component || route;
-
-    const componentTree = (
-        <ReactHotLoader>
-            <MuiThemeProvider theme={theme}>
-                <RemoveServerCSS>
-                    <App store={store}>
-                        { component }
-                    </App>
-                </RemoveServerCSS>
-            </MuiThemeProvider>
-        </ReactHotLoader>
-    );
-
-    ReactDOM.hydrate(componentTree, container);
-}
-
-
-const onLocationChange = (location, action) => {
+const onLocationChange = async (location, action) => {
     currentLocation = location;
 
     try {
-        render(App);
+        // Resolve route for new location
+        const route = await router.resolve({ pathname: location.pathname });
+
+        // Prevent multiple page renders during the routing process
+        if (currentLocation.key !== location.key) {
+            return;
+        }
+
+        // Render the route
+        const component = route.component || route;
+        const componentTree = (
+            <ReactHotLoader>
+                <MuiThemeProvider theme={theme}>
+                    <App store={store}>
+                        { component }
+                    </App>
+                </MuiThemeProvider>
+            </ReactHotLoader>
+        );
+
+        ReactDOM.hydrate(componentTree, container, () => onRenderComplete(route, location));
     }
     catch(error) {
         if (__DEV__) {
@@ -85,7 +82,7 @@ if (module.hot) {
         onLocationChange(currentLocation);
     });
 
-    module.hot.accept('./components/App', () => {
-        render(require('./components/App').default);
-    });
+    // module.hot.accept('./components/App', () => {
+    //     render(require('./components/App').default);
+    // });
 }
