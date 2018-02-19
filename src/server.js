@@ -113,19 +113,6 @@ app.post('/logout', (req, res) => {
 });
 
 
-
-// app.post('/login',
-//     passport.authenticate('local', {
-//         //failureRedirect: '/login',
-//         session: false,
-//     }),
-//     (req, res) => {
-//         // Success
-//         res.json({ user: req.user });
-//     },
-// );
-
-
 // Render the app
 app.get('*', (req, res, next) => {
     require('./render').render(req, res, next);
