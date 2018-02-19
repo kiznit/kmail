@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
 
 import Button from 'material-ui/Button';
 import Checkbox from 'material-ui/Checkbox';
@@ -7,7 +8,6 @@ import Dialog, { DialogActions, DialogContent, DialogContentText, DialogTitle } 
 import { CircularProgress } from 'material-ui/Progress';
 import TextField from 'material-ui/TextField';
 
-import { connect } from 'react-redux';
 import { login } from '../actions/auth';
 
 

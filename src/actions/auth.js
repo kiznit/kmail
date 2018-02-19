@@ -1,5 +1,7 @@
-export const LOGIN = 'LOGIN';
+import history from '../history';
 
+
+export const LOGIN = 'LOGIN';
 
 export const login = (username, password) => {
 
@@ -18,6 +20,7 @@ export const login = (username, password) => {
     // TODO: remove the delay, it is used to test login UI
     const promise = Promise.fromCallback((callback) => setTimeout(callback, 1000)).then(() => Promise.join(request, json, (response, data) => {
         if (response.ok) {
+            history.replace('/');
             return data;
         } else {
             throw new Error(data.message || response.statusText);

@@ -6,15 +6,16 @@ import { MuiThemeProvider } from 'material-ui/styles'
 import App from './components/App';
 import Layout from './components/Layout';
 
+import history from './history';
 import configureStore from './store';
 import createTheme from './theme';
-
 
 
 const store = configureStore(global.INITIAL_APP_STATE);
 const container = document.getElementById('react-root');
 const theme = createTheme();
 let router = require('./router').default;
+let currentLocation = history.location;
 
 
 // Remove the server-side injected CSS.
@@ -53,16 +54,38 @@ const render = async (App) => {
 }
 
 
+const onLocationChange = (location, action) => {
+    currentLocation = location;
+
+    try {
+        render(App);
+    }
+    catch(error) {
+        if (__DEV__) {
+            throw error;
+        }
+
+        console.error(error);
+
+        // Do a full page reload if an error occurs during client-side navigation
+        if (action && currentLocation.key === location.key) {
+            window.location.reload();
+        }
+    }
+}
+
+
+history.listen(onLocationChange);
+onLocationChange(currentLocation);
+
+
 if (module.hot) {
     module.hot.accept('./router', () => {
         router = require('./router').default;
-        render(require('./components/App').default);
+        onLocationChange(currentLocation);
     });
 
     module.hot.accept('./components/App', () => {
         render(require('./components/App').default);
     });
 }
-
-
-render(App);
