@@ -9,6 +9,7 @@ import { CircularProgress } from 'material-ui/Progress';
 import TextField from 'material-ui/TextField';
 
 import { login } from '../actions/auth';
+import history from '../history';
 
 
 class Login extends React.Component {
@@ -20,6 +21,20 @@ class Login extends React.Component {
             errorUsername: null,
             errorPassword: null,
         };
+    }
+
+    componentWillMount() {
+        // TODO: move this logic to the router
+        if (this.props.isAuthenticated) {
+            history.replace('/');
+        }
+    }
+
+    componentWillReceiveProps (nextProps) {
+        // TODO: move this logic to the router
+        if (nextProps.isAuthenticated) {
+            history.replace('/');
+        }
     }
 
     onSubmit(event) {
@@ -147,6 +162,7 @@ class Login extends React.Component {
 Login.propTypes = {
     dispatch: PropTypes.func.isRequired,
     errorMessage: PropTypes.string,
+    isAuthenticated: PropTypes.bool,
     isAuthenticating: PropTypes.bool,
 };
 
@@ -154,6 +170,7 @@ Login.propTypes = {
 
 const mapStateToProps = state => ({
     errorMessage: state.auth.errorMessage,
+    isAuthenticated: state.auth.isAuthenticated,
     isAuthenticating: state.auth.isAuthenticating,
 });
 

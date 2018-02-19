@@ -107,6 +107,10 @@ app.post('/login', (req, res, next) => {
     })(req, res, next);
 });
 
+app.post('/logout', (req, res) => {
+    req.logout();
+    res.json({});
+});
 
 
 

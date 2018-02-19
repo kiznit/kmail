@@ -1,6 +1,6 @@
 import { handle } from 'redux-pack';
 
-import { LOGIN } from '../actions/auth';
+import { LOGIN, LOGOUT } from '../actions/auth';
 
 
 const defaultState = {
@@ -35,6 +35,11 @@ export default function auth(state = defaultState, action) {
                     errorMessage: payload.message,
                     username: '',
                 }),
+            });
+
+        case LOGOUT:
+            return handle(state, action, {
+                success: () => defaultState,
             });
 
         default:
