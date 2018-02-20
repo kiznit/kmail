@@ -11,16 +11,14 @@ import { logout } from '../actions/auth';
 
 
 const Header = ({ dispatch, isAuthenticated }) => (
-    <div style={{marginTop: '72px'}}>
-        <AppBar position={'fixed'}>
-            <Toolbar>
-                { isAuthenticated
-                    ? <Button color="inherit" onClick={() => dispatch(logout())}>Log out</Button>
-                    : <Button color="inherit" onClick={() => history.push('/login')}>Log in</Button>
-                }
-            </Toolbar>
-        </AppBar>
-    </div>
+    <AppBar>
+        <Toolbar>
+            { isAuthenticated
+                ? <Button color="inherit" onClick={() => dispatch(logout())}>Log out</Button>
+                : <Button color="inherit" onClick={() => history.push('/login')}>Log in</Button>
+            }
+        </Toolbar>
+    </AppBar>
 );
 
 

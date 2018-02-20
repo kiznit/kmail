@@ -7,7 +7,9 @@ import Header from './Header';
 const Layout = ({ children }) => (
     <div>
         <Header />
-        { children }
+        <div style={{padding: '64px 16px 0 16px'}}>
+            { children }
+        </div>
     </div>
 );
 
