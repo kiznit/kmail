@@ -7,11 +7,14 @@ import history from './history';
 import configureStore from './store';
 import createTheme from './theme';
 
+// These modules are imported using require so that we can hot reload them.
+let App = require('./components/App').default;
+let router = require('./router').default;
+
 
 const store = configureStore(global.INITIAL_APP_STATE);
 const container = document.getElementById('react-root');
 const theme = createTheme();
-let router = require('./router').default;
 let currentLocation = history.location;
 
 
@@ -41,7 +44,6 @@ const onLocationChange = async (location, action) => {
         }
 
         // Render the route
-        const App = require('./components/App').default;
         const component = route.component || route;
         const componentTree = (
             <ReactHotLoader>
@@ -81,6 +83,7 @@ if (module.hot) {
     });
 
     module.hot.accept('./components/App', () => {
+        App = require('./components/App').default;
         onLocationChange(currentLocation);
     });
 }

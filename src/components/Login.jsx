@@ -94,7 +94,7 @@ class Login extends React.Component {
                 <DialogTitle>Log in</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Please enter your username and password to access your emails.
+                        Please enter your username and password.
                     </DialogContentText>
                     <TextField
                         autoFocus
