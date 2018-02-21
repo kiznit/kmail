@@ -17,7 +17,11 @@ const render = async (req, res, next) => {
     {
         const route = await router.resolve({ pathname: req.path });
         const component = route.component || route;
+
         const scripts = [assets.main.js];
+        if (__DEV__) {
+            scripts.unshift(assets.manifest.js, assets.vendor.js);
+        }
 
         const componentTree = (
             <Html scripts={scripts} appState={store.getState()}>

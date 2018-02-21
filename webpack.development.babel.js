@@ -33,6 +33,13 @@ export default {
             filename: 'assets.json',
             prettyPrint: true,
         }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendor',
+            minChunks: module => /node_modules/.test(module.resource),
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'manifest',
+        }),
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
