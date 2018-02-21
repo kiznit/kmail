@@ -9,7 +9,7 @@ export default {
     entry: {
         main: [
             'react-hot-loader/patch',
-            'webpack-hot-middleware/client',
+            'webpack-hot-middleware/client',//?reload=true',
             './src/client.jsx',
         ],
     },
