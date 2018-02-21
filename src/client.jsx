@@ -3,9 +3,6 @@ import ReactDOM from 'react-dom';
 import { AppContainer as ReactHotLoader } from 'react-hot-loader';
 import { MuiThemeProvider } from 'material-ui/styles'
 
-import App from './components/App';
-import Layout from './components/Layout';
-
 import history from './history';
 import configureStore from './store';
 import createTheme from './theme';
@@ -44,6 +41,7 @@ const onLocationChange = async (location, action) => {
         }
 
         // Render the route
+        const App = require('./components/App').default;
         const component = route.component || route;
         const componentTree = (
             <ReactHotLoader>
@@ -82,7 +80,7 @@ if (module.hot) {
         onLocationChange(currentLocation);
     });
 
-    // module.hot.accept('./components/App', () => {
-    //     render(require('./components/App').default);
-    // });
+    module.hot.accept('./components/App', () => {
+        onLocationChange(currentLocation);
+    });
 }
