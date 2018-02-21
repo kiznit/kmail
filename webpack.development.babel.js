@@ -1,20 +1,23 @@
 import path from 'path';
 import webpack from 'webpack';
+import AssetsPlugin from 'assets-webpack-plugin';
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 
 export default {
-    entry: [
-        'react-hot-loader/patch',
-        'webpack-hot-middleware/client',
-        './src/client.jsx',
-    ],
+    entry: {
+        main: [
+            'react-hot-loader/patch',
+            'webpack-hot-middleware/client',
+            './src/client.jsx',
+        ],
+    },
 
     output: {
         path: path.resolve(__dirname, 'dist/public/js'),
-        filename: 'bundle.js',
-        publicPath: '/js',
+        filename: '[name].js',
+        publicPath: '/js/',
     },
 
     devtool: 'eval-source-map',
@@ -24,6 +27,11 @@ export default {
             'process.env.NODE_ENV': `"${process.env.NODE_ENV}"`,
             __BROWSER__: true,
             __DEV__: true,
+        }),
+        new AssetsPlugin({
+            path: path.resolve(__dirname, 'src'),
+            filename: 'assets.json',
+            prettyPrint: true,
         }),
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),

@@ -1,5 +1,6 @@
 import path from 'path';
 import webpack from 'webpack';
+import AssetsPlugin from 'assets-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { default as UglifyPlugin } from 'uglifyjs-webpack-plugin';
 
@@ -7,14 +8,14 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
 
 export default {
-    entry: [
-        './src/client.jsx',
-    ],
+    entry: {
+        main: './src/client.jsx',
+    },
 
     output: {
         path: path.resolve(__dirname, 'dist/public/js'),
-        filename: 'bundle.js',
-        publicPath: '/js',
+        filename: '[name].[chunkhash].js',
+        publicPath: '/js/',
     },
 
     devtool: 'source-map',
@@ -24,6 +25,11 @@ export default {
             'process.env.NODE_ENV': `"${process.env.NODE_ENV}"`,
             __BROWSER__: true,
             __DEV__: false,
+        }),
+        new AssetsPlugin({
+            path: path.resolve(__dirname, 'dist/server'),
+            filename: 'assets.json',
+            prettyPrint: true,
         }),
         new UglifyPlugin({
             sourceMap: true,
@@ -48,7 +54,7 @@ export default {
         }),
         new BundleAnalyzerPlugin({
             analyzerMode: 'static',
-            reportFilename: '../bundle.html',
+            reportFilename: '../bundle_report.html',
             openAnalyzer: false,
         })
     ],

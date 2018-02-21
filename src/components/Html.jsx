@@ -10,7 +10,7 @@ import JssProvider from 'react-jss/lib/JssProvider';
 import createTheme from '../theme';
 
 
-const Html = ({ title, description, appState, children }) => {
+const Html = ({ title, description, scripts, appState, children }) => {
     // Prepare CSS generation
     const sheetsRegistry = new SheetsRegistry();
     const generateClassName = createGenerateClassName();
@@ -37,6 +37,7 @@ const Html = ({ title, description, appState, children }) => {
                 <title>{title}</title>
                 <meta name="description" content={description} />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
+                { scripts.map(script => <link key={script} rel="preload" href={script} as="script" />) }
                 <link rel="icon" href="/favicon.ico?v=1" />
                 <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=1" />
                 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
@@ -45,7 +46,7 @@ const Html = ({ title, description, appState, children }) => {
                 <style id="jss-server-side" dangerouslySetInnerHTML={{__html: css}} />
                 <div id='react-root' dangerouslySetInnerHTML={{__html: html}} />
                 <script dangerouslySetInnerHTML={{__html: `window.INITIAL_APP_STATE=${JSON.stringify(appState)};`}} />
-                <script src="/js/bundle.js"></script>
+                { scripts.map(script => <script key={script} src={script} />) }
             </body>
         </html>
     );
@@ -56,12 +57,14 @@ Html.propTypes = {
     appState: PropTypes.object,
     children: PropTypes.node.isRequired,
     description: PropTypes.string.isRequired,
+    scripts: PropTypes.arrayOf(PropTypes.string.isRequired),
     title: PropTypes.string.isRequired,
 };
 
 
 Html.defaultProps = {
     description: '',
+    scripts: [],
     title: 'Untitled',
 };
 
