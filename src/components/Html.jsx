@@ -41,9 +41,9 @@ const Html = ({ title, description, scripts, appState, children }) => {
                 <link rel="icon" href="/favicon.ico?v=1" />
                 <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=1" />
                 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
+                <style id="jss-server-side" dangerouslySetInnerHTML={{__html: css}} />
             </head>
             <body>
-                <style id="jss-server-side" dangerouslySetInnerHTML={{__html: css}} />
                 <div id='react-root' dangerouslySetInnerHTML={{__html: html}} />
                 <script dangerouslySetInnerHTML={{__html: `window.INITIAL_APP_STATE=${JSON.stringify(appState)};`}} />
                 { scripts.map(script => <script key={script} src={script} />) }
