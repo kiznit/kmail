@@ -15,7 +15,10 @@ const render = async (req, res, next) => {
 
     try
     {
-        const route = await router.resolve({ pathname: req.path });
+        const route = await router.resolve({
+            state: store.getState(),
+            pathname: req.path,
+        });
         const component = route.component || route;
 
         const scripts = [assets.main.js];

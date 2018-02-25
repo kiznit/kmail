@@ -36,7 +36,10 @@ const onLocationChange = async (location, action) => {
 
     try {
         // Resolve route for new location
-        const route = await router.resolve({ pathname: location.pathname });
+        const route = await router.resolve({
+            state: store.getState(),
+            pathname: location.pathname,
+        });
 
         // Prevent multiple page renders during the routing process
         if (currentLocation.key !== location.key) {
