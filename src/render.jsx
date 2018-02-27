@@ -18,6 +18,7 @@ const render = async (req, res, next) => {
         const route = await router.resolve({
             state: store.getState(),
             pathname: req.path,
+            query: req.query,
         });
         const component = route.component || route;
 

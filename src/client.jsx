@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer as ReactHotLoader } from 'react-hot-loader';
 import { MuiThemeProvider } from 'material-ui/styles'
+import queryString from 'query-string';
 
 import history from './history';
 import configureStore from './store';
@@ -39,6 +40,7 @@ const onLocationChange = async (location, action) => {
         const route = await router.resolve({
             state: store.getState(),
             pathname: location.pathname,
+            query: queryString.parse(location.search),
         });
 
         // Prevent multiple page renders during the routing process
