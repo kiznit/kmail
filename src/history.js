@@ -1,5 +1,4 @@
-import { createBrowserHistory, createMemoryHistory } from 'history';
+import { createBrowserHistory } from 'history';
 
 
-export default __BROWSER__ ? createBrowserHistory() : createMemoryHistory();
-
+export default __BROWSER__ ? createBrowserHistory() : null;

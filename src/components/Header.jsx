@@ -6,7 +6,8 @@ import AppBar from 'material-ui/AppBar';
 import Button from 'material-ui/Button';
 import Toolbar from 'material-ui/Toolbar';
 
-import history from '../history';
+import Link from './Link';
+
 import { logout } from '../actions/auth';
 
 
@@ -15,8 +16,11 @@ const Header = ({ dispatch, isAuthenticated }) => (
         <Toolbar>
             { isAuthenticated
                 ? <Button color="inherit" onClick={() => dispatch(logout())}>Log out</Button>
-                : <Button color="inherit" onClick={() => history.push('/login')}>Log in</Button>
+                : <Button color="inherit" component={Link} to="/login">Log in</Button>
             }
+            <Button color="inherit" component={Link} to="/somewhere?abc=123">Somewhere</Button>
+            <Button color="inherit" component={Link} to="/else#cocorico_mr_poulet">Else</Button>
+            <Button color="inherit" component={Link} to="/extra">Extra</Button>
         </Toolbar>
     </AppBar>
 );
