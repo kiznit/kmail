@@ -7,14 +7,14 @@ import Login from '../components/Login';
 const routes = {
     path: '/',
 
-    async action({ state, next }) {
-        // if (!state.auth.isAuthenticated) {
-        //     return (
-        //         <Layout>
-        //             <Login />
-        //         </Layout>
-        //     );
-        // }
+    async action({ username, next }) {
+        if (!username) {
+            return (
+                <Layout>
+                    <Login />
+                </Layout>
+            );
+        }
 
         return await next();
     },
@@ -25,14 +25,6 @@ const routes = {
             action: () => (
                 <Layout>
                     <h1>This is the index page</h1>
-                </Layout>
-            ),
-        },
-        {
-            path: '/login',
-            action: () => (
-                <Layout>
-                    <Login />
                 </Layout>
             ),
         },

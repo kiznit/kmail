@@ -9,18 +9,16 @@ import Toolbar from 'material-ui/Toolbar';
 import Link from './Link';
 
 import { logout } from '../actions/auth';
+import history from '../history';
 
 
-const Header = ({ dispatch, isAuthenticated }) => (
+const Header = ({ dispatch, username }) => (
     <AppBar>
         <Toolbar>
-            { isAuthenticated
-                ? <Button color="inherit" onClick={() => dispatch(logout())}>Log out</Button>
-                : <Button color="inherit" component={Link} to="/login">Log in</Button>
-            }
             <Button color="inherit" component={Link} to="/somewhere?abc=123">Somewhere</Button>
             <Button color="inherit" component={Link} to="/else#cocorico_mr_poulet">Else</Button>
             <Button color="inherit" component={Link} to="/extra">Extra</Button>
+            { username && <Button color="inherit" onClick={() => dispatch(logout()).then(() => history.refresh())}>Log out</Button> }
         </Toolbar>
     </AppBar>
 );
@@ -28,12 +26,12 @@ const Header = ({ dispatch, isAuthenticated }) => (
 
 Header.propTypes = {
     dispatch: PropTypes.func.isRequired,
-    isAuthenticated: PropTypes.bool,
+    username: PropTypes.string.isRequired,
 };
 
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
+    username: state.auth.username,
 });
 
 

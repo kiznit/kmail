@@ -15,11 +15,14 @@ const render = async (req, res, next) => {
 
     try
     {
+        const state = store.getState();
+
         const route = await router.resolve({
-            state: store.getState(),
             pathname: req.path,
             query: req.query,
+            username: state.auth.username,
         });
+
         const component = route.component || route;
 
         const scripts = [assets.main.js];

@@ -23,19 +23,6 @@ class Login extends React.Component {
         };
     }
 
-    componentWillMount() {
-        // TODO: move this logic to the router
-        if (this.props.isAuthenticated) {
-            history.replace('/');
-        }
-    }
-
-    componentWillReceiveProps (nextProps) {
-        // TODO: move this logic to the router
-        if (nextProps.isAuthenticated) {
-            history.replace('/');
-        }
-    }
 
     onSubmit(event) {
         event.preventDefault();
@@ -50,7 +37,7 @@ class Login extends React.Component {
 
         if (username && password) {
             //ReactDOM.findDOMNode(this.submit).focus();
-            this.props.dispatch(login(username, password));
+            this.props.dispatch(login(username, password)).then(() => history.refresh());
             this.setState({ showErrorDialog: true });
         } else if (username) {
             //this.password.focus();
@@ -162,16 +149,16 @@ class Login extends React.Component {
 Login.propTypes = {
     dispatch: PropTypes.func.isRequired,
     errorMessage: PropTypes.string,
-    isAuthenticated: PropTypes.bool,
     isAuthenticating: PropTypes.bool,
+    username: PropTypes.string.isRequired,
 };
 
 
 
 const mapStateToProps = state => ({
     errorMessage: state.auth.errorMessage,
-    isAuthenticated: state.auth.isAuthenticated,
     isAuthenticating: state.auth.isAuthenticating,
+    username: state.auth.username,
 });
 
 

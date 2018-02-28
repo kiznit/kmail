@@ -37,10 +37,12 @@ const onLocationChange = async (location, action) => {
 
     try {
         // Resolve route for new location
+        const state = store.getState();
+
         const route = await router.resolve({
-            state: store.getState(),
             pathname: location.pathname,
             query: queryString.parse(location.search),
+            username: state.auth.username,
         });
 
         // Prevent multiple page renders during the routing process
@@ -50,6 +52,7 @@ const onLocationChange = async (location, action) => {
 
         // Render the route
         const component = route.component || route;
+
         const componentTree = (
             <ReactHotLoader>
                 <MuiThemeProvider theme={theme}>
