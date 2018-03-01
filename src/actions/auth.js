@@ -26,7 +26,7 @@ export const login = (username, password) => {
     return {
         type: LOGIN,
         promise,
-    }
+    };
 };
 
 
@@ -49,5 +49,5 @@ export const logout = () => {
     return {
         type: LOGOUT,
         promise,
-    }
+    };
 };

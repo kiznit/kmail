@@ -9,12 +9,23 @@ import assets from './assets.json';
 import router from './router';
 import configureStore from './store';
 
+import { LOGIN } from './actions/auth';
+
+
 
 const render = async (req, res, next) => {
-    const store = configureStore();
-
     try
     {
+        const store = configureStore();
+
+        // Hydrate the store
+        if (req.isAuthenticated()) {
+            store.dispatch({
+                type: LOGIN,
+                promise: Promise.resolve(req.session.passport.user),
+            });
+        }
+
         const state = store.getState();
 
         const route = await router.resolve({

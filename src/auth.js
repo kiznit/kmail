@@ -20,4 +20,18 @@ passport.use(
 );
 
 
+passport.serializeUser((user, done) => {
+    //console.log('*** serializeUser()');
+    const userId = user;    // todo: fix
+    done(null, userId);
+});
+
+
+passport.deserializeUser((userId, done) => {
+    //console.log('*** deserializeUser():', userId);
+    const user = userId;    // todo: fix
+    done(null, user);
+});
+
+
 export { passport };
