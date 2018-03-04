@@ -3,7 +3,7 @@ global.__DEV__ = (process.env.NODE_ENV !== 'production');
 
 // Azure Application Insights should be the first thing initialized on the
 // server so that the SDK can instrument node packages.
-import appInsights from 'applicationinsights';
+import * as appInsights from 'applicationinsights';
 if (process.env.APPINSIGHTS_INSTRUMENTATIONKEY) {
     appInsights.setup(process.env.APPINSIGHTS_INSTRUMENTATIONKEY).start();
 }
