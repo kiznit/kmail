@@ -5,6 +5,9 @@
   "repository": "git://github.com/kiznit/kmail.git",
   "author": "Thierry Tremblay",
   "license": "MIT",
+  "engines": {
+    "node": "8.9.4"
+  },
   "scripts": {
     "start": "cross-env NODE_ENV=production node dist/server/server.js",
     "start-dev": "cross-env NODE_ENV=development babel-node src/server",
