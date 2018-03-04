@@ -1,3 +1,6 @@
+global.__BROWSER__ = false;
+global.__DEV__ = (process.env.NODE_ENV !== 'production');
+
 // Azure Application Insights should be the first thing initialized on the
 // server so that the SDK can instrument node packages.
 import appInsights from 'applicationinsights';
@@ -15,10 +18,6 @@ import path from 'path';
 import session from 'express-session';
 
 import { passport } from './auth';  //todo: how to hot load this?
-
-
-global.__BROWSER__ = false;
-global.__DEV__ = (process.env.NODE_ENV !== 'production');
 
 
 const app = express();
