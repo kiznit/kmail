@@ -6,7 +6,7 @@
   "author": "Thierry Tremblay",
   "license": "MIT",
   "engines": {
-    "node": "8.9.4"
+    "node": ">=8.9.0"
   },
   "scripts": {
     "start": "cross-env NODE_ENV=production node dist/server/server.js",
@@ -19,6 +19,7 @@
     "build-static": "cp -R public/ dist/"
   },
   "dependencies": {
+    "applicationinsights": "^1.0.2",
     "babel-runtime": "^6.26.0",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",

@@ -1,3 +1,10 @@
+// Azure Application Insights should be the first thing initialized on the
+// server so that the SDK can instrument node packages.
+import appInsights from 'applicationinsights';
+if (process.env.APPINSIGHTS_INSTRUMENTATIONKEY) {
+    appInsights.setup(process.env.APPINSIGHTS_INSTRUMENTATIONKEY).start();
+}
+
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import express from 'express';
