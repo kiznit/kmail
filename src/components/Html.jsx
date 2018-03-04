@@ -17,8 +17,7 @@ const appInsightsJavascript = `
         instrumentationKey: '${process.env.APPINSIGHTS_INSTRUMENTATIONKEY}'
     });
 
-    window.appInsights=appInsights,appInsights.queue&&0===appInsights.queue.length&&appInsights.trackPageView();
-}`;
+    window.appInsights=appInsights,appInsights.queue&&0===appInsights.queue.length&&appInsights.trackPageView();`;
 
 
 const Html = ({ title, description, scripts, appState, children }) => {
