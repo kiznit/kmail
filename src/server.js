@@ -109,8 +109,8 @@ app.use(passport.initialize());
 app.use(passport.session({ pauseStream: true }));
 
 app.post('/login', (req, res, next) => {
-    passport.authenticate('local', (err, user, info, status) => {
-        if (err) {
+    passport.authenticate('local', (error, user, info, status) => {
+        if (error) {
             return next(error);
         }
 
