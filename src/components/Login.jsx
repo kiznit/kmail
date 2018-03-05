@@ -6,10 +6,28 @@ import Button from 'material-ui/Button';
 import Checkbox from 'material-ui/Checkbox';
 import Dialog, { DialogActions, DialogContent, DialogContentText, DialogTitle } from 'material-ui/Dialog';
 import { CircularProgress } from 'material-ui/Progress';
+import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
+import { withStyles } from 'material-ui/styles';
 
 import { login } from '../actions/auth';
 import history from '../history';
+
+
+const styles = theme => ({
+    root: {
+        position: 'relative',
+        backgroundColor: '#C0C0C0',
+        width: '100%',
+        //height: '100%',
+    },
+    paper: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, 50%)',
+    },
+});
 
 
 class Login extends React.Component {
@@ -73,72 +91,72 @@ class Login extends React.Component {
 
 
     render() {
-        const { errorMessage, isAuthenticating } = this.props;
+        const { classes, errorMessage, isAuthenticating } = this.props;
 
         return (
-            <div>
-            <Dialog open={true}>
-                <DialogTitle>Log in</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Please enter your username and password.
-                    </DialogContentText>
-                    <TextField
-                        autoFocus
-                        disabled={isAuthenticating}
-                        error={!!(this.state.errorUsername)}
-                        helperText={this.state.errorUsername || 'Enter your username'}
-                        margin="dense"
-                        label="Username"
-                        type="email"
-                        fullWidth
-                        inputRef={(node) => { this.username = node; }}
-                        onBlur={() => {
-                            this.setState({
-                                errorUsername: this.username.value.trim() ? null : "A username is required",
-                            });
-                        }}
-                    />
-                    <TextField
-                        disabled={isAuthenticating}
-                        error={!!(this.state.errorPassword)}
-                        helperText={this.state.errorPassword || 'Enter your password'}
-                        margin="dense"
-                        label="Password"
-                        type="password"
-                        fullWidth
-                        inputRef={(node) => { this.password = node; }}
-                        onBlur={() => {
-                            this.setState({
-                                errorPassword: this.password.value ? null : "A password is required",
-                            });
-                        }}
-                    />
-                    <div style={{marginTop: '16px', display: 'block'}}>
-                        <Button
+            <div className={classes.root}>
+                <Paper className={classes.paper} elevation={24}>
+                    <DialogTitle>Log in</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            Please enter your username and password.
+                        </DialogContentText>
+                        <TextField
+                            autoFocus
                             disabled={isAuthenticating}
-                            ref={(node) => { this.submit = node; }}
-                            onClick={(event) => this.onSubmit(event)}
+                            error={!!(this.state.errorUsername)}
+                            helperText={this.state.errorUsername || 'Enter your username'}
+                            margin="dense"
+                            label="Username"
+                            type="email"
                             fullWidth
-                            style={{ height: '50px' }}
-                            variant="raised"
-                            color="primary"
-                            >
-                            <span>Log in</span>
-                            { isAuthenticating &&
-                                <div style={{ display: 'inline-block', marginLeft: '5%'}}>
-                                    <div margin="4px">
-                                        <div style={{ borderWidth: '2px' }}>
-                                            <CircularProgress style={{ width: '20px', height: '20px' }}/>
+                            inputRef={(node) => { this.username = node; }}
+                            onBlur={() => {
+                                this.setState({
+                                    errorUsername: this.username.value.trim() ? null : "A username is required",
+                                });
+                            }}
+                        />
+                        <TextField
+                            disabled={isAuthenticating}
+                            error={!!(this.state.errorPassword)}
+                            helperText={this.state.errorPassword || 'Enter your password'}
+                            margin="dense"
+                            label="Password"
+                            type="password"
+                            fullWidth
+                            inputRef={(node) => { this.password = node; }}
+                            onBlur={() => {
+                                this.setState({
+                                    errorPassword: this.password.value ? null : "A password is required",
+                                });
+                            }}
+                        />
+                        <div style={{marginTop: '16px', display: 'block'}}>
+                            <Button
+                                disabled={isAuthenticating}
+                                ref={(node) => { this.submit = node; }}
+                                onClick={(event) => this.onSubmit(event)}
+                                fullWidth
+                                style={{ height: '50px' }}
+                                variant="raised"
+                                color="primary"
+                                >
+                                <span>Log in</span>
+                                { isAuthenticating &&
+                                    <div style={{ display: 'inline-block', marginLeft: '5%'}}>
+                                        <div margin="4px">
+                                            <div style={{ borderWidth: '2px' }}>
+                                                <CircularProgress style={{ width: '20px', height: '20px' }}/>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            }
-                        </Button>
-                    </div>
-                </DialogContent>
-            </Dialog>
-            { this.state.showErrorDialog && errorMessage && this.renderError() }
+                                }
+                            </Button>
+                        </div>
+                    </DialogContent>
+                </Paper>
+                { this.state.showErrorDialog && errorMessage && this.renderError() }
             </div>
         );
     }
@@ -147,6 +165,7 @@ class Login extends React.Component {
 
 
 Login.propTypes = {
+    classes: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
     errorMessage: PropTypes.string,
     isAuthenticating: PropTypes.bool,
@@ -162,4 +181,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps)(withStyles(styles)(Login));

@@ -10,9 +10,7 @@ const routes = {
     async action({ username, next }) {
         if (!username) {
             return (
-                <Layout>
-                    <Login />
-                </Layout>
+                <Login />
             );
         }
 
