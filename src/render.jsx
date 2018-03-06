@@ -15,14 +15,14 @@ import { LOGIN } from './actions/auth';
 const initializeStore = async (req) => {
     const store = configureStore();
 
-    if (!req.isAuthenticated()) {
-        return store;
+    if (req.isAuthenticated()) {
+        await store.dispatch({
+            type: LOGIN,
+            promise: Promise.resolve(req.session.passport.user),
+        });
     }
 
-    return store.dispatch({
-        type: LOGIN,
-        promise: Promise.resolve(req.session.passport.user),
-    }).then(() => store);
+    return store;
 }
 
 
