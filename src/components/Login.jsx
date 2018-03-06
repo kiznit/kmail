@@ -10,6 +10,8 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import { withStyles } from 'material-ui/styles';
 
+import NoScript from './NoScript';
+
 import { login } from '../actions/auth';
 import history from '../history';
 
@@ -153,6 +155,11 @@ class Login extends React.Component {
                                     </div>
                                 }
                             </Button>
+                        </div>
+                        <div>
+                            <NoScript>
+                                <p>Warning: This webmail service requires Javascript! In order to use it please enable Javascript in your browser's settings.</p>
+                            </NoScript>
                         </div>
                     </DialogContent>
                 </Paper>
