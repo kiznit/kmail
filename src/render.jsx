@@ -12,20 +12,23 @@ import configureStore from './store';
 import { LOGIN } from './actions/auth';
 
 
+const initializeStore = async (req) => {
+    const store = configureStore();
+
+    if (!req.isAuthenticated()) {
+        return store;
+    }
+
+    return store.dispatch({
+        type: LOGIN,
+        promise: Promise.resolve(req.session.passport.user),
+    }).then(() => store);
+}
+
 
 const render = async (req, res, next) => {
-    try
-    {
-        const store = configureStore();
-
-        // Hydrate the store
-        if (req.isAuthenticated()) {
-            store.dispatch({
-                type: LOGIN,
-                promise: Promise.resolve(req.session.passport.user),
-            });
-        }
-
+    try {
+        const store = await initializeStore(req);
         const state = store.getState();
 
         const route = await router.resolve({
