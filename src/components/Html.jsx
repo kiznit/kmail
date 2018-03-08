@@ -51,6 +51,7 @@ const Html = ({ title, description, scripts, appState, children }) => {
                 <link rel="icon" href="/favicon.ico?v=1" />
                 <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=1" />
                 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
+                <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
                 <style id="jss-server-side" dangerouslySetInnerHTML={{__html: css}} />
 
                 { process.env.APPINSIGHTS_INSTRUMENTATIONKEY && (
