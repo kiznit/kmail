@@ -32,7 +32,7 @@ const styles = {
 };
 
 
-class Header extends React.Component {
+class NavBar extends React.Component {
     state = {
         settings: false,
     };
@@ -92,7 +92,7 @@ class Header extends React.Component {
 }
 
 
-Header.propTypes = {
+NavBar.propTypes = {
     classes: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
     username: PropTypes.string.isRequired,
@@ -104,4 +104,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps)(withStyles(styles)(Header));
+export default connect(mapStateToProps)(withStyles(styles)(NavBar));

@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import Header from './Header';
+import NavBar from './NavBar';
 
 
 const Layout = ({ children }) => (
     <div>
-        <Header />
+        <NavBar />
         <div style={{padding: '64px 16px 0 16px'}}>
             { children }
         </div>
