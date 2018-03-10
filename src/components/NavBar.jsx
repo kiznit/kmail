@@ -7,7 +7,6 @@ import Button from 'material-ui/Button';
 import Drawer from 'material-ui/Drawer';
 import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
-import List from 'material-ui/List';
 import { MenuItem }  from 'material-ui/Menu';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
@@ -19,17 +18,17 @@ import { logout } from '../actions/auth';
 import history from '../history';
 
 
-const styles = {
+const styles = theme => ({
+    appBar: {
+        zIndex: theme.zIndex.drawer + 1,
+    },
     list: {
         width: 250,
-    },
-    root: {
-        flexGrow: 1,
     },
     flex: {
         flex: 1,
     },
-};
+});
 
 
 class NavBar extends React.Component {
@@ -43,50 +42,47 @@ class NavBar extends React.Component {
         });
     };
 
-
     render() {
         const { classes, dispatch, username } = this.props;
 
         return (
-            <div className={classes.root}>
-                <AppBar>
-                    <Toolbar>
-                        <IconButton color="inherit">
-                            <Icon>menu</Icon>
-                        </IconButton>
+            <AppBar position="absolute" className={classes.appBar}>
+                <Toolbar>
+                    <IconButton color="inherit">
+                        <Icon>menu</Icon>
+                    </IconButton>
 
-                        <Typography variant="title" color="inherit" className={classes.flex}>
-                            KMail
-                        </Typography>
+                    <Typography variant="title" color="inherit" className={classes.flex} component={Link} to="/" style={{ textDecoration: 'none' }}>
+                        KMail
+                    </Typography>
 
-                        <Button color="inherit" component={Link} to="/mail">Mail</Button>
-                        <Button color="inherit" component={Link} to="/contacts">Contacts</Button>
+                    <Button color="inherit" component={Link} to="/mail">Mail</Button>
+                    <Button color="inherit" component={Link} to="/contacts">Contacts</Button>
 
-                        <IconButton color="inherit" onClick={this.toggleSettings(true)}>
-                            <Icon>settings</Icon>
-                        </IconButton>
+                    <IconButton color="inherit" onClick={this.toggleSettings(true)}>
+                        <Icon>settings</Icon>
+                    </IconButton>
 
-                        <IconButton color="inherit" onClick={() => dispatch(logout()).then(() => history.refresh())}>
-                            <Icon>account_circle</Icon>
-                        </IconButton>
+                    <IconButton color="inherit" onClick={() => dispatch(logout()).then(() => history.refresh())}>
+                        <Icon>account_circle</Icon>
+                    </IconButton>
 
-                        <Drawer anchor="right" open={this.state.settings} onClose={this.toggleSettings(false)}>
-                            <div
-                                tabIndex={0}
-                                role="button"
-                                onClick={this.toggleSettings(false)}
-                                onKeyDown={this.toggleSettings(false)}
-                            >
-                                <div className={classes.list}>
-                                    <MenuItem>First item</MenuItem>
-                                    <MenuItem>Second item</MenuItem>
-                                    <MenuItem>Third item</MenuItem>
-                                </div>
+                    <Drawer anchor="right" open={this.state.settings} onClose={this.toggleSettings(false)}>
+                        <div
+                            tabIndex={0}
+                            role="button"
+                            onClick={this.toggleSettings(false)}
+                            onKeyDown={this.toggleSettings(false)}
+                        >
+                            <div className={classes.list}>
+                                <MenuItem>First item</MenuItem>
+                                <MenuItem>Second item</MenuItem>
+                                <MenuItem>Third item</MenuItem>
                             </div>
-                        </Drawer>
-                    </Toolbar>
-                </AppBar>
-            </div>
+                        </div>
+                    </Drawer>
+                </Toolbar>
+            </AppBar>
         );
     }
 }

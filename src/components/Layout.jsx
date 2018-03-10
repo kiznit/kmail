@@ -1,22 +1,51 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+ import PropTypes from 'prop-types';
+ import React from 'react';
 
+import { withStyles } from 'material-ui/styles';
+
+import SideBar from './SideBar';
 import NavBar from './NavBar';
 
 
-const Layout = ({ children }) => (
-    <div>
+const styles = theme => ({
+    root: {
+        flexGrow: 1,
+        height: 430,
+        zIndex: 1,
+        overflow: 'hidden',
+        position: 'relative',
+        display: 'flex',
+    },
+    content: {
+        flexGrow: 1,
+        backgroundColor: theme.palette.background.default,
+        paddingLeft: theme.spacing.unit,
+        paddingRight: theme.spacing.unit,
+        minWidth: 0, // So the Typography noWrap works
+    },
+    toolbar: theme.mixins.toolbar,  // This is used to offset content by the height of the toolbar
+});
+
+
+const Layout = ({ children, classes }) => (
+    <div className={classes.root}>
         <NavBar />
-        <div style={{padding: '64px 16px 0 16px'}}>
-            { children }
+        <div>
+            <div className={classes.toolbar} />
+            <SideBar />
         </div>
+        <main className={classes.content}>
+            <div className={classes.toolbar} />
+            {children}
+        </main>
     </div>
 );
 
 
 Layout.propTypes = {
     children: PropTypes.node.isRequired,
+    classes: PropTypes.object.isRequired,
 };
 
 
-export default Layout;
+export default withStyles(styles)(Layout);
