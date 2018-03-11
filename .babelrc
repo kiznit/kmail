@@ -1,23 +1,13 @@
 {
     "presets": [
-        ["env", {
-            "targets": {
-                "node": "current"
+        [
+            "env", {
+                "targets": {
+                    "node": "current"
+                }
             }
-        }],
+        ],
         "react",
         "stage-2"
     ],
-    "plugins": [
-        "transform-async-to-bluebird",
-        "transform-promise-to-bluebird",
-        "transform-runtime"
-    ],
-    "env": {
-        "development": {
-            "plugins": [
-                "react-hot-loader/babel",
-            ],
-        },
-    }
 }

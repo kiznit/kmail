@@ -8,13 +8,23 @@
   "engines": {
     "node": ">=8.9.0"
   },
+  "browserslist": [
+    ">1%",
+    "last 4 versions",
+    "Firefox ESR",
+    "not ie < 11",
+    "not edge < 14",
+    "not firefox < 45",
+    "not chrome < 49",
+    "not safari < 10"
+  ],
   "scripts": {
     "start": "cross-env NODE_ENV=production node dist/server/server.js",
     "start-azure": "cross-env NODE_ENV=production node dist/azure/main.js",
     "start-dev": "cross-env NODE_ENV=development babel-node src/server",
     "clean": "rm -rf dist && mkdir dist",
     "build": "yarn run clean && yarn run build-bundle && yarn run build-server && yarn run build-static",
-    "build-bundle": "cross-env NODE_ENV=production webpack --config webpack.production.babel.js",
+    "build-bundle": "cross-env NODE_ENV=production webpack --config webpack.client.babel.js",
     "build-server": "cross-env NODE_ENV=production babel src --ignore client.js -d dist/server -s",
     "build-static": "cp -R public/ dist/",
     "build-azure" : "yarn build && cp deployment/azure/web.config . && cross-env NODE_ENV=production babel deployment/azure -d dist/azure -s"

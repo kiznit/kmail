@@ -23,7 +23,7 @@ const startupPromises = [];
 if (__DEV__) {
     // Serve webpack bundle to client
     const webpack = require('webpack');
-    const config = require('../webpack.development.babel').default;
+    const config = require('../webpack.client.babel').default;
     const compiler = webpack(config);
 
     startupPromises.push(new Promise(resolve => compiler.plugin('done', resolve)));

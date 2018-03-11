@@ -1,8 +1,0 @@
->1%
-last 4 versions
-Firefox ESR
-not ie < 11
-not edge < 14
-not firefox < 45
-not chrome < 49
-not safari < 10
