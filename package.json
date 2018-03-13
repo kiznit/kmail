@@ -25,9 +25,9 @@
     "clean": "rm -rf dist && mkdir dist",
     "build": "yarn run clean && yarn run build-bundle && yarn run build-server && yarn run build-static",
     "build-bundle": "cross-env NODE_ENV=production webpack --config webpack.client.babel.js",
-    "build-server": "cross-env NODE_ENV=production babel src --ignore client.js -d dist/server -s",
+    "build-server": "cross-env NODE_ENV=production webpack --config webpack.server.babel.js",
     "build-static": "cp -R public/ dist/",
-    "build-azure" : "yarn build && cp deployment/azure/web.config . && cross-env NODE_ENV=production babel deployment/azure -d dist/azure -s"
+    "build-azure": "cross-env ENTRY=deployment/azure/main.js yarn build && cp deployment/azure/web.config ."
   },
   "dependencies": {
     "applicationinsights": "^1.0.2",
@@ -69,6 +69,7 @@
     "webpack": "^3.10.0",
     "webpack-bundle-analyzer": "^2.10.0",
     "webpack-dev-middleware": "^2.0.4",
-    "webpack-hot-middleware": "^2.21.0"
+    "webpack-hot-middleware": "^2.21.0",
+    "webpack-node-externals": "^1.6.0"
   }
 }

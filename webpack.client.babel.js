@@ -1,14 +1,18 @@
-import path from 'path';
-import webpack from 'webpack';
 import AssetsPlugin from 'assets-webpack-plugin';
+import path from 'path';
+import pkg from './package.json';
+import webpack from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { default as UglifyPlugin } from 'uglifyjs-webpack-plugin';
-import pkg from './package.json';
 
 const isDebug = process.env.NODE_ENV !== 'production';
 
 
 export default {
+    name: 'client',
+
+    target: 'web',
+
     entry: {
         main: [
             ...(isDebug ? ['react-hot-loader/patch', 'webpack-hot-middleware/client?reload=true'] : []),
@@ -30,6 +34,7 @@ export default {
             __BROWSER__: true,
             __DEV__: isDebug,
         }),
+
         new AssetsPlugin({
             path: path.resolve(__dirname, isDebug ?  'src' : 'dist/server'),
             filename: 'assets.json',
@@ -74,7 +79,7 @@ export default {
                 }),
                 new BundleAnalyzerPlugin({
                     analyzerMode: 'static',
-                    reportFilename: '../../server/bundle_report.html',
+                    reportFilename: '../../bundle_client.html',
                     openAnalyzer: false,
                 })
             ]
@@ -115,4 +120,4 @@ export default {
             },
         ]
     },
-}
+};

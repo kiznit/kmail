@@ -8,4 +8,4 @@ if (process.env.APPINSIGHTS_INSTRUMENTATIONKEY) {
 
 
 // Start the server
-require('../server/server');
+require('../../src/server');

@@ -10,11 +10,6 @@ import session from 'express-session';
 import { passport } from './auth';  //todo: how to hot load this?
 
 
-// TODO: this needs to happen before the import statements above!
-global.__BROWSER__ = false;
-global.__DEV__ = (process.env.NODE_ENV !== 'production');
-
-
 const app = express();
 
 const startupPromises = [];
