@@ -20,7 +20,7 @@ export default (env = {}) => {
         entry: {
             main: [
                 ...(isDev
-                    ? ['webpack/hot/poll?1000']     // StartServerPlugin requires this for Hot Module Reloading
+                    ? ['webpack/hot/poll?1000']     // StartServerPlugin Hot Module Reloading
                     : []
                 ),
                 './zzz/server/index',
@@ -32,12 +32,7 @@ export default (env = {}) => {
             filename: 'server.js'
         },
 
-        // Do not include node_modules in the bundle (we can't anyways, some dependencies are binaries)
-        externals: [
-            nodeExternals({
-                whitelist: ['webpack/hot/poll?1000'],   // StartServerPlugin requires this
-            }),
-        ],
+        devtool: isDev ? 'eval-source-map' : 'source-map',
 
         module: {
             rules: [
@@ -68,6 +63,13 @@ export default (env = {}) => {
             ],
         },
 
+        // Do not include node_modules in the bundle (we can't anyways, some dependencies are binaries)
+        externals: [
+            nodeExternals({
+                whitelist: ['webpack/hot/poll?1000'],   // StartServerPlugin Hot Module Reloading
+            }),
+        ],
+
         plugins: [
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': isDev ? '"development"' : '"production"',
@@ -75,12 +77,18 @@ export default (env = {}) => {
                 __DEV__: isDev,
             }),
 
+            new webpack.BannerPlugin({
+              banner: 'require("source-map-support").install();',
+              raw: true,
+              entryOnly: false,
+            }),
+
             ...(isDev
                 ? [
                     new StartServerPlugin('server.js'),
-                    new webpack.NamedModulesPlugin(),
                     new webpack.HotModuleReplacementPlugin(),
                     new webpack.NoEmitOnErrorsPlugin(),
+                    new webpack.NamedModulesPlugin(),
                 ] : [
                     new BundleAnalyzerPlugin({
                         analyzerMode: 'static',

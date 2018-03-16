@@ -2,6 +2,7 @@ import path from 'path';
 import webpack from 'webpack';
 import pkg from './package.json';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import { default as UglifyPlugin } from 'uglifyjs-webpack-plugin';
 
 
 export default (env = {}) => {
@@ -12,8 +13,6 @@ export default (env = {}) => {
         name: 'client',
 
         target: 'web',
-
-        devtool: isDev ? 'eval-source-map' : 'source-map',
 
         entry: {
             main: [
@@ -30,6 +29,8 @@ export default (env = {}) => {
             filename: 'client.js',
             publicPath: '/js/',
         },
+
+        devtool: isDev ? 'eval-source-map' : 'source-map',
 
         module: {
             rules: [
@@ -68,10 +69,31 @@ export default (env = {}) => {
             }),
 
             ...(isDev ? [
-                    new webpack.NamedModulesPlugin(),
                     new webpack.HotModuleReplacementPlugin(),
                     new webpack.NoEmitOnErrorsPlugin(),
+                    new webpack.NamedModulesPlugin(),
                 ] : [
+                    new UglifyPlugin({
+                        sourceMap: true,
+                        uglifyOptions: {
+                            ie8: false,
+                            compress: {
+                                dead_code: true,
+                                keep_classnames: true,
+                                keep_fnames: true,
+                                unused: true,
+                                warnings: false,
+                            },
+                            mangle: {
+                                keep_classnames: true,
+                                keep_fnames: true,
+                            },
+                            output: {
+                                beautify: false,
+                                comments: false,
+                            },
+                        },
+                    }),
                     new BundleAnalyzerPlugin({
                         analyzerMode: 'static',
                         reportFilename: '../../bundle_client.html',
