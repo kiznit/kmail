@@ -1,10 +1,13 @@
+import express from 'express'
 import http from 'http'
-import app from './server'
+import serverApp from './server'
 
 const startupPromises = [];
 
 let webpackDevMiddleware;
 let webpackHotMiddleware;
+
+let app = express();
 
 if (__DEV__) {
     // Serve webpack bundle to client
@@ -26,22 +29,18 @@ if (__DEV__) {
     app.use(webpackHotMiddleware);
 }
 
+app.use('*', (req, res, next) => {
+    serverApp(req, res, next);
+});
+
 
 Promise.all(startupPromises).then(() => {
     const server = http.createServer(app)
     server.listen(3000)
 
-    let currentApp = app
-
     if (module.hot) {
         module.hot.accept('./server', () => {
-            server.removeListener('request', currentApp);
-            if (__DEV__) {
-                app.use(webpackDevMiddleware);
-                app.use(webpackHotMiddleware);
-            }
-            server.on('request', app);
-            currentApp = app;
+            // Nothing to do here: the default behaviour of reloading './server' works for us.
         });
     }
 });

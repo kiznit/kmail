@@ -15,7 +15,7 @@ app.get('/api', (req, res) => {
     })
 })
 
-app.get('/', (req,res) => {
+app.get('*', (req,res) => {
     let application = renderToString(<App />)
     let html = `<!doctype html>
     <html class="no-js" lang="">
