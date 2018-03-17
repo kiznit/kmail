@@ -16,7 +16,6 @@ const appInsightsJavascript = `
     }({
         instrumentationKey: '${process.env.APPINSIGHTS_INSTRUMENTATIONKEY}'
     });
-
     window.appInsights=appInsights,appInsights.queue&&0===appInsights.queue.length&&appInsights.trackPageView();`;
 
 

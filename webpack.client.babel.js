@@ -76,6 +76,7 @@ export default (env = {}) => {
             }),
 
             ...(isDev ? [
+                    new webpack.optimize.OccurrenceOrderPlugin(),
                     new webpack.HotModuleReplacementPlugin(),
                     new webpack.NoEmitOnErrorsPlugin(),
                     new webpack.NamedModulesPlugin(),

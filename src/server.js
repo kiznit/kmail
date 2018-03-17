@@ -9,7 +9,6 @@ import session from 'express-session';
 
 import { passport } from './auth';  //todo: how to hot load this?
 
-
 const app = express();
 
 const startupPromises = [];
