@@ -23,6 +23,7 @@ export default (env = {}) => {
                     ? ['webpack/hot/poll?1000']     // StartServerPlugin Hot Module Reloading
                     : []
                 ),
+                ...(process.env.AZURE ? ['./deployment/azure/main.js'] : []),
                 './src/server.js',
             ],
         },

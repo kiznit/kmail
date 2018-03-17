@@ -26,8 +26,7 @@
     "build-client": "webpack --config webpack.client.babel.js",
     "build-server": "webpack --config webpack.server.babel.js",
     "build-static": "cp -R public/ dist/",
-    "_start-azure": "node dist/azure/main.js",
-    "_build-azure": "cross-env ENTRY=deployment/azure/main.js yarn build && cp deployment/azure/web.config ."
+    "build-azure": "cross-env AZURE=1 yarn build && cp deployment/azure/web.config ."
   },
   "babel": {
     "presets": [
