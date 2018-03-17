@@ -1,26 +1,23 @@
+import axios from 'axios';
+
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 
 
 export const login = (username, password) => {
-    const request = fetch('/login', {
-        method: 'POST',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({ username, password }),
-    });
 
-    const json = request.then(response => response.json());
-
-    const promise = Promise.join(request, json, (response, data) => {
-        if (response.ok) {
-            return data;
-        } else {
-            throw new Error(data.message || response.statusText);
+    const promise = axios.post('/login', {
+        username,
+        password,
+    })
+    .then(response => {
+        return response.data;
+    })
+    .catch(error => {
+        if (error.response) {
+            throw new Error(error.response.data.message);
         }
+        throw error;
     });
 
     return {
@@ -31,19 +28,10 @@ export const login = (username, password) => {
 
 
 export const logout = () => {
-    const request = fetch('/logout', {
-        method: 'POST',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-    });
 
-    const promise = request.then(response => {
-        if (!response.ok) {
-            throw new Error(response.statusText);
-        }
+    const promise = axios.post('/logout')
+    .then(response => {
+        return response.data;
     });
 
     return {
