@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import { hot } from 'react-hot-loader'
 
 import Button from 'material-ui/Button';
 import Checkbox from 'material-ui/Checkbox';
@@ -188,4 +189,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps)(withStyles(styles)(Login));
+export default hot(module)(connect(mapStateToProps)(withStyles(styles)(Login)));

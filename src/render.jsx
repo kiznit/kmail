@@ -25,41 +25,40 @@ const initializeStore = async (req) => {
 }
 
 
-const render = async (req, res, next) => {
-    try {
-        const store = await initializeStore(req);
-        const state = store.getState();
+const render = async (req, res) => {
+    const store = await initializeStore(req);
+    const state = store.getState();
 
-        const route = await router.resolve({
-            pathname: req.path,
-            query: req.query,
-            username: state.auth.username,
-        });
+    const route = await router.resolve({
+        pathname: req.path,
+        query: req.query,
+        username: state.auth.username,
+    });
 
-        const component = route.component || route;
+    const component = route.component || route;
 
-        const scripts = ['/js/client.js'];
+    const scripts = ['/js/client.js'];
 
-        const componentTree = (
-            <Html scripts={scripts} appState={store.getState()}>
-                <App store={store}>
-                    { component }
-                </App>
-            </Html>
-        );
+    const componentTree = (
+        <Html scripts={scripts} appState={store.getState()}>
+            <App store={store}>
+                { component }
+            </App>
+        </Html>
+    );
 
-        const html = renderToStaticMarkup(componentTree);
+    const html = renderToStaticMarkup(componentTree);
 
-        res.status(route.status || 200);
-        res.setHeader('Content-Type', 'text/html');
-        res.write('<!DOCTYPE html>');
-        res.write(html);
-        res.end();
-        next();
-    }
-    catch(error) {
-        next(error);
-    }
+    res.status(route.status || 200);
+    res.setHeader('Content-Type', 'text/html');
+    res.write('<!DOCTYPE html>');
+    res.write(html);
+    res.end();
+}
+
+
+if (module.hot) {
+    module.hot.accept('./router');
 }
 
 

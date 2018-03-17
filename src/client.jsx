@@ -1,20 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { AppContainer as ReactHotLoader } from 'react-hot-loader';
-import { MuiThemeProvider } from 'material-ui/styles'
 import queryString from 'query-string';
+import { MuiThemeProvider } from 'material-ui/styles'
 
 import history from './history';
 import configureStore from './store';
 import createTheme from './theme';
+import router from './router';
 
-// These modules are imported using require so that we can hot reload them.
-let App = require('./components/App').default;
-let router = require('./router').default;
+import App from './components/App';
 
-
-const store = configureStore(global.INITIAL_APP_STATE);
 const container = document.getElementById('react-root');
+const store = configureStore(global.INITIAL_APP_STATE);
 const theme = createTheme();
 let currentLocation = history.location;
 
@@ -54,13 +51,11 @@ const onLocationChange = async (location, action) => {
         const component = route.component || route;
 
         const componentTree = (
-            <ReactHotLoader>
-                <MuiThemeProvider theme={theme}>
-                    <App store={store}>
-                        { component }
-                    </App>
-                </MuiThemeProvider>
-            </ReactHotLoader>
+            <MuiThemeProvider theme={theme}>
+                <App store={store}>
+                    { component }
+                </App>
+            </MuiThemeProvider>
         );
 
         ReactDOM.hydrate(componentTree, container, () => onRenderComplete(route, location));
@@ -86,12 +81,8 @@ onLocationChange(currentLocation);
 
 if (module.hot) {
     module.hot.accept('./router', () => {
-        router = require('./router').default;
-        onLocationChange(currentLocation);
-    });
-
-    module.hot.accept('./components/App', () => {
-        App = require('./components/App').default;
+        // TODO: this doesn't work (no re-render). I believe this is because the router is
+        // not a React component and React doesn't think anything changed!
         onLocationChange(currentLocation);
     });
 }

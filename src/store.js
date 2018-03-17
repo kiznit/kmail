@@ -9,13 +9,8 @@ export default function configureStore(initialState) {
     const middleware = [reduxPackMiddleware];
     const store = createStore(reducers, initialState, composeEnhancers(applyMiddleware(...middleware)));
 
-    // Hot Module Reloading (HMR) support for Redux store / reducers
-    if (__DEV__) {
-        if (module.hot) {
-            module.hot.accept('./reducers', () =>
-                store.replaceReducer(require('./reducers').default)
-            );
-        }
+    if (module.hot) {
+        module.hot.accept('./reducers');
     }
 
     return store;

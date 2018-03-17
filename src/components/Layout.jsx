@@ -1,5 +1,6 @@
  import PropTypes from 'prop-types';
  import React from 'react';
+import { hot } from 'react-hot-loader'
 
 import { withStyles } from 'material-ui/styles';
 
@@ -48,4 +49,4 @@ Layout.propTypes = {
 };
 
 
-export default withStyles(styles)(Layout);
+export default hot(module)(withStyles(styles)(Layout));
