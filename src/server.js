@@ -18,11 +18,12 @@ const startupPromises = [];
 if (__DEV__) {
     // Serve webpack bundle to client
     const webpack = require('webpack');
-    const config = require('../webpack.client.babel').default;
+    const config = require('../webpack.client.babel').default({ dev: __DEV__ });
     const compiler = webpack(config);
 
     startupPromises.push(new Promise(resolve => compiler.plugin('done', resolve)));
 
+    // Client bundle
     const WebpackDevMiddleware = require('webpack-dev-middleware');
     app.use(WebpackDevMiddleware(compiler, {
         noInfo: true,
@@ -32,22 +33,6 @@ if (__DEV__) {
     // Client hot reloading
     const WebpackHotMiddleware = require('webpack-hot-middleware');
     app.use(WebpackHotMiddleware(compiler));
-
-    // Server hot reloading
-    const chokidar = require('chokidar');
-    const watcher = chokidar.watch(__dirname);
-
-    watcher.on('ready', () => {
-        watcher.on('all', () => {
-            console.log("Deleting server modules from cache");
-            Object.keys(require.cache).forEach((module) => {
-                const filename = path.relative(__dirname, module);
-                if (!filename.startsWith('..')) {
-                    delete require.cache[module];
-                }
-            });
-        });
-    });
 }
 
 

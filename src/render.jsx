@@ -5,7 +5,6 @@ import App from './components/App';
 import Html from './components/Html';
 import Layout from './components/Layout';
 
-import assets from './assets.json';
 import router from './router';
 import configureStore from './store';
 
@@ -39,10 +38,7 @@ const render = async (req, res, next) => {
 
         const component = route.component || route;
 
-        const scripts = [assets.main.js];
-        if (__DEV__) {
-            scripts.unshift(assets.manifest.js, assets.vendor.js);
-        }
+        const scripts = ['/js/client.js'];
 
         const componentTree = (
             <Html scripts={scripts} appState={store.getState()}>

@@ -20,7 +20,7 @@ export default (env = {}) => {
                     ? ['webpack-hot-middleware/client?name=client&reload=true']
                     : []
                 ),
-                './zzz/client/index',
+                './src/client.jsx',
             ],
         },
 
@@ -31,6 +31,10 @@ export default (env = {}) => {
         },
 
         devtool: isDev ? 'eval-source-map' : 'source-map',
+
+        resolve: {
+            extensions: ['.js', '.jsx']
+        },
 
         module: {
             rules: [
@@ -54,6 +58,9 @@ export default (env = {}) => {
                             'stage-2',
                         ],
                         "plugins": [
+                            "transform-async-to-bluebird",
+                            "transform-promise-to-bluebird",
+                            "transform-runtime",
                             ...(isDev ? ["react-hot-loader/babel"] : []),
                         ],
                     },

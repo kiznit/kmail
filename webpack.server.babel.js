@@ -23,7 +23,7 @@ export default (env = {}) => {
                     ? ['webpack/hot/poll?1000']     // StartServerPlugin Hot Module Reloading
                     : []
                 ),
-                './zzz/server/index',
+                './src/server.js',
             ],
         },
 
@@ -33,6 +33,10 @@ export default (env = {}) => {
         },
 
         devtool: isDev ? 'eval-source-map' : 'source-map',
+
+        resolve: {
+            extensions: ['.js', '.jsx']
+        },
 
         module: {
             rules: [
@@ -56,6 +60,8 @@ export default (env = {}) => {
                             'stage-2',
                         ],
                         "plugins": [
+                            "transform-async-to-bluebird",
+                            "transform-promise-to-bluebird",
                             ...(isDev ? ["react-hot-loader/babel"] : []),
                         ],
                     },
