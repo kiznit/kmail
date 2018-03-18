@@ -1,5 +1,7 @@
 import bodyParser from 'body-parser';
 import compression from 'compression';
+import cookieParser from 'cookie-parser';
+import csrf from 'csurf';
 import express from 'express';
 import helmet from 'helmet';
 import HttpStatus from 'http-status-codes';
@@ -41,14 +43,15 @@ app.use('/', express.static(path.resolve(__dirname, '../public')));
 // Session
 const sessionCookieId = 'kmail.sid';    // Name of the session ID cookie (todo: generate from configured app name?)
 
-const cookie = {
-    sameSite: 'lax',                    // lax same site enforcement (SameSite = Lax)
+const cookieOptions = {
+    sameSite: 'strict',                 // No CSRF attacks please
     secure: false,                      // todo: should be true if configured for HTTPS
+    httpOnly: true,
     //maxAge:                           // todo: set an expiry date on the cookied if the user clicks "remember me / stay logged in"
 };
 
 app.use(session({
-    cookie,
+    cookie: cookieOptions,
     name: sessionCookieId,
     resave: false,                      // Do not resave the session back to the store if it wasn't modified
     saveUninitialized: false,           // Do not save uninitialized sessions
@@ -65,6 +68,12 @@ app.use(bodyParser.json());
 // Authentication
 app.use(passport.initialize());
 app.use(passport.session({ pauseStream: true }));
+
+
+// CSRF
+app.use(cookieParser());
+app.use(csrf({ cookie: cookieOptions }));
+
 
 app.post('/login', (req, res, next) => {
     passport.authenticate('local', (error, user, info, status) => {
@@ -94,7 +103,7 @@ app.post('/logout', (req, res) => {
             return next(error);
         }
 
-        res.clearCookie(sessionCookieId, cookie);
+        res.clearCookie(sessionCookieId, cookieOptions);
         res.json({});
     });
 });
@@ -103,6 +112,7 @@ app.post('/logout', (req, res) => {
 // Render the app
 app.get('*', async (req, res, next) => {
     try {
+        res.cookie('XSRF-TOKEN', req.csrfToken(), { ...cookieOptions, httpOnly: false });
         await render(req, res);
         next();
     }
