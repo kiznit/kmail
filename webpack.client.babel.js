@@ -17,9 +17,10 @@ export default (env = {}) => {
         entry: {
             main: [
                 ...(isDev
-                    ? ['webpack-hot-middleware/client?name=client&reload=true']
+                    ? ['eventsource-polyfill', 'webpack-hot-middleware/client?name=client&reload=true']
                     : []
                 ),
+                'babel-polyfill',
                 './src/client.jsx',
             ],
         },
@@ -60,7 +61,6 @@ export default (env = {}) => {
                         "plugins": [
                             "transform-async-to-bluebird",
                             "transform-promise-to-bluebird",
-                            "transform-runtime",
                             ...(isDev ? ["react-hot-loader/babel"] : []),
                         ],
                     },

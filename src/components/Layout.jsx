@@ -18,11 +18,12 @@ const styles = theme => ({
         display: 'flex',
     },
     content: {
+        display: 'block',           // IE 11 doesn't understand <main>, so we emulate it
         flexGrow: 1,
         backgroundColor: theme.palette.background.default,
         paddingLeft: theme.spacing.unit,
         paddingRight: theme.spacing.unit,
-        minWidth: 0, // So the Typography noWrap works
+        minWidth: 0,                // So the Typography noWrap works
     },
     toolbar: theme.mixins.toolbar,  // This is used to offset content by the height of the toolbar
 });
@@ -35,7 +36,7 @@ const Layout = ({ children, classes }) => (
             <div className={classes.toolbar} />
             <SideBar />
         </div>
-        <main className={classes.content}>
+        <main role='main' className={classes.content}>
             <div className={classes.toolbar} />
             {children}
         </main>
