@@ -5,7 +5,3 @@ const appInsights = require('applicationinsights');
 if (process.env.APPINSIGHTS_INSTRUMENTATIONKEY) {
     appInsights.setup().start();
 }
-
-
-// Start the server
-require('../../src/server');
