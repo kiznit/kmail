@@ -20,7 +20,7 @@ export default (env = {}) => {
                     ? ['eventsource-polyfill', 'webpack-hot-middleware/client?name=client&reload=true']
                     : []
                 ),
-                'babel-polyfill',
+                './src/polyfills.js',
                 './src/client.jsx',
             ],
         },
@@ -53,6 +53,7 @@ export default (env = {}) => {
                                     targets: {
                                         browsers: pkg.browserslist,
                                     },
+                                    useBuiltIns: 'entry',
                                 },
                             ],
                             'react',
