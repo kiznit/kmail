@@ -6,7 +6,7 @@ export const LOGOUT = 'LOGOUT';
 
 export const login = (username, password) => {
 
-    const promise = axios.post('/login', {
+    const promise = axios.post('/api/login', {
         username,
         password,
     })
@@ -29,7 +29,7 @@ export const login = (username, password) => {
 
 export const logout = () => {
 
-    const promise = axios.post('/logout')
+    const promise = axios.post('/api/logout')
     .then(response => {
         return response.data;
     });

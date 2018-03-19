@@ -74,6 +74,7 @@ export default (env = {}) => {
                 'process.env.NODE_ENV': isDev ? '"development"' : '"production"',
                 __BROWSER__: true,
                 __DEV__: isDev,
+                __TEST__: false,
             }),
 
             ...(isDev ? [

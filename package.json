@@ -26,7 +26,10 @@
     "build-client": "webpack --config webpack.client.babel.js",
     "build-server": "webpack --config webpack.server.babel.js",
     "build-static": "cp -R public/ dist/",
-    "build-azure": "cross-env AZURE=1 yarn build && cp deployment/azure/web.config ."
+    "build-azure": "cross-env AZURE=1 yarn build && cp deployment/azure/web.config .",
+    "test": "jest",
+    "test-cover": "yarn test --coverage",
+    "coverage": "yarn test-cover && opn coverage/lcov-report/index.html"
   },
   "babel": {
     "presets": [
@@ -78,9 +81,16 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
+    "chai": "^4.1.2",
+    "chai-things": "^0.2.0",
     "eventsource-polyfill": "^0.9.6",
+    "jest": "^22.4.2",
+    "opn-cli": "^3.1.0",
     "react-hot-loader": "^4.0.0-rc.0",
+    "sinon": "^4.4.6",
+    "sinon-chai": "^3.0.0",
     "start-server-webpack-plugin": "^2.2.5",
+    "supertest": "^3.0.0",
     "uglifyjs-webpack-plugin": "^1.1.8",
     "webpack": "^3.10.0",
     "webpack-bundle-analyzer": "^2.10.0",

@@ -75,7 +75,7 @@ app.use(cookieParser());
 app.use(csrf({ cookie: cookieOptions }));
 
 
-app.post('/login', (req, res, next) => {
+app.post('/api/login', (req, res, next) => {
     passport.authenticate('local', (error, user, info, status) => {
         if (error) {
             return next(error);
@@ -96,7 +96,7 @@ app.post('/login', (req, res, next) => {
     })(req, res, next);
 });
 
-app.post('/logout', (req, res) => {
+app.post('/api/logout', (req, res) => {
     req.logout();
     req.session.destroy(error => {
         if (error) {
