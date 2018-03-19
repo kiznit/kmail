@@ -8,7 +8,7 @@ const createEnhancedHistory = () => {
 
         // Refresh the page (re-render)
         refresh: () => {
-            return proto.replace.call(this, proto.history);
+            return proto.replace.call(this, proto.location);
         },
     });
 }

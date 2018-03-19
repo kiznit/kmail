@@ -50,7 +50,6 @@ describe("app", () => {
             .expect(200);
     });
 
-
     test("responds to /", () => {
         return request(app)
             .get('/')
@@ -148,7 +147,6 @@ describe("CSRF", () => {
             .set('X-CSRF-Token', csrfToken1)
             .expect(403);
     });
-
 
     test("users can login with their tokens", async () => {
         await agent1
