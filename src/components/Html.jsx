@@ -19,7 +19,7 @@ const appInsightsJavascript = `
     window.appInsights=appInsights,appInsights.queue&&0===appInsights.queue.length&&appInsights.trackPageView();`;
 
 
-const Html = ({ title, description, scripts, appState, children }) => {
+const Html = ({ title, description, scripts, appState, csrfToken, children }) => {
     // Prepare CSS generation
     const sheetsRegistry = new SheetsRegistry();
     const generateClassName = createGenerateClassName();
@@ -53,6 +53,8 @@ const Html = ({ title, description, scripts, appState, children }) => {
                 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
                 <style id="jss-server-side" dangerouslySetInnerHTML={{__html: css}} />
 
+                <script dangerouslySetInnerHTML={{__html: `window._csrfToken = '${csrfToken}';`}} />
+
                 { process.env.APPINSIGHTS_INSTRUMENTATIONKEY && (
                     <script type="text/javascript" dangerouslySetInnerHTML={{__html: appInsightsJavascript }} />
                 )}
@@ -71,6 +73,7 @@ const Html = ({ title, description, scripts, appState, children }) => {
 Html.propTypes = {
     appState: PropTypes.object,
     children: PropTypes.node.isRequired,
+    csrfToken: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     scripts: PropTypes.arrayOf(PropTypes.string.isRequired),
     title: PropTypes.string.isRequired,

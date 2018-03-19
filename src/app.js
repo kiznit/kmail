@@ -14,6 +14,24 @@ import { render } from './render';
 const app = express();
 
 
+const sessionCookie = {
+    key: 'kmail.auth',              // Name of the session ID cookie (todo: generate from configured app name?)
+    sameSite: 'strict',             // No CSRF attacks please
+    secure: false,                  // todo: should be true if configured for HTTPS
+    httpOnly: true,
+    //maxAge:                       // todo: set an expiry date on the cookied if the user clicks "remember me / stay logged in"
+};
+
+
+const csrfCookie = {
+    key: 'kmail.session',           // Name of the cookie used to store the CSRF token secret (todo: generate from configured app name?)
+    sameSite: 'strict',             // No CSRF attacks please
+    secure: false,                  // todo: should be true if configured for HTTPS
+    httpOnly: true,
+    //maxAge:                       // todo: set an expiry date on the cookied if the user clicks "remember me / stay logged in"
+};
+
+
 // Helmet helps you secure your Express apps by setting various HTTP headers. It's not a silver bullet, but it can help!
 app.use(helmet());
 
@@ -41,22 +59,13 @@ app.use('/', express.static(path.resolve(__dirname, '../public')));
 
 
 // Session
-const sessionCookieId = 'kmail.sid';    // Name of the session ID cookie (todo: generate from configured app name?)
-
-const cookieOptions = {
-    sameSite: 'strict',                 // No CSRF attacks please
-    secure: false,                      // todo: should be true if configured for HTTPS
-    httpOnly: true,
-    //maxAge:                           // todo: set an expiry date on the cookied if the user clicks "remember me / stay logged in"
-};
-
 app.use(session({
-    cookie: cookieOptions,
-    name: sessionCookieId,
-    resave: false,                      // Do not resave the session back to the store if it wasn't modified
-    saveUninitialized: false,           // Do not save uninitialized sessions
-    secret: 'shhh-nothing-here',        // todo: should come from config
-    //store:                            // todo: need a proper backend store for sessions in production
+    cookie: sessionCookie,          // Cookie options
+    name: sessionCookie.key,        // Cookie name
+    resave: false,                  // Do not resave the session back to the store if it wasn't modified
+    saveUninitialized: false,       // Do not save uninitialized sessions
+    secret: 'shhh-nothing-here',    // todo: should come from config
+    //store:                        // todo: need a proper backend store for sessions in production
 }));
 
 
@@ -72,7 +81,7 @@ app.use(passport.session({ pauseStream: true }));
 
 // CSRF
 app.use(cookieParser());
-app.use(csrf({ cookie: cookieOptions }));
+app.use(csrf({ cookie: csrfCookie }));
 
 
 app.post('/api/login', (req, res, next) => {
@@ -103,7 +112,7 @@ app.post('/api/logout', (req, res) => {
             return next(error);
         }
 
-        res.clearCookie(sessionCookieId, cookieOptions);
+        res.clearCookie(sessionCookie.key, sessionCookie);
         res.json({});
     });
 });
@@ -112,7 +121,6 @@ app.post('/api/logout', (req, res) => {
 // Render the app
 app.get('*', async (req, res, next) => {
     try {
-        res.cookie('XSRF-TOKEN', req.csrfToken(), { ...cookieOptions, httpOnly: false });
         await render(req, res);
         next();
     }

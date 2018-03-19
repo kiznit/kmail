@@ -3,10 +3,8 @@ import app from './app';
 
 
 // Some regexs to validate cookies
-const COOKIE_CSRF = /^_csrf=[\w\-]{24}; Path=\/; HttpOnly; SameSite=Strict$/;                   // CRSF cookie from csurf
-const COOKIE_XSRF_TOKEN = /^XSRF-TOKEN=[\w\-]{36}; Path=\/; SameSite=Strict$/;                  // CRSF token from csurf (todo: don't send this as a cookie)
-const COOKIE_SESSION = /^kmail.sid=s:[\w]{32}\.[\w]{43}; Path=\/; HttpOnly; SameSite=Strict$/;  // Session cookie
-
+const COOKIE_CSRF = /^kmail.session=[\w\-]{24}; Path=\/; HttpOnly; SameSite=Strict$/;
+const COOKIE_SESSION = /^kmail.auth=s%3A[\w\-]{32}\.[\w%]{43,}; Path=\/; HttpOnly; SameSite=Strict$/;
 
 // There is a bug in Jest where it doesn't merge multiple 'set-cookie' headers properly.
 // Instead of having an array of cookies, we end up with an single-element list that
@@ -56,11 +54,12 @@ describe('app', () => {
                 // Verify that we got the login screen
                 expect(res.text).to.contain('Please enter your username and password');
 
-                // Verify cookies
+                // Verify cookies:
+                //  - We expect a CSRF cookie to allow "safe" login
+                //  - We do not expect a session cookie (the user is not logged in yet)
                 const cookies = getCookies(res);
-                expect(cookies).to.be.an('array').and.have.length(2);
+                expect(cookies).to.be.an('array').and.have.length(1);
                 expect(cookies).to.include.something.that.match(COOKIE_CSRF);
-                expect(cookies).to.include.something.that.match(COOKIE_XSRF_TOKEN);
             });
     });
 });

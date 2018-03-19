@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+axios.defaults.headers.post['X-CSRF-Token'] = global._csrfToken;
+
+
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 
