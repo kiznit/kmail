@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { hot } from 'react-hot-loader'
 
 import Button from 'material-ui/Button';
 import Checkbox from 'material-ui/Checkbox';
@@ -33,7 +32,7 @@ const styles = theme => ({
 });
 
 
-class Login extends React.Component {
+class Login extends React.PureComponent {
 
     constructor(props) {
         super(props);
@@ -189,4 +188,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default hot(module)(connect(mapStateToProps)(withStyles(styles)(Login)));
+export default connect(mapStateToProps)(withStyles(styles)(Login));

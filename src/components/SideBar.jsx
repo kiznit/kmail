@@ -18,7 +18,7 @@ const styles = {
 };
 
 
-class SideBar extends React.Component {
+class SideBar extends React.PureComponent {
 
     render() {
         const { classes } = this.props;

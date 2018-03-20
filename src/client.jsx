@@ -10,6 +10,12 @@ import router from './router';
 
 import App from './components/App';
 
+if (__DEV__) {
+    const { whyDidYouUpdate } = require('why-did-you-update');
+    whyDidYouUpdate(React);
+}
+
+
 const container = document.getElementById('react-root');
 const store = configureStore(global.INITIAL_APP_STATE);
 const theme = createTheme();

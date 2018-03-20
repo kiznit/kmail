@@ -96,6 +96,7 @@
     "webpack-bundle-analyzer": "^2.10.0",
     "webpack-dev-middleware": "^2.0.4",
     "webpack-hot-middleware": "^2.21.0",
-    "webpack-node-externals": "^1.6.0"
+    "webpack-node-externals": "^1.6.0",
+    "why-did-you-update": "^0.1.1"
   }
 }

@@ -8,7 +8,7 @@ const isLeftClickEvent = event => event.button === 0;
 const isModifiedEvent = event => !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
 
 
-class Link extends React.Component {
+class Link extends React.PureComponent {
 
     handleClick = event => {
         if (this.props.onClick) {

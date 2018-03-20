@@ -31,7 +31,7 @@ const styles = theme => ({
 });
 
 
-class NavBar extends React.Component {
+class NavBar extends React.PureComponent {
     state = {
         settings: false,
     };
