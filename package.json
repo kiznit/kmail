@@ -19,7 +19,7 @@
     "not safari < 10"
   ],
   "scripts": {
-    "start-dev": "yarn clean && cross-env NODE_ENV=development yarn build-server --env.dev",
+    "start-dev": "yarn clean && yarn build-static && cross-env NODE_ENV=development yarn build-server --env.dev",
     "start": "cross-env NODE_ENV=production node dist/server/server",
     "clean": "rm -rf dist && mkdir dist",
     "build": "yarn clean && yarn build-server && yarn build-client && yarn build-static",
