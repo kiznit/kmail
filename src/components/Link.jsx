@@ -11,8 +11,11 @@ const isModifiedEvent = event => !!(event.metaKey || event.altKey || event.ctrlK
 class Link extends React.PureComponent {
 
     handleClick = event => {
-        if (this.props.onClick) {
-            this.props.onClick(event);
+
+        const { onClick, replace, target, to } = this.props;
+
+        if (onClick) {
+            onClick(event);
         }
 
         if (isModifiedEvent(event) || !isLeftClickEvent(event)) {
@@ -23,17 +26,26 @@ class Link extends React.PureComponent {
             return;
         }
 
+        if (target) {
+            return;
+        }
+
         event.preventDefault();
-        history.push(this.props.to);
+
+        if (replace) {
+            history.replace(to);
+        } else {
+            history.push(to);
+        }
     };
 
 
     render() {
-        const { to, children, ...props } = this.props;
+        const { to, children, replace, ...props } = this.props;
 
         return (
-            <a href={to} {...props} onClick={this.handleClick}>
-                {children}
+            <a href={ to } { ...props } onClick={ this.handleClick }>
+                { children }
             </a>
         );
     }
@@ -43,12 +55,13 @@ class Link extends React.PureComponent {
 Link.propTypes = {
     children: PropTypes.node.isRequired,
     onClick: PropTypes.func,
+    replace: PropTypes.bool.isRequired,
     to: PropTypes.string.isRequired,
 };
 
 
 Link.defaultProps = {
-    onClick: null,
+    replace: false,
 };
 
 
