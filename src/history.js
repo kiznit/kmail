@@ -25,11 +25,6 @@ const createEnhancedHistory = () => {
                 proto.push.call(this, newLocation);
             }
         },
-
-        // Refresh the page (re-render)
-        refresh: () => {
-            return proto.replace.call(this, proto.location);
-        },
     });
 }
 

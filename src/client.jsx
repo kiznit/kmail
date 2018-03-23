@@ -9,6 +9,8 @@ import createTheme from './theme';
 import router from './router';
 
 import App from './components/App';
+import Auth from './components/Auth';
+
 
 if (__DEV__) {
     // const { whyDidYouUpdate } = require('why-did-you-update');
@@ -59,7 +61,9 @@ const onLocationChange = async (location, action) => {
         const componentTree = (
             <MuiThemeProvider theme={theme}>
                 <App store={store}>
-                    { component }
+                    <Auth>
+                        { component }
+                    </Auth>
                 </App>
             </MuiThemeProvider>
         );

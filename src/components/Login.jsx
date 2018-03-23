@@ -13,7 +13,6 @@ import { withStyles } from 'material-ui/styles';
 import NoScript from './NoScript';
 
 import { login } from '../actions/auth';
-import history from '../history';
 
 
 const styles = theme => ({
@@ -57,7 +56,7 @@ class Login extends React.PureComponent {
 
         if (username && password) {
             //ReactDOM.findDOMNode(this.submit).focus();
-            this.props.dispatch(login(username, password)).then(() => history.refresh());
+            this.props.dispatch(login(username, password));
             this.setState({ showErrorDialog: true });
         } else if (username) {
             //this.password.focus();

@@ -15,7 +15,6 @@ import { withStyles } from 'material-ui/styles';
 import Link from './Link';
 
 import { logout } from '../actions/auth';
-import history from '../history';
 
 
 const styles = theme => ({
@@ -63,7 +62,7 @@ class NavBar extends React.PureComponent {
                         <Icon>settings</Icon>
                     </IconButton>
 
-                    <IconButton color="inherit" onClick={() => dispatch(logout()).then(() => history.refresh())}>
+                    <IconButton color="inherit" onClick={() => dispatch(logout())}>
                         <Icon>account_circle</Icon>
                     </IconButton>
 

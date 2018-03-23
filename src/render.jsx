@@ -2,6 +2,7 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
 import App from './components/App';
+import Auth from './components/Auth';
 import Html from './components/Html';
 import Layout from './components/Layout';
 
@@ -42,7 +43,9 @@ const render = async (req, res) => {
     const componentTree = (
         <Html scripts={scripts} appState={store.getState()} csrfToken={req.csrfToken()}>
             <App store={store}>
-                { component }
+                <Auth>
+                    { component }
+                </Auth>
             </App>
         </Html>
     );
