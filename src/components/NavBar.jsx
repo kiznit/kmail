@@ -51,9 +51,11 @@ class NavBar extends React.PureComponent {
                         <Icon>menu</Icon>
                     </IconButton>
 
-                    <Typography variant="title" color="inherit" className={classes.flex} component={Link} to="/" style={{ textDecoration: 'none' }}>
+                    <Typography variant="title" color="inherit" component={Link} to="/" style={{ textDecoration: 'none' }}>
                         KMail
                     </Typography>
+
+                    <div className={classes.flex} />
 
                     <Button color="inherit" component={Link} to="/mail">Mail</Button>
                     <Button color="inherit" component={Link} to="/contacts">Contacts</Button>
