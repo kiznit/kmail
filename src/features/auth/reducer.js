@@ -1,6 +1,6 @@
 import { handle } from 'redux-pack';
 
-import { LOGIN, LOGOUT } from '../actions/auth';
+import { LOGIN, LOGOUT } from './actions';
 
 
 const defaultState = {

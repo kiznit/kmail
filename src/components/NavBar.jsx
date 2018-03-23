@@ -14,7 +14,7 @@ import { withStyles } from 'material-ui/styles';
 
 import Link from './Link';
 
-import { logout } from '../actions/auth';
+import { logout } from '../features/auth/actions';
 
 
 const styles = theme => ({

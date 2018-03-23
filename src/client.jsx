@@ -9,7 +9,7 @@ import createTheme from './theme';
 import router from './router';
 
 import App from './components/App';
-import Auth from './components/Auth';
+import Auth from './features/auth/Auth';
 
 
 if (__DEV__) {

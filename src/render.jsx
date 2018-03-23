@@ -2,14 +2,14 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
 import App from './components/App';
-import Auth from './components/Auth';
+import Auth from './features/auth/Auth';
 import Html from './components/Html';
 import Layout from './components/Layout';
 
 import router from './router';
 import configureStore from './store';
 
-import { LOGIN } from './actions/auth';
+import { LOGIN } from './features/auth/actions';
 
 
 const initializeStore = async (req) => {

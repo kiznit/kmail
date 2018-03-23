@@ -10,9 +10,9 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import { withStyles } from 'material-ui/styles';
 
-import NoScript from './NoScript';
+import NoScript from '../../components/NoScript';
 
-import { login } from '../actions/auth';
+import { login } from './actions';
 
 
 const styles = theme => ({
@@ -20,7 +20,6 @@ const styles = theme => ({
         position: 'relative',
         backgroundColor: '#C0C0C0',
         width: '100%',
-        //height: '100%',
     },
     paper: {
         position: 'absolute',
