@@ -80,7 +80,7 @@ class Login extends React.PureComponent {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button color="primary" onClick={onClose}>
+                    <Button color="primary" autoFocus onClick={onClose}>
                         Back
                     </Button>
                 </DialogActions>
@@ -97,62 +97,64 @@ class Login extends React.PureComponent {
                 <Paper className={classes.paper} elevation={24}>
                     <DialogTitle>Log in</DialogTitle>
                     <DialogContent>
-                        <DialogContentText>
-                            Please enter your username and password.
-                        </DialogContentText>
-                        <TextField
-                            autoFocus
-                            disabled={isAuthenticating}
-                            error={!!(this.state.errorUsername)}
-                            helperText={this.state.errorUsername || 'Enter your username'}
-                            margin="dense"
-                            label="Username"
-                            type="email"
-                            fullWidth
-                            inputRef={(node) => { this.username = node; }}
-                            onBlur={() => {
-                                this.setState({
-                                    errorUsername: this.username.value.trim() ? null : "A username is required",
-                                });
-                            }}
-                        />
-                        <TextField
-                            disabled={isAuthenticating}
-                            error={!!(this.state.errorPassword)}
-                            helperText={this.state.errorPassword || 'Enter your password'}
-                            margin="dense"
-                            label="Password"
-                            type="password"
-                            fullWidth
-                            inputRef={(node) => { this.password = node; }}
-                            onBlur={() => {
-                                this.setState({
-                                    errorPassword: this.password.value ? null : "A password is required",
-                                });
-                            }}
-                        />
-                        <div style={{marginTop: '16px', display: 'block'}}>
-                            <Button
+                         <form onSubmit={(event) => this.onSubmit(event)}>
+                            <DialogContentText>
+                                Please enter your username and password.
+                            </DialogContentText>
+                             <TextField
+                                autoFocus
                                 disabled={isAuthenticating}
-                                ref={(node) => { this.submit = node; }}
-                                onClick={(event) => this.onSubmit(event)}
+                                error={!!(this.state.errorUsername)}
+                                helperText={this.state.errorUsername || 'Enter your username'}
+                                margin="dense"
+                                label="Username"
+                                //type="email"
                                 fullWidth
-                                style={{ height: '50px' }}
-                                variant="raised"
-                                color="primary"
-                                >
-                                <span>Log in</span>
-                                { isAuthenticating &&
-                                    <div style={{ display: 'inline-block', marginLeft: '5%'}}>
-                                        <div margin="4px">
-                                            <div style={{ borderWidth: '2px' }}>
-                                                <CircularProgress style={{ width: '20px', height: '20px' }}/>
+                                inputRef={(node) => { this.username = node; }}
+                                onBlur={() => {
+                                    this.setState({
+                                        errorUsername: this.username.value.trim() ? null : "A username is required",
+                                    });
+                                }}
+                            />
+                            <TextField
+                                disabled={isAuthenticating}
+                                error={!!(this.state.errorPassword)}
+                                helperText={this.state.errorPassword || 'Enter your password'}
+                                margin="dense"
+                                label="Password"
+                                type="password"
+                                fullWidth
+                                inputRef={(node) => { this.password = node; }}
+                                onBlur={() => {
+                                    this.setState({
+                                        errorPassword: this.password.value ? null : "A password is required",
+                                    });
+                                }}
+                            />
+                            <div style={{marginTop: '16px', display: 'block'}}>
+                                <Button
+                                    type="submit"
+                                    disabled={isAuthenticating}
+                                    ref={(node) => { this.submit = node; }}
+                                    fullWidth
+                                    style={{ height: '50px' }}
+                                    variant="raised"
+                                    color="primary"
+                                    >
+                                    <span>Log in</span>
+                                    { isAuthenticating &&
+                                        <div style={{ display: 'inline-block', marginLeft: '5%'}}>
+                                            <div margin="4px">
+                                                <div style={{ borderWidth: '2px' }}>
+                                                    <CircularProgress style={{ width: '20px', height: '20px' }}/>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                }
-                            </Button>
-                        </div>
+                                    }
+                                </Button>
+                            </div>
+                        </form>
                         <div>
                             <NoScript>
                                 <p>Warning: This webmail service requires Javascript! In order to use it please enable Javascript in your browser's settings.</p>
