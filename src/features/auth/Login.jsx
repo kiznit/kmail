@@ -54,15 +54,14 @@ class Login extends React.PureComponent {
         });
 
         if (username && password) {
-            //ReactDOM.findDOMNode(this.submit).focus();
             this.props.dispatch(login(username, password));
             this.setState({ showErrorDialog: true });
         } else if (username) {
-            //this.password.focus();
+            this.password.focus();
         } else if (password) {
-            //this.username.focus();
+            this.username.focus();
         } else {
-            //this.username.focus();
+            this.username.focus();
         }
     }
 
