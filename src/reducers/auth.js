@@ -19,7 +19,7 @@ export default function auth(state = defaultState, action) {
                 start: prevState => ({
                     isAuthenticating: true,
                     errorMessage: '',
-                    username: '2',
+                    username: '',
                 }),
                 success: prevState => ({
                     isAuthenticating: false,
