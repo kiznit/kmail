@@ -47,7 +47,6 @@ const onLocationChange = async (location, action) => {
         const route = await router.resolve({
             pathname: location.pathname,
             query: queryString.parse(location.search),
-            username: state.auth.username,
         });
 
         // Prevent multiple page renders during the routing process

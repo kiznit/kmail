@@ -33,7 +33,6 @@ const render = async (req, res) => {
     const route = await router.resolve({
         pathname: req.path,
         query: req.query,
-        username: state.auth.username,
     });
 
     const component = route.component || route;
