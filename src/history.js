@@ -7,8 +7,9 @@ const createEnhancedHistory = () => {
 
     return Object.assign(Object.create(proto), {
 
-        // Fix push() so that links behave like browser anchors
-        push: (path, state) => {
+        // Emulate the behaviour of the browser when a link (anchor) is clicked.
+        // This means only pushing to the history when the location is different.
+        navigate: (path, state) => {
             const currentLocation = proto.location;
             const newLocation = createLocation(path, state, null, currentLocation);
 

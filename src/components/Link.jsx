@@ -35,7 +35,7 @@ class Link extends React.PureComponent {
         if (replace) {
             history.replace(to);
         } else {
-            history.push(to);
+            history.navigate(to);
         }
     };
 
