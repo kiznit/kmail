@@ -38,6 +38,9 @@ export default (env = {}) => {
         },
 
         module: {
+            // Make missing exports an error instead of warning
+            strictExportPresence: true,
+
             rules: [
                 {
                     test: /\.jsx?$/,
