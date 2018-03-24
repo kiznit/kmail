@@ -1,9 +1,9 @@
 import path from 'path';
 import webpack from 'webpack';
 import pkg from './package.json';
+import AssetsPlugin from 'assets-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { default as UglifyPlugin } from 'uglifyjs-webpack-plugin';
-
 
 export default (env = {}) => {
 
@@ -27,7 +27,7 @@ export default (env = {}) => {
 
         output: {
             path: path.resolve(__dirname, 'dist/public/js'),
-            filename: '[name].js',
+            filename: isDev ? '[name].js' : '[name].[chunkhash].js',
             publicPath: '/js/',
         },
 
@@ -78,6 +78,14 @@ export default (env = {}) => {
                 __BROWSER__: true,
                 __DEV__: isDev,
                 __TEST__: false,
+            }),
+
+            // Emit a file with assets paths
+            // https://github.com/sporto/assets-webpack-plugin#options
+            new AssetsPlugin({
+                path: 'dist/server',
+                filename: 'assets.json',
+                prettyPrint: true,
             }),
 
             // Put node_modules code in its own bundle

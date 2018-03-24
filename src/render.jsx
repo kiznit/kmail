@@ -6,6 +6,7 @@ import Auth from './features/auth/Auth';
 import Html from './components/Html';
 import Layout from './components/Layout';
 
+import assets from './assets.json';
 import router from './router';
 import configureStore from './store';
 
@@ -37,7 +38,7 @@ const render = async (req, res) => {
 
     const component = route.component || route;
 
-    const scripts = ['/js/vendor.js', '/js/client.js'];
+    const scripts = [assets.vendor.js, assets.client.js];
 
     const componentTree = (
         <Html scripts={scripts} appState={store.getState()} csrfToken={req.csrfToken()}>

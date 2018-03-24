@@ -30,7 +30,8 @@ export default (env = {}) => {
 
         output: {
             path: path.resolve(__dirname, 'dist/server'),
-            filename: '[name].js'
+            filename: '[name].js',
+            libraryTarget: 'commonjs2',
         },
 
         devtool: isDev ? 'eval-source-map' : 'source-map',
@@ -75,6 +76,7 @@ export default (env = {}) => {
 
         // Do not include node_modules in the bundle (we can't anyways, some dependencies are binaries)
         externals: [
+            './assets.json',
             nodeExternals({
                 whitelist: ['webpack/hot/poll?1000'],   // StartServerPlugin Hot Module Reloading
             }),

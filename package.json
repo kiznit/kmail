@@ -72,6 +72,7 @@
     "universal-router": "^6.0.0"
   },
   "devDependencies": {
+    "assets-webpack-plugin": "^3.5.1",
     "babel-cli": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-async-to-bluebird": "^1.1.1",
