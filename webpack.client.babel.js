@@ -15,7 +15,7 @@ export default (env = {}) => {
         target: 'web',
 
         entry: {
-            main: [
+            client: [
                 ...(isDev
                     ? ['eventsource-polyfill', 'webpack-hot-middleware/client?name=client&reload=true']
                     : []
@@ -27,7 +27,7 @@ export default (env = {}) => {
 
         output: {
             path: path.resolve(__dirname, 'dist/public/js'),
-            filename: 'client.js',
+            filename: '[name].js',
             publicPath: '/js/',
         },
 
@@ -78,6 +78,12 @@ export default (env = {}) => {
                 __BROWSER__: true,
                 __DEV__: isDev,
                 __TEST__: false,
+            }),
+
+            // Put node_modules code in its own bundle
+            new webpack.optimize.CommonsChunkPlugin({
+                name: 'vendor',
+                minChunks: module => /node_modules/.test(module.resource),
             }),
 
             ...(isDev ? [

@@ -18,7 +18,7 @@ export default (env = {}) => {
         watch: isDev,
 
         entry: {
-            main: [
+            server: [
                 ...(isDev
                     ? ['webpack/hot/poll?1000']     // StartServerPlugin Hot Module Reloading
                     : []
@@ -30,7 +30,7 @@ export default (env = {}) => {
 
         output: {
             path: path.resolve(__dirname, 'dist/server'),
-            filename: 'server.js'
+            filename: '[name].js'
         },
 
         devtool: isDev ? 'eval-source-map' : 'source-map',
