@@ -32,7 +32,7 @@
 
     // coveragePathIgnorePatterns: // [array<string>]
 
-     coverageReporters: ['json', 'lcov', 'text', 'cobertura'],
+    coverageReporters: ['json', 'lcov', 'text', 'cobertura'],
 
     // coverageThreshold: {}, // [object]
 
@@ -54,9 +54,9 @@
     // A map from regular expressions to module names that allow to stub out resources,
     // like images or styles with a single module.
     moduleNameMapper: {
-        '\\.(css|less|scss|sss)$': 'identity-obj-proxy',
-        '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
-        'GlobalImageStub',
+        '^\.\/assets.json$': '<rootDir>/test/assets.json',
+        //'\\.(css|less|scss|sss)$': 'identity-obj-proxy',
+        //'\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': 'GlobalImageStub',
     },
 
     // modulePathIgnorePatterns: // [array<string>]
