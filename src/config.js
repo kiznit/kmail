@@ -25,6 +25,7 @@ const configs = {
 
     test: {
         https: false,
+        sessionSecret: 'Secret testing',
     },
 
     production: {
