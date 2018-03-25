@@ -11,21 +11,14 @@ if (__BROWSER__) {
 dotenv.config();
 
 
-const configs = {
-    default: {
-        appName: 'kmail',
-        env: getenv('NODE_ENV'),
-        https: getenv.boolish('KMAIL_HTTPS', true),
-        sessionSecret: getenv('KMAIL_SECRET'),
-    },
-
+const defaultConfig = {
     development: {
-        https: false,
+        KMAIL_HTTPS: 'false',
     },
 
     test: {
-        https: false,
-        sessionSecret: 'Secret testing',
+        KMAIL_HTTPS: 'false',
+        KMAIL_SECRET: 'Secret testing',
     },
 
     production: {
@@ -33,10 +26,21 @@ const configs = {
 };
 
 
-const config = {
-    ...configs.default,
-    ...configs[process.env.NODE_ENV],
+for (const [key, value] of Object.entries(defaultConfig[process.env.NODE_ENV])) {
+    if (process.env[key] === undefined) {
+        process.env[key] = value;
+    }
+}
+
+
+const generateConfig = () => {
+    return {
+        appName: 'kmail',
+        env: getenv('NODE_ENV'),
+        https: getenv.boolish('KMAIL_HTTPS', true),
+        sessionSecret: getenv('KMAIL_SECRET'),
+    };
 };
 
 
-export default config;
+export default generateConfig();
