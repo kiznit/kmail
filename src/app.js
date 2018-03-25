@@ -8,6 +8,7 @@ import HttpStatus from 'http-status-codes';
 import path from 'path';
 import session from 'express-session';
 
+import config from './config';
 import { passport } from './auth';
 import { render } from './render';
 
@@ -15,20 +16,20 @@ const app = express();
 
 
 const sessionCookie = {
-    key: 'kmail.auth',              // Name of the session ID cookie (todo: generate from configured app name?)
-    sameSite: 'strict',             // No CSRF attacks please
-    secure: false,                  // todo: should be true if configured for HTTPS
-    httpOnly: true,
-    //maxAge:                       // todo: set an expiry date on the cookied if the user clicks "remember me / stay logged in"
+    key: `${config.appName}.auth`,      // Name of the session ID cookie
+    sameSite: 'strict',                 // No CSRF attacks please
+    httpOnly: true,                     // Cookie only accessible by HTTP(S)
+    secure: config.https,               // Only send the cookie over HTTPS
+    //maxAge:                           // todo: set an expiry date on the cookied if the user clicks "remember me / stay logged in"
 };
 
 
 const csrfCookie = {
-    key: 'kmail.session',           // Name of the cookie used to store the CSRF token secret (todo: generate from configured app name?)
-    sameSite: 'strict',             // No CSRF attacks please
-    secure: false,                  // todo: should be true if configured for HTTPS
-    httpOnly: true,
-    //maxAge:                       // todo: set an expiry date on the cookied if the user clicks "remember me / stay logged in"
+    key: `${config.appName}.session`,   // Name of the cookie used to store the CSRF token secret
+    sameSite: 'strict',                 // No CSRF attacks please
+    httpOnly: true,                     // Cookie only accessible by HTTP(S)
+    secure: config.https,               // Only send the cookie over HTTPS
+    //maxAge:                           // todo: set an expiry date on the cookied if the user clicks "remember me / stay logged in"
 };
 
 
@@ -64,7 +65,7 @@ app.use(session({
     name: sessionCookie.key,        // Cookie name
     resave: false,                  // Do not resave the session back to the store if it wasn't modified
     saveUninitialized: false,       // Do not save uninitialized sessions
-    secret: 'shhh-nothing-here',    // todo: should come from config
+    secret: config.sessionSecret,   // Secret used to sign session cookies
     //store:                        // todo: need a proper backend store for sessions in production
 }));
 
@@ -80,7 +81,7 @@ app.use(passport.session({ pauseStream: true }));
 
 
 // CSRF
-app.use(cookieParser());
+app.use(cookieParser(config.sessionSecret));
 app.use(csrf({ cookie: csrfCookie }));
 
 
