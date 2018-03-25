@@ -59,10 +59,15 @@ app.use(compression({
 app.use('/', express.static(path.resolve(__dirname, '../public')));
 
 
+// Proxy
+app.set('trust proxy', config.trustProxy);
+
+
 // Session
 app.use(session({
     cookie: sessionCookie,          // Cookie options
     name: sessionCookie.key,        // Cookie name
+    proxy: config.trustProxy,
     resave: false,                  // Do not resave the session back to the store if it wasn't modified
     saveUninitialized: false,       // Do not save uninitialized sessions
     secret: config.sessionSecret,   // Secret used to sign session cookies

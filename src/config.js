@@ -39,6 +39,7 @@ const generateConfig = () => {
         env: getenv('NODE_ENV'),
         https: getenv.boolish('KMAIL_HTTPS', true),
         sessionSecret: getenv('KMAIL_SECRET'),
+        trustProxy: getenv.boolish('KMAIL_TRUSTPROXY', false),
     };
 };
 
