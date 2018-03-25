@@ -37,12 +37,6 @@ const csrfCookie = {
 app.use(helmet());
 
 
-// Trust proxy
-if (__DEV__) {
-    app.enable('trust proxy');
-}
-
-
 // Compression
 app.use(compression({
     filter: (req, res) => {
@@ -57,6 +51,15 @@ app.use(compression({
 
 // Static path
 app.use('/', express.static(path.resolve(__dirname, '../public')));
+
+
+// Azure uses 'x-arr-ssl' instead of 'x-forwarded-proto', so fix that.
+app.use((req, res, next) => {
+    if (req.headers['x-arr-ssl'] && !req.headers['x-forwarded-proto']) {
+        req.headers['x-forwarded-proto'] = 'https';
+    }
+    next();
+});
 
 
 // Proxy
