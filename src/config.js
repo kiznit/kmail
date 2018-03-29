@@ -14,6 +14,7 @@ dotenv.config();
 const defaultConfig = {
     development: {
         KMAIL_HTTPS: 'false',
+        loggerFormat: 'dev',
     },
 
     test: {
@@ -22,6 +23,7 @@ const defaultConfig = {
     },
 
     production: {
+        loggerFormat: 'combined',
     },
 };
 
@@ -37,6 +39,7 @@ const generateConfig = () => {
     return {
         appName: 'kmail',
         env: getenv('NODE_ENV'),
+        loggerFormat: 'combined',
         https: getenv.boolish('KMAIL_HTTPS', true),
         sessionSecret: getenv('KMAIL_SECRET'),
         trustProxy: getenv.boolish('KMAIL_TRUSTPROXY', false),

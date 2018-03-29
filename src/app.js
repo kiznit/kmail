@@ -5,14 +5,22 @@ import csrf from 'csurf';
 import express from 'express';
 import helmet from 'helmet';
 import HttpStatus from 'http-status-codes';
+import morgan from 'morgan';
 import path from 'path';
 import session from 'express-session';
 
 import config from './config';
+import logger from './logger';
 import { passport } from './auth';
 import { render } from './render';
 
 const app = express();
+
+
+// Logging
+if (!__TEST__) {
+    app.use(morgan(config.loggerFormat, { stream: logger.stream }));
+}
 
 
 const sessionCookie = {
