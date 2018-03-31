@@ -3,48 +3,57 @@ import getenv from 'getenv';
 
 
 if (__BROWSER__) {
-    throw new Error('Do not import `config.js` from inside the client-side code.');
+    throw new Error("Do not import 'config.js' from inside the client-side code.");
 }
 
-
-// dotenv is used to read environment variables from a local '.env' file.
+// dotenv allows you to provide environment variables in a local '.env' file.
+// This is meant to be used locally on your development machine for testing
+// the production build. This can be done by creating the '.env' file at the root
+// of this project and defining environment variables in it.
 dotenv.config();
 
 
+// Default configuration for all environments
 const defaultConfig = {
+    appName: 'kmail',
+    env: getenv('NODE_ENV'),
+    loggerFormat: 'combined',
+    https: false,
+    sessionSecret: 'Secret development',
+    trustProxy: false,
+};
+
+
+// Per-environment configuration. Getters are used because we do
+// not want to fail on getenv() for a different environment then
+// the one we are currently running.
+const envConfigs = {
     development: {
-        KMAIL_HTTPS: 'false',
         loggerFormat: 'dev',
     },
 
     test: {
-        KMAIL_HTTPS: 'false',
-        KMAIL_SECRET: 'Secret testing',
+        sessionSecret: 'Secret testing',
     },
 
-    production: {
-        loggerFormat: 'combined',
+    // Here I use a getter because I do not want these getenv calls
+    // to fail on non-production environments. For example, getenv()
+    // on KMAIL_SECRET can fail on local development builds and we
+    // do not want that to happen.
+    get production() {
+        return {
+            https: getenv.boolish('KMAIL_HTTPS', true),
+            sessionSecret: getenv('KMAIL_SECRET'),
+            trustProxy: getenv.boolish('KMAIL_TRUSTPROXY', false),
+        };
     },
 };
 
 
-for (const [key, value] of Object.entries(defaultConfig[process.env.NODE_ENV])) {
-    if (process.env[key] === undefined) {
-        process.env[key] = value;
-    }
-}
-
-
-const generateConfig = () => {
-    return {
-        appName: 'kmail',
-        env: getenv('NODE_ENV'),
-        loggerFormat: 'combined',
-        https: getenv.boolish('KMAIL_HTTPS', true),
-        sessionSecret: getenv('KMAIL_SECRET'),
-        trustProxy: getenv.boolish('KMAIL_TRUSTPROXY', false),
-    };
+const config = {
+    ...defaultConfig,
+    ...envConfigs[process.env.NODE_ENV] || {},
 };
 
 
-export default generateConfig();
+export default config;
