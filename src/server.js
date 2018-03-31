@@ -27,8 +27,8 @@ if (__DEV__) {
     // Client bundles
     const WebpackDevMiddleware = require('webpack-dev-middleware');
     app.use(WebpackDevMiddleware(compiler, {
-        //noInfo: true,
-        publicPath: config.output.publicPath
+        publicPath: config.output.publicPath,
+        stats: 'errors-only',
     }));
 
     // Client hot reloading

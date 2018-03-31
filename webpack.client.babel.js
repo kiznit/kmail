@@ -14,6 +14,8 @@ export default (env = {}) => {
 
         target: 'web',
 
+        stats: 'errors-only',
+
         entry: {
             client: [
                 ...(isDev

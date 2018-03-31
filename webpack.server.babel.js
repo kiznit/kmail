@@ -17,6 +17,8 @@ export default (env = {}) => {
 
         watch: isDev,
 
+        stats: 'errors-only',
+
         entry: {
             server: [
                 ...(isDev
