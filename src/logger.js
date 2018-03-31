@@ -1,3 +1,4 @@
+import split from 'split';
 import winston from 'winston';
 
 
@@ -24,9 +25,7 @@ const logger = new (winston.Logger)({
 
 
 // Hook for morgan
-logger.stream = {
-    write: (message, encoding) => logger.info(message),
-};
+logger.stream = split().on('data', message => logger.info(message));
 
 
 export default logger;
