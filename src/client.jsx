@@ -89,9 +89,7 @@ onLocationChange(currentLocation);
 
 
 if (module.hot) {
-    module.hot.accept('./router', () => {
-        // TODO: this doesn't work (no re-render). I believe this is because the router is
-        // not a React component and React doesn't think anything changed!
+    module.hot.accept('./features/auth/Auth', () => {
         onLocationChange(currentLocation);
     });
 }
