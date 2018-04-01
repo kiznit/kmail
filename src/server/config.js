@@ -31,6 +31,18 @@ const defaultConfig = {
 const envConfigs = {
     development: {
         loggerFormat: 'dev',
+
+        // Knex configuration
+        database: {
+            client: 'sqlite3',
+            connection: {
+                filename: 'database.sqlite3',
+            },
+            migrations: {
+                directory: 'src/server/data/migrations',
+                tableName: 'knex_migrations'
+            },
+        },
     },
 
     test: {
@@ -46,6 +58,21 @@ const envConfigs = {
             https: getenv.boolish('KMAIL_HTTPS', true),
             sessionSecret: getenv('KMAIL_SECRET'),
             trustProxy: getenv.boolish('KMAIL_TRUSTPROXY', false),
+
+            // Knex configuration
+            database: {
+                client: 'mssql',
+                connection: {
+                    server: getenv('KMAIL_DB_SERVER'),
+                    user: getenv('KMAIL_DB_USER'),
+                    password: getenv('KMAIL_DB_PASSWORD'),
+                    options: {
+                        port: 1443,
+                        database: getenv('KMAIL_DB_NAME', pkg.name),
+                        encrypt: true,
+                    },
+                },
+            },
         };
     },
 };

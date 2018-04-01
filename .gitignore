@@ -1,5 +1,6 @@
 /.env
 /coverage
+/database.sqlite3
 /dist
 /node_modules
 /yarn-error.log
