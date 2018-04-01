@@ -57,8 +57,9 @@ app.use(compression({
 }));
 
 
-// Static path
-app.use('/', express.static(path.resolve(__dirname, '../public')));
+// Static content
+const publicPath = __TEST__ ? '../../public' : '../public';
+app.use('/', express.static(path.resolve(__dirname, publicPath)));
 
 
 // Azure uses 'x-arr-ssl' instead of 'x-forwarded-proto', so fix that.

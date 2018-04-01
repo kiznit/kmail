@@ -1,16 +1,16 @@
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
-import App from './components/App';
-import Auth from './features/auth/Auth';
-import Html from './components/Html';
-import Layout from './components/Layout';
+import App from '../components/App';
+import Auth from '../features/auth/Auth';
+import Html from '../components/Html';
+import Layout from '../components/Layout';
 
 import assets from './assets.json';
-import router from './router';
-import configureStore from './store';
+import router from '../router';
+import configureStore from '../store';
 
-import { LOGIN } from './features/auth/actions';
+import { LOGIN } from '../features/auth/actions';
 
 
 const initializeStore = async (req) => {
@@ -61,7 +61,7 @@ const render = async (req, res) => {
 
 
 if (module.hot) {
-    module.hot.accept('./router');
+    module.hot.accept('../router');
 }
 
 

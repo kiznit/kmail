@@ -11,7 +11,7 @@ const app = express();
 if (__DEV__) {
     // Webpack configuration
     const webpack = require('webpack');
-    const config = require('../webpack.client.babel').default({ dev: __DEV__ });
+    const config = require('../../webpack.client.babel').default({ dev: __DEV__ });
     const compiler = webpack(config);
 
     startupPromises.push(new Promise((resolve, reject) => {
