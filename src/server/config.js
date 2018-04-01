@@ -66,9 +66,8 @@ const envConfigs = {
                     server: getenv('KMAIL_DB_SERVER'),
                     user: getenv('KMAIL_DB_USER'),
                     password: getenv('KMAIL_DB_PASSWORD'),
+                    database: getenv('KMAIL_DB_NAME', pkg.name),
                     options: {
-                        port: 1443,
-                        database: getenv('KMAIL_DB_NAME', pkg.name),
                         encrypt: true,
                     },
                 },
