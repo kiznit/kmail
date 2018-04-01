@@ -24,20 +24,20 @@ if (!__TEST__) {
 
 
 const sessionCookie = {
-    key: `${config.appName}.auth`,      // Name of the session ID cookie
-    sameSite: 'strict',                 // No CSRF attacks please
-    httpOnly: true,                     // Cookie only accessible by HTTP(S)
-    secure: config.https,               // Only send the cookie over HTTPS
-    //maxAge:                           // todo: set an expiry date on the cookied if the user clicks "remember me / stay logged in"
+    key: 'kmail.auth',      // Name of the session ID cookie
+    sameSite: 'strict',     // No CSRF attacks please
+    httpOnly: true,         // Cookie only accessible by HTTP(S)
+    secure: config.https,   // Only send the cookie over HTTPS
+    //maxAge:               // todo: set an expiry date on the cookied if the user clicks "remember me / stay logged in"
 };
 
 
 const csrfCookie = {
-    key: `${config.appName}.session`,   // Name of the cookie used to store the CSRF token secret
-    sameSite: 'strict',                 // No CSRF attacks please
-    httpOnly: true,                     // Cookie only accessible by HTTP(S)
-    secure: config.https,               // Only send the cookie over HTTPS
-    //maxAge:                           // todo: set an expiry date on the cookied if the user clicks "remember me / stay logged in"
+    key: 'kmail.session',   // Name of the cookie used to store the CSRF token secret
+    sameSite: 'strict',     // No CSRF attacks please
+    httpOnly: true,         // Cookie only accessible by HTTP(S)
+    secure: config.https,   // Only send the cookie over HTTPS
+    //maxAge:               // todo: set an expiry date on the cookied if the user clicks "remember me / stay logged in"
 };
 
 

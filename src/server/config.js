@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import getenv from 'getenv';
+import pkg from '../../package.json';
 
 
 if (__BROWSER__) {
@@ -15,7 +16,7 @@ dotenv.config();
 
 // Default configuration for all environments
 const defaultConfig = {
-    appName: 'kmail',
+    appName: pkg.name,
     env: getenv('NODE_ENV'),
     loggerFormat: 'combined',
     https: false,
