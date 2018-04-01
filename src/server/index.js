@@ -3,12 +3,7 @@ import http from 'http';
 import { dbInit } from './data';
 
 
-dbInit
-.then(() => console.log("DB initialization succeeded!"))
-.catch(error => console.log("DB failed to initialize:", error));
-
-
-const startupPromises = [];
+const startupPromises = [dbInit];
 
 // We create an express app for the Webpack middlewares and use the real app
 // as a middleare. This allows us to easily hot reload the real app without
