@@ -5,16 +5,21 @@ import csrf from 'csurf';
 import express from 'express';
 import helmet from 'helmet';
 import HttpStatus from 'http-status-codes';
+import connectKnex from 'connect-session-knex';
 import morgan from 'morgan';
 import path from 'path';
 import session from 'express-session';
 
 import config from './config';
+import { db } from './data';
 import logger from './logger';
 import { passport } from './auth';
 import { render } from './render';
 
 const app = express();
+
+const KnexSessionStore = connectKnex(session);
+const sessionStore = new KnexSessionStore({ knex: db });
 
 
 // Logging
@@ -83,7 +88,7 @@ app.use(session({
     resave: false,                  // Do not resave the session back to the store if it wasn't modified
     saveUninitialized: false,       // Do not save uninitialized sessions
     secret: config.sessionSecret,   // Secret used to sign session cookies
-    //store:                        // todo: need a proper backend store for sessions in production
+    store: sessionStore,            // Session store
 }));
 
 
