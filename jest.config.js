@@ -73,10 +73,12 @@
     // roots: // [array<string>]
     // setupFiles: // [array]
 
-    setupTestFrameworkScriptFile: '<rootDir>/test/setupTests',
+    setupTestFrameworkScriptFile: '<rootDir>/test/setup.js',
 
     // snapshotSerializers: // [array<string>]
-    // testEnvironment: // [string]
+
+    testEnvironment: 'node',
+
     // testMatch: // [array<string>]
     // testPathIgnorePatterns: // [array<string>]
     // testRegex: // [string]

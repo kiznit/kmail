@@ -42,11 +42,25 @@ const envConfigs = {
                 directory: 'src/server/data/migrations',
                 tableName: 'knex_migrations'
             },
+            useNullAsDefault: true,
         },
     },
 
     test: {
         sessionSecret: 'Secret testing',
+
+        // Knex configuration
+        database: {
+            client: 'sqlite3',
+            connection: {
+                filename: ':memory:',
+            },
+            migrations: {
+                directory: 'src/server/data/migrations',
+                tableName: 'knex_migrations'
+            },
+            useNullAsDefault: true,
+        },
     },
 
     // Here I use a getter because I do not want these getenv calls

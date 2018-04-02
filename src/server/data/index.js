@@ -4,7 +4,7 @@ import config from '../config';
 
 const db = knex(config.database);
 
-const dbInit = db.migrate.latest();
+const dbInitPromise = db.migrate.latest();
 
 
-export { db, dbInit };
+export { db, dbInitPromise };

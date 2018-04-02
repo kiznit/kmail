@@ -1,9 +1,9 @@
 import express from 'express'
 import http from 'http';
-import { dbInit } from './data';
+import { dbInitPromise } from './data';
 
 
-const startupPromises = [dbInit];
+const startupPromises = [dbInitPromise];
 
 // We create an express app for the Webpack middlewares and use the real app
 // as a middleare. This allows us to easily hot reload the real app without
