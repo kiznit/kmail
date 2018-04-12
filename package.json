@@ -27,6 +27,7 @@
     "build-server": "webpack --config webpack.server.babel.js",
     "build-static": "mkdirp dist/server && cp -R public/ dist/ && cp -R src/server/data/migrations/ dist/server/",
     "build-azure": "cross-env AZURE=1 yarn build && cp deployment/azure/web.config .",
+    "lint": "eslint --ext .js,.jsx *.js src",
     "test": "jest",
     "test-cover": "yarn test --coverage",
     "coverage": "yarn test-cover && opn coverage/lcov-report/index.html"

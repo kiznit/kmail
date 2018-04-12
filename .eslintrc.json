@@ -5,13 +5,29 @@
         "jest": true,
         "node": true
     },
+    "globals": {
+        "__BROWSER__": true,
+        "__DEV__": true,
+        "__TEST__": true
+    },
     "extends": "airbnb",
     "parser": "babel-eslint",
     "rules": {
-        // Indentation
-        "indent": [2, 4],
+        // Javascript
+        "arrow-body-style": [1, "as-needed"],
+        "arrow-parens": [1],
+        "comma-dangle": [2, "always-multiline"],
+        "function-paren-newline": [2, "consistent"],
+        "indent": [2, 4, { "SwitchCase": 1 }],
+        "keyword-spacing": [2, { "overrides": { "catch": { "after": false }} }],
+        "linebreak-style": [0], // TODO: must fix my GIT to not add CRLF
+        "max-len": [1],
+        "no-multi-spaces": [2, { "ignoreEOLComments": true }],
+        "no-unused-vars": [2, { "vars": "all", "args": "none" }],
+        "spaced-comment": [1, "always"],
 
         // React
-        "react/jsx-indent": [2, 4]
+        "react/jsx-indent": [2, 4],
+        "react/jsx-indent-props": [2, 4]
     }
 }
