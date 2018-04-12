@@ -1,0 +1,17 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true,
+        "jest": true,
+        "node": true
+    },
+    "extends": "airbnb",
+    "parser": "babel-eslint",
+    "rules": {
+        // Indentation
+        "indent": [2, 4],
+
+        // React
+        "react/jsx-indent": [2, 4]
+    }
+}
