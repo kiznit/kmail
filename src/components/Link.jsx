@@ -9,9 +9,7 @@ const isModifiedEvent = event => !!(event.metaKey || event.altKey || event.ctrlK
 
 
 class Link extends React.PureComponent {
-
-    handleClick = event => {
-
+    handleClick = (event) => {
         const { onClick, replace, target, to } = this.props;
 
         if (onClick) {
@@ -41,10 +39,10 @@ class Link extends React.PureComponent {
 
 
     render() {
-        const { to, children, replace, ...props } = this.props;
+        const { to, children, replace, ...props } = this.props; // eslint-disable-line no-unused-vars
 
         return (
-            <a href={ to } { ...props } onClick={ this.handleClick }>
+            <a href={to} {...props} onClick={this.handleClick}>
                 { children }
             </a>
         );
@@ -55,13 +53,16 @@ class Link extends React.PureComponent {
 Link.propTypes = {
     children: PropTypes.node.isRequired,
     onClick: PropTypes.func,
-    replace: PropTypes.bool.isRequired,
+    replace: PropTypes.bool,
+    target: PropTypes.string,
     to: PropTypes.string.isRequired,
 };
 
 
 Link.defaultProps = {
+    onClick: null,
     replace: false,
+    target: null,
 };
 
 

@@ -117,26 +117,28 @@ app.post('/api/login', (req, res, next) => {
             return res.status(status || HttpStatus.UNAUTHORIZED).json(info);
         }
 
-        req.login(user, (error) => {
-            if (error) {
-                return next(error);
+        req.login(user, (loginError) => {
+            if (loginError) {
+                return next(loginError);
             }
 
             // Success
             return res.json(user);
         });
+
+        return null;
     })(req, res, next);
 });
 
-app.post('/api/logout', (req, res) => {
+app.post('/api/logout', (req, res, next) => {
     req.logout();
-    req.session.destroy(error => {
+    req.session.destroy((error) => {
         if (error) {
             return next(error);
         }
 
         res.clearCookie(sessionCookie.key, sessionCookie);
-        res.json({});
+        return res.json({});
     });
 });
 

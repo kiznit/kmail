@@ -35,7 +35,7 @@ const Layout = ({ children, classes }) => (
             <div className={classes.toolbar} />
             <SideBar />
         </div>
-        <main role='main' className={classes.content}>
+        <main role="main" className={classes.content}>
             <div className={classes.toolbar} />
             {children}
         </main>
@@ -45,7 +45,7 @@ const Layout = ({ children, classes }) => (
 
 Layout.propTypes = {
     children: PropTypes.node.isRequired,
-    classes: PropTypes.object.isRequired,
+    classes: PropTypes.shape({}).isRequired,
 };
 
 

@@ -7,7 +7,7 @@ import Button from 'material-ui/Button';
 import Drawer from 'material-ui/Drawer';
 import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
-import { MenuItem }  from 'material-ui/Menu';
+import { MenuItem } from 'material-ui/Menu';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
@@ -35,14 +35,14 @@ class NavBar extends React.PureComponent {
         settings: false,
     };
 
-    toggleSettings = (open) => () => {
+    toggleSettings = open => () => {
         this.setState({
-            settings: open
+            settings: open,
         });
     };
 
     render() {
-        const { classes, dispatch, username } = this.props;
+        const { classes, dispatch } = this.props;
 
         return (
             <AppBar position="absolute" className={classes.appBar}>
@@ -90,15 +90,9 @@ class NavBar extends React.PureComponent {
 
 
 NavBar.propTypes = {
-    classes: PropTypes.object.isRequired,
+    classes: PropTypes.shape({}).isRequired,
     dispatch: PropTypes.func.isRequired,
-    username: PropTypes.string.isRequired,
 };
 
 
-const mapStateToProps = state => ({
-    username: state.auth.username,
-});
-
-
-export default connect(mapStateToProps)(withStyles(styles)(NavBar));
+export default connect()(withStyles(styles)(NavBar));

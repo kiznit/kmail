@@ -27,7 +27,7 @@
     "build-server": "webpack --config webpack.server.babel.js",
     "build-static": "mkdirp dist/server && cp -R public/ dist/ && cp -R src/server/data/migrations/ dist/server/",
     "build-azure": "cross-env AZURE=1 yarn build && cp deployment/azure/web.config .",
-    "lint": "eslint --ext .js,.jsx *.js src",
+    "lint": "eslint --ext .js,.jsx *.js src deployment",
     "test": "jest",
     "test-cover": "yarn test --coverage",
     "coverage": "yarn test-cover && opn coverage/lcov-report/index.html"
@@ -74,6 +74,7 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-hot-loader": "^4.0.0-rc.0",
+    "react-jss": "^8.4.0",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "redux-pack": "^0.1.5",
@@ -81,6 +82,7 @@
     "split": "^1.0.1",
     "sqlite3": "^4.0.0",
     "universal-router": "^6.0.0",
+    "value-equal": "^0.4.0",
     "winston": "^2.4.1"
   },
   "devDependencies": {

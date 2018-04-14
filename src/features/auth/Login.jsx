@@ -3,7 +3,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Button from 'material-ui/Button';
-import Checkbox from 'material-ui/Checkbox';
 import Dialog, { DialogActions, DialogContent, DialogContentText, DialogTitle } from 'material-ui/Dialog';
 import { CircularProgress } from 'material-ui/Progress';
 import Paper from 'material-ui/Paper';
@@ -31,7 +30,6 @@ const styles = theme => ({
 
 
 class Login extends React.PureComponent {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -97,11 +95,11 @@ class Login extends React.PureComponent {
                 <Paper className={classes.paper} elevation={24}>
                     <DialogTitle>Log in</DialogTitle>
                     <DialogContent>
-                         <form onSubmit={(event) => this.onSubmit(event)}>
+                        <form onSubmit={event => this.onSubmit(event)}>
                             <DialogContentText>
                                 Please enter your username and password.
                             </DialogContentText>
-                             <TextField
+                            <TextField
                                 autoFocus
                                 disabled={isAuthenticating}
                                 error={!!(this.state.errorUsername)}
@@ -132,7 +130,7 @@ class Login extends React.PureComponent {
                                     });
                                 }}
                             />
-                            <div style={{marginTop: '16px', display: 'block'}}>
+                            <div style={{ marginTop: '16px', display: 'block' }}>
                                 <Button
                                     type="submit"
                                     disabled={isAuthenticating}
@@ -141,13 +139,13 @@ class Login extends React.PureComponent {
                                     style={{ height: '50px' }}
                                     variant="raised"
                                     color="primary"
-                                    >
+                                >
                                     <span>Log in</span>
                                     { isAuthenticating &&
-                                        <div style={{ display: 'inline-block', marginLeft: '5%'}}>
+                                        <div style={{ display: 'inline-block', marginLeft: '5%' }}>
                                             <div margin="4px">
                                                 <div style={{ borderWidth: '2px' }}>
-                                                    <CircularProgress style={{ width: '20px', height: '20px' }}/>
+                                                    <CircularProgress style={{ width: '20px', height: '20px' }} />
                                                 </div>
                                             </div>
                                         </div>
@@ -157,7 +155,7 @@ class Login extends React.PureComponent {
                         </form>
                         <div>
                             <NoScript>
-                                <p>Warning: This webmail service requires Javascript! In order to use it please enable Javascript in your browser's settings.</p>
+                                <p>{"Warning: This webmail service requires Javascript! In order to use it please enable Javascript in your browser's settings."}</p>
                             </NoScript>
                         </div>
                     </DialogContent>
@@ -169,21 +167,17 @@ class Login extends React.PureComponent {
 }
 
 
-
 Login.propTypes = {
-    classes: PropTypes.object.isRequired,
+    classes: PropTypes.shape({}).isRequired,
     dispatch: PropTypes.func.isRequired,
-    errorMessage: PropTypes.string,
-    isAuthenticating: PropTypes.bool,
-    username: PropTypes.string.isRequired,
+    errorMessage: PropTypes.string.isRequired,
+    isAuthenticating: PropTypes.bool.isRequired,
 };
-
 
 
 const mapStateToProps = state => ({
     errorMessage: state.auth.errorMessage,
     isAuthenticating: state.auth.isAuthenticating,
-    username: state.auth.username,
 });
 
 

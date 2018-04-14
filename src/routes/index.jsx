@@ -17,16 +17,14 @@ const routes = {
         },
         {
             path: '(.*)',
-            action: () => {
-                return {
-                    component: (
-                        <Layout>
-                            <h1>Page not found</h1>
-                        </Layout>
-                    ),
-                    status: 404,
-                };
-            },
+            action: () => ({
+                component: (
+                    <Layout>
+                        <h1>Page not found</h1>
+                    </Layout>
+                ),
+                status: 404,
+            }),
         },
     ],
 };

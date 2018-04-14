@@ -16,17 +16,25 @@
         // Javascript
         "arrow-body-style": [1, "as-needed"],
         "arrow-parens": [1],
+        "brace-style": [1],
         "comma-dangle": [2, "always-multiline"],
         "function-paren-newline": [2, "consistent"],
         "indent": [2, 4, { "SwitchCase": 1 }],
         "keyword-spacing": [2, { "overrides": { "catch": { "after": false }} }],
         "linebreak-style": [0], // TODO: must fix my GIT to not add CRLF
-        "max-len": [1],
+        "max-len": [1, { "code": 120, "ignoreTrailingComments": true, "ignoreTemplateLiterals": true }],
+        "no-else-return": [0],
         "no-multi-spaces": [2, { "ignoreEOLComments": true }],
         "no-unused-vars": [2, { "vars": "all", "args": "none" }],
+        "object-curly-newline": [2, { "consistent": true }],
+        "quotes": [1, "single"],
         "spaced-comment": [1, "always"],
 
+        // Import
+        "import/prefer-default-export": [1],
+
         // React
+        "react/jsx-curly-brace-presence": [1],
         "react/jsx-indent": [2, 4],
         "react/jsx-indent-props": [2, 4]
     }

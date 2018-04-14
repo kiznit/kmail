@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import Login from './Login';
 
 
-const Auth = ({ children, authenticated }) => {
-    return authenticated ? children : <Login />
-};
+const Auth = ({ children, authenticated }) => (
+    authenticated ? children : <Login />
+);
 
 
 Auth.propTypes = {

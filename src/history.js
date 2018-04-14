@@ -17,7 +17,6 @@ const createEnhancedHistory = () => {
                 newLocation.search === currentLocation.search &&
                 newLocation.hash === currentLocation.hash &&
                 valueEqual(newLocation.state, currentLocation.state)) {
-
                 // Same location, replace
                 proto.replace.call(this, newLocation);
             } else {
@@ -26,7 +25,7 @@ const createEnhancedHistory = () => {
             }
         },
     });
-}
+};
 
 
 export default __BROWSER__ ? createEnhancedHistory() : null;

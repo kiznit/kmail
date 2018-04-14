@@ -4,9 +4,8 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import App from '../components/App';
 import Auth from '../features/auth/Auth';
 import Html from '../components/Html';
-import Layout from '../components/Layout';
 
-import assets from './assets.json';
+import assets from './assets.json'; // eslint-disable-line import/no-unresolved
 import router from '../router';
 import configureStore from '../store';
 
@@ -24,12 +23,11 @@ const initializeStore = async (req) => {
     }
 
     return store;
-}
+};
 
 
 const render = async (req, res) => {
     const store = await initializeStore(req);
-    const state = store.getState();
 
     const route = await router.resolve({
         pathname: req.path,
@@ -57,7 +55,7 @@ const render = async (req, res) => {
     res.write('<!DOCTYPE html>');
     res.write(html);
     res.end();
-}
+};
 
 
 if (module.hot) {

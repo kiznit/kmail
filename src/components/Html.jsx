@@ -52,32 +52,32 @@ const Html = ({ title, description, scripts, appState, csrfToken, children }) =>
                 <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=1" />
                 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
                 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-                <style id="jss-server-side" dangerouslySetInnerHTML={{__html: css}} />
+                <style id="jss-server-side" dangerouslySetInnerHTML={{ __html: css }} />
 
-                <script dangerouslySetInnerHTML={{__html: `window._csrfToken = '${csrfToken}';`}} />
+                <script dangerouslySetInnerHTML={{ __html: `window._csrfToken = '${csrfToken}';` }} />
 
                 { process.env.APPINSIGHTS_INSTRUMENTATIONKEY && (
-                    <script type="text/javascript" dangerouslySetInnerHTML={{__html: appInsightsJavascript }} />
+                    <script type="text/javascript" dangerouslySetInnerHTML={{ __html: appInsightsJavascript }} />
                 )}
 
             </head>
             <body>
-                <div id='react-root' dangerouslySetInnerHTML={{__html: html}} />
-                <script dangerouslySetInnerHTML={{__html: `window.INITIAL_APP_STATE=${JSON.stringify(appState)};`}} />
+                <div id="react-root" dangerouslySetInnerHTML={{ __html: html }} />
+                <script dangerouslySetInnerHTML={{ __html: `window.INITIAL_APP_STATE=${JSON.stringify(appState)};` }} />
                 { scripts.map(script => <script key={script} src={script} />) }
             </body>
         </html>
     );
-}
+};
 
 
 Html.propTypes = {
-    appState: PropTypes.object,
+    appState: PropTypes.shape({}).isRequired,
     children: PropTypes.node.isRequired,
     csrfToken: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
+    description: PropTypes.string,
     scripts: PropTypes.arrayOf(PropTypes.string.isRequired),
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string,
 };
 
 

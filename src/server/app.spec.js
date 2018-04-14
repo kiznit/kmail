@@ -3,8 +3,8 @@ import app from './app';
 
 
 // Some regexs to validate cookies
-const RE_COOKIE_CSRF = /^kmail.session=[\w\-]{24}; Path=\/; HttpOnly; SameSite=Strict$/;
-const RE_COOKIE_SESSION = /^kmail.auth=s%3A[\w\-]{32}\.[\w%]{43,}; Path=\/; HttpOnly; SameSite=Strict$/;
+const RE_COOKIE_CSRF = /^kmail.session=[\w-]{24}; Path=\/; HttpOnly; SameSite=Strict$/;
+const RE_COOKIE_SESSION = /^kmail.auth=s%3A[\w-]{32}\.[\w%]{43,}; Path=\/; HttpOnly; SameSite=Strict$/;
 const RE_COOKIE_SESSION_DELETE = /kmail.auth=; Path=\/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; SameSite=Strict/;
 
 
@@ -16,7 +16,7 @@ const RE_COOKIE_SESSION_DELETE = /kmail.auth=; Path=\/; Expires=Thu, 01 Jan 1970
 // https://github.com/crux153/supertest/commit/a54069829ca94b3a80ce8e5e864c49b58dedd0d2
 // https://github.com/facebook/jest/issues/2549
 
-const getCookies = res => {
+const getCookies = (res) => {
     const cookies = res.headers['set-cookie'];
 
     // No set-cookie header?
@@ -39,11 +39,10 @@ const getCookies = res => {
 };
 
 // Extract the CSRF token from the HTML response
-const getCsrfToken = res => res.text.match(/window\._csrfToken = '([\w\-]{36})';/)[1];
+const getCsrfToken = res => res.text.match(/window\._csrfToken = '([\w-]{36})';/)[1];
 
 
 describe("app", () => {
-
     test("serves static files", () => {
         return request(app)
             .get('/apple-touch-icon.png')
@@ -54,7 +53,7 @@ describe("app", () => {
         return request(app)
             .get('/')
             .expect(200)
-            .expect(res => {
+            .expect((res) => {
                 // Verify that we got the login screen
                 expect(res.text).to.contain('Please enter your username and password');
 
@@ -70,7 +69,6 @@ describe("app", () => {
 
 
 describe("login", () => {
-
     const agent = request.agent(app);
     let csrfToken;
 
@@ -78,7 +76,7 @@ describe("login", () => {
         return agent.get('/')
             .expect(200)
             .expect('set-cookie', RE_COOKIE_CSRF)
-            .expect(res => {
+            .expect((res) => {
                 // We must scrub the csrfToken from the HTML
                 csrfToken = getCsrfToken(res);
             });
@@ -134,7 +132,7 @@ describe("CSRF", () => {
         expect(csrfToken2).to.not.equal(csrfToken1);
     });
 
-    test("users can't swap tokens", async ()=> {
+    test("users can't swap tokens", async () => {
         await agent1
             .post('/api/login')
             .send({ username: 'admin', password: '1234' })

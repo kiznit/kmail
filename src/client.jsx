@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import queryString from 'query-string';
-import { MuiThemeProvider } from 'material-ui/styles'
+import { MuiThemeProvider } from 'material-ui/styles';
 
 import history from './history';
 import configureStore from './store';
@@ -33,7 +33,7 @@ let onRenderComplete = () => {
 
     onRenderComplete = (route, location) => {
         // TODO: update tags in <head> here - title, meta, ...
-    }
+    };
 };
 
 
@@ -42,8 +42,6 @@ const onLocationChange = async (location, action) => {
 
     try {
         // Resolve route for new location
-        const state = store.getState();
-
         const route = await router.resolve({
             pathname: location.pathname,
             query: queryString.parse(location.search),
@@ -81,7 +79,7 @@ const onLocationChange = async (location, action) => {
             window.location.reload();
         }
     }
-}
+};
 
 
 history.listen(onLocationChange);

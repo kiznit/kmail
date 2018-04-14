@@ -3,7 +3,7 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
 
-const NoScript = (props) => (
+const NoScript = props => (
     <noscript dangerouslySetInnerHTML={{ __html: renderToStaticMarkup(props.children) }} />
 );
 

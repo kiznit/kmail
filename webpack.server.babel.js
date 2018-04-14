@@ -1,13 +1,13 @@
-import nodeExternals from 'webpack-node-externals';
+/* eslint import/no-extraneous-dependencies: 1 */
 import path from 'path';
-import StartServerPlugin from 'start-server-webpack-plugin';
 import webpack from 'webpack';
-import pkg from './package.json';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import nodeExternals from 'webpack-node-externals';
+import StartServerPlugin from 'start-server-webpack-plugin';
+import pkg from './package.json';
 
 
 export default (env = {}) => {
-
     const isDev = env.dev || false;
 
     return {
@@ -39,7 +39,7 @@ export default (env = {}) => {
         devtool: isDev ? 'eval-source-map' : 'source-map',
 
         resolve: {
-            extensions: ['.js', '.jsx']
+            extensions: ['.js', '.jsx'],
         },
 
         module: {
@@ -66,10 +66,10 @@ export default (env = {}) => {
                             'react',
                             'stage-2',
                         ],
-                        "plugins": [
-                            "transform-async-to-bluebird",
-                            "transform-promise-to-bluebird",
-                            ...(isDev ? ["react-hot-loader/babel"] : []),
+                        plugins: [
+                            'transform-async-to-bluebird',
+                            'transform-promise-to-bluebird',
+                            ...(isDev ? ['react-hot-loader/babel'] : []),
                         ],
                     },
                 },
@@ -93,9 +93,9 @@ export default (env = {}) => {
             }),
 
             new webpack.BannerPlugin({
-              banner: 'require("source-map-support").install();',
-              raw: true,
-              entryOnly: false,
+                banner: 'require("source-map-support").install();',
+                raw: true,
+                entryOnly: false,
             }),
 
             ...(isDev

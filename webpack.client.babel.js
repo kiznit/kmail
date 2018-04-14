@@ -1,12 +1,13 @@
+/* eslint import/no-extraneous-dependencies: 1 */
 import path from 'path';
 import webpack from 'webpack';
-import pkg from './package.json';
-import AssetsPlugin from 'assets-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import { default as UglifyPlugin } from 'uglifyjs-webpack-plugin';
+import AssetsPlugin from 'assets-webpack-plugin';
+import UglifyPlugin from 'uglifyjs-webpack-plugin';
+import pkg from './package.json';
+
 
 export default (env = {}) => {
-
     const isDev = env.dev || false;
 
     return {
@@ -36,7 +37,7 @@ export default (env = {}) => {
         devtool: isDev ? 'eval-source-map' : 'source-map',
 
         resolve: {
-            extensions: ['.js', '.jsx']
+            extensions: ['.js', '.jsx'],
         },
 
         module: {
@@ -64,10 +65,10 @@ export default (env = {}) => {
                             'react',
                             'stage-2',
                         ],
-                        "plugins": [
-                            "transform-async-to-bluebird",
-                            "transform-promise-to-bluebird",
-                            ...(isDev ? ["react-hot-loader/babel"] : []),
+                        plugins: [
+                            'transform-async-to-bluebird',
+                            'transform-promise-to-bluebird',
+                            ...(isDev ? ['react-hot-loader/babel'] : []),
                         ],
                     },
                 },
@@ -96,7 +97,8 @@ export default (env = {}) => {
                 minChunks: module => /node_modules/.test(module.resource),
             }),
 
-            ...(isDev ? [
+            ...(isDev
+                ? [
                     new webpack.optimize.OccurrenceOrderPlugin(),
                     new webpack.HotModuleReplacementPlugin(),
                     new webpack.NoEmitOnErrorsPlugin(),

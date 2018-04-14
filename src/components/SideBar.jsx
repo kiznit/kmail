@@ -3,7 +3,7 @@ import React from 'react';
 
 import Divider from 'material-ui/Divider';
 import Drawer from 'material-ui/Drawer';
-import { MenuItem }  from 'material-ui/Menu';
+import { MenuItem } from 'material-ui/Menu';
 import { withStyles } from 'material-ui/styles';
 
 
@@ -19,7 +19,6 @@ const styles = {
 
 
 class SideBar extends React.PureComponent {
-
     render() {
         const { classes } = this.props;
 
@@ -42,8 +41,8 @@ class SideBar extends React.PureComponent {
 
 
 SideBar.propTypes = {
-    classes: PropTypes.object.isRequired,
-}
+    classes: PropTypes.shape({}).isRequired,
+};
 
 
 export default withStyles(styles)(SideBar);
