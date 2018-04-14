@@ -85,10 +85,6 @@ const envConfigs = {
                         encrypt: true,
                     },
                 },
-                migrations: {
-                    directory: './dist/server/migrations',
-                    tableName: 'knex_migrations',
-                },
             },
         };
     },
