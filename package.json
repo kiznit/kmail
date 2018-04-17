@@ -25,7 +25,7 @@
     "build": "yarn clean && yarn build-server && yarn build-client && yarn build-static",
     "build-client": "webpack --config webpack.client.babel.js",
     "build-server": "webpack --config webpack.server.babel.js",
-    "build-static": "mkdirp dist/server && cp -R public/ dist/ && cp -R src/server/data/migrations/ dist/server/",
+    "build-static": "mkdirp dist/server && cp -R public/ dist/",
     "build-azure": "cross-env AZURE=1 yarn build && cp deployment/azure/web.config .",
     "lint": "eslint --ext .js,.jsx *.js src deployment",
     "test": "jest",
