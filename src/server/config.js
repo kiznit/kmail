@@ -40,7 +40,6 @@ const envConfigs = {
             },
             migrations: {
                 directory: 'src/server/data/migrations',
-                tableName: 'knex_migrations',
             },
             useNullAsDefault: true,
         },
@@ -57,7 +56,6 @@ const envConfigs = {
             },
             migrations: {
                 directory: 'src/server/data/migrations',
-                tableName: 'knex_migrations',
             },
             useNullAsDefault: true,
         },
@@ -84,6 +82,9 @@ const envConfigs = {
                     options: {
                         encrypt: true,
                     },
+                },
+                migrations: {
+                    directory: 'src/server/data/migrations',
                 },
             },
         };
