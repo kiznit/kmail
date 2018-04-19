@@ -107,6 +107,11 @@ app.use(cookieParser(config.sessionSecret));
 app.use(csrf({ cookie: csrfCookie }));
 
 
+// Simple /ping route - can be used by load balancers or deployment systems
+// to verify if the server is up and running.
+app.get('/ping', (req, res) => res.json());
+
+
 app.post('/api/login', (req, res, next) => {
     passport.authenticate('local', (error, user, info, status) => {
         if (error) {
