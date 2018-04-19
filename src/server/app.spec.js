@@ -65,6 +65,16 @@ describe("app", () => {
                 expect(cookies).to.include.something.that.match(RE_COOKIE_CSRF);
             });
     });
+
+    test("responds to /ping", () => {
+        return request(app)
+            .get('/ping')
+            .expect(200)
+            .expect('Content-Type', /json/)
+            .expect((res) => {
+                expect(res.body).to.equal('');
+            });
+    });
 });
 
 
