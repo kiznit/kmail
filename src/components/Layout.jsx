@@ -1,10 +1,19 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
 
+import Button from 'material-ui/Button';
+import Drawer from 'material-ui/Drawer';
+import Icon from 'material-ui/Icon';
+import IconButton from 'material-ui/IconButton';
+import { MenuItem } from 'material-ui/Menu';
 import { withStyles } from 'material-ui/styles';
 
-import SideBar from './SideBar';
+import Link from './Link';
 import NavBar from './NavBar';
+import SideBar from './SideBar';
+
+import { logout } from '../features/auth/actions';
 
 
 const styles = theme => ({
@@ -28,25 +37,68 @@ const styles = theme => ({
 });
 
 
-const Layout = ({ children, classes }) => (
-    <div className={classes.root}>
-        <NavBar title="KMail" />
-        <div>
-            <div className={classes.toolbar} />
-            <SideBar />
-        </div>
-        <main role="main" className={classes.content}>
-            <div className={classes.toolbar} />
-            {children}
-        </main>
-    </div>
-);
+class Layout extends React.Component {
+    state = {
+        settings: false,
+    };
+
+    toggleSettings = open => () => {
+        this.setState({
+            settings: open,
+        });
+    };
+
+    render() {
+        const { children, classes, dispatch } = this.props;
+
+        return (
+            <div className={classes.root}>
+                <NavBar title="KMail">
+                    <Button color="inherit" component={Link} to="/mail">Mail</Button>
+                    <Button color="inherit" component={Link} to="/contacts">Contacts</Button>
+
+                    <IconButton color="inherit" onClick={this.toggleSettings(true)}>
+                        <Icon>settings</Icon>
+                    </IconButton>
+
+                    <IconButton color="inherit" onClick={() => dispatch(logout())}>
+                        <Icon>account_circle</Icon>
+                    </IconButton>
+                </NavBar>
+                <div>
+                    <div className={classes.toolbar} />
+                    <SideBar />
+                </div>
+                <main role="main" className={classes.content}>
+                    <div className={classes.toolbar} />
+                    {children}
+                </main>
+
+                <Drawer anchor="right" open={this.state.settings} onClose={this.toggleSettings(false)}>
+                    <div
+                        tabIndex={0}
+                        role="button"
+                        onClick={this.toggleSettings(false)}
+                        onKeyDown={this.toggleSettings(false)}
+                    >
+                        <div className={classes.list}>
+                            <MenuItem>First item</MenuItem>
+                            <MenuItem>Second item</MenuItem>
+                            <MenuItem>Third item</MenuItem>
+                        </div>
+                    </div>
+                </Drawer>
+            </div>
+        );
+    }
+}
 
 
 Layout.propTypes = {
     children: PropTypes.node.isRequired,
     classes: PropTypes.shape({}).isRequired,
+    dispatch: PropTypes.func.isRequired,
 };
 
 
-export default withStyles(styles)(Layout);
+export default connect()(withStyles(styles)(Layout));

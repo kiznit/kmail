@@ -1,20 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { connect } from 'react-redux';
 
 import AppBar from 'material-ui/AppBar';
-import Button from 'material-ui/Button';
-import Drawer from 'material-ui/Drawer';
 import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
-import { MenuItem } from 'material-ui/Menu';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 
 import Link from './Link';
-
-import { logout } from '../features/auth/actions';
 
 
 const styles = theme => ({
@@ -31,18 +25,8 @@ const styles = theme => ({
 
 
 class NavBar extends React.PureComponent {
-    state = {
-        settings: false,
-    };
-
-    toggleSettings = open => () => {
-        this.setState({
-            settings: open,
-        });
-    };
-
     render() {
-        const { classes, dispatch, title, titleUrl } = this.props;
+        const { children, classes, title, titleUrl } = this.props;
 
         return (
             <AppBar position="absolute" className={classes.appBar}>
@@ -56,32 +40,7 @@ class NavBar extends React.PureComponent {
                     </Typography>
 
                     <div className={classes.flex} />
-
-                    <Button color="inherit" component={Link} to="/mail">Mail</Button>
-                    <Button color="inherit" component={Link} to="/contacts">Contacts</Button>
-
-                    <IconButton color="inherit" onClick={this.toggleSettings(true)}>
-                        <Icon>settings</Icon>
-                    </IconButton>
-
-                    <IconButton color="inherit" onClick={() => dispatch(logout())}>
-                        <Icon>account_circle</Icon>
-                    </IconButton>
-
-                    <Drawer anchor="right" open={this.state.settings} onClose={this.toggleSettings(false)}>
-                        <div
-                            tabIndex={0}
-                            role="button"
-                            onClick={this.toggleSettings(false)}
-                            onKeyDown={this.toggleSettings(false)}
-                        >
-                            <div className={classes.list}>
-                                <MenuItem>First item</MenuItem>
-                                <MenuItem>Second item</MenuItem>
-                                <MenuItem>Third item</MenuItem>
-                            </div>
-                        </div>
-                    </Drawer>
+                    {children}
                 </Toolbar>
             </AppBar>
         );
@@ -90,16 +49,17 @@ class NavBar extends React.PureComponent {
 
 
 NavBar.propTypes = {
+    children: PropTypes.arrayOf(PropTypes.node),
     classes: PropTypes.shape({}).isRequired,
-    dispatch: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
     titleUrl: PropTypes.string,
 };
 
 
 NavBar.defaultProps = {
+    children: [],
     titleUrl: '/',
 };
 
 
-export default connect()(withStyles(styles)(NavBar));
+export default withStyles(styles)(NavBar);

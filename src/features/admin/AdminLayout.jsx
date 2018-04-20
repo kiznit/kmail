@@ -13,7 +13,7 @@ class AdminLayout extends React.Component {
     render() {
         return (
             <MuiThemeProvider theme={theme}>
-                <NavBar title="KMail - Admin" titleUrl="/admin"/>
+                <NavBar title="KMail - Admin Panel" titleUrl="/admin"/>
             </MuiThemeProvider>
         );
     }
