@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Layout from '../components/Layout';
+import AdminLayout from '../features/admin/AdminLayout';
 
 
 const routes = {
@@ -14,6 +15,10 @@ const routes = {
                     <h1>This is the index page</h1>
                 </Layout>
             ),
+        },
+        {
+            path: '/admin',
+            action: () => <AdminLayout />,
         },
         {
             path: '(.*)',

@@ -30,7 +30,7 @@ const styles = theme => ({
 
 const Layout = ({ children, classes }) => (
     <div className={classes.root}>
-        <NavBar />
+        <NavBar title="KMail" />
         <div>
             <div className={classes.toolbar} />
             <SideBar />

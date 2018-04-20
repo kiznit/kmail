@@ -42,7 +42,7 @@ class NavBar extends React.PureComponent {
     };
 
     render() {
-        const { classes, dispatch } = this.props;
+        const { classes, dispatch, title, titleUrl } = this.props;
 
         return (
             <AppBar position="absolute" className={classes.appBar}>
@@ -51,8 +51,8 @@ class NavBar extends React.PureComponent {
                         <Icon>menu</Icon>
                     </IconButton>
 
-                    <Typography variant="title" color="inherit" component={Link} to="/" style={{ textDecoration: 'none' }}>
-                        KMail
+                    <Typography variant="title" color="inherit" component={Link} to={titleUrl} style={{ textDecoration: 'none' }}>
+                        { title }
                     </Typography>
 
                     <div className={classes.flex} />
@@ -92,6 +92,13 @@ class NavBar extends React.PureComponent {
 NavBar.propTypes = {
     classes: PropTypes.shape({}).isRequired,
     dispatch: PropTypes.func.isRequired,
+    title: PropTypes.string.isRequired,
+    titleUrl: PropTypes.string,
+};
+
+
+NavBar.defaultProps = {
+    titleUrl: '/',
 };
 
 
