@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 import { MuiThemeProvider } from 'material-ui/styles';
 
 import NavBar from '../../components/NavBar';
-import theme from './theme';
+import createTheme from './theme';
+
+const theme = createTheme();
 
 
 class AdminLayout extends React.Component {
