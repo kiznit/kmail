@@ -3,13 +3,13 @@ import ReactDOM from 'react-dom';
 import queryString from 'query-string';
 import { MuiThemeProvider } from 'material-ui/styles';
 
+import App from 'components/App';
+import Auth from 'features/auth/Auth';
+
 import history from './history';
 import configureStore from './store';
 import createTheme from './theme';
 import router from './router';
-
-import App from './components/App';
-import Auth from './features/auth/Auth';
 
 
 if (__DEV__) {

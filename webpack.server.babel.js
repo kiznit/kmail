@@ -40,6 +40,10 @@ export default (env = {}) => {
 
         resolve: {
             extensions: ['.js', '.jsx'],
+            alias: {
+                components: path.resolve('src/components/'),
+                features: path.resolve('src/features/'),
+            },
         },
 
         module: {

@@ -9,7 +9,7 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import { withStyles } from 'material-ui/styles';
 
-import NoScript from '../../components/NoScript';
+import NoScript from 'components/NoScript';
 
 import { login } from './actions';
 

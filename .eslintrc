@@ -12,6 +12,13 @@
     },
     "extends": "airbnb",
     "parser": "babel-eslint",
+    "settings": {
+        "import/resolver": {
+            "webpack": {
+                "config": "webpack.server.babel.js"
+            }
+        }
+    },
     "rules": {
         // Javascript
         "arrow-body-style": [1, "as-needed"],

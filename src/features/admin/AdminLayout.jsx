@@ -7,9 +7,9 @@ import IconButton from 'material-ui/IconButton';
 import Tooltip from 'material-ui/Tooltip';
 import { MuiThemeProvider } from 'material-ui/styles';
 
-import NavBar from '../../components/NavBar';
-import createTheme from './theme';
+import NavBar from 'components/NavBar';
 
+import createTheme from './theme';
 import { logout } from '../auth/actions';
 
 const theme = createTheme();

@@ -1,15 +1,15 @@
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
-import App from '../components/App';
-import Auth from '../features/auth/Auth';
-import Html from '../components/Html';
+import App from 'components/App';
+import Auth from 'features/auth/Auth';
+import Html from 'components/Html';
 
 import assets from './assets.json'; // eslint-disable-line import/no-unresolved
 import router from '../router';
 import configureStore from '../store';
 
-import { LOGIN } from '../features/auth/actions';
+import { LOGIN } from 'features/auth/actions';
 
 
 const initializeStore = async (req) => {

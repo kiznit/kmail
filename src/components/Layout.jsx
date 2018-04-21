@@ -10,11 +10,11 @@ import Tooltip from 'material-ui/Tooltip';
 import { MenuItem } from 'material-ui/Menu';
 import { withStyles } from 'material-ui/styles';
 
+import { logout } from 'features/auth/actions';
+
 import Link from './Link';
 import NavBar from './NavBar';
 import SideBar from './SideBar';
-
-import { logout } from '../features/auth/actions';
 
 
 const styles = theme => ({
