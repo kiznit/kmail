@@ -49,7 +49,7 @@ class NavBar extends React.PureComponent {
 
 
 NavBar.propTypes = {
-    children: PropTypes.arrayOf(PropTypes.node),
+    children: PropTypes.node,
     classes: PropTypes.shape({}).isRequired,
     title: PropTypes.string.isRequired,
     titleUrl: PropTypes.string,
@@ -57,7 +57,6 @@ NavBar.propTypes = {
 
 
 NavBar.defaultProps = {
-    children: [],
     titleUrl: '/',
 };
 

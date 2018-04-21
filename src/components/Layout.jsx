@@ -6,6 +6,7 @@ import Button from 'material-ui/Button';
 import Drawer from 'material-ui/Drawer';
 import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
+import Tooltip from 'material-ui/Tooltip';
 import { MenuItem } from 'material-ui/Menu';
 import { withStyles } from 'material-ui/styles';
 
@@ -54,21 +55,33 @@ class Layout extends React.Component {
         return (
             <div className={classes.root}>
                 <NavBar title="KMail">
-                    <Button color="inherit" component={Link} to="/mail">Mail</Button>
-                    <Button color="inherit" component={Link} to="/contacts">Contacts</Button>
 
-                    <IconButton color="inherit" onClick={this.toggleSettings(true)}>
-                        <Icon>settings</Icon>
-                    </IconButton>
+                    <Tooltip id="tooltip-mail" title="E-mail">
+                        <Button color="inherit" component={Link} to="/mail">Mail</Button>
+                    </Tooltip>
 
-                    <IconButton color="inherit" onClick={() => dispatch(logout())}>
-                        <Icon>account_circle</Icon>
-                    </IconButton>
+                    <Tooltip id="tooltip-contacts" title="Contacts">
+                        <Button color="inherit" component={Link} to="/contacts">Contacts</Button>
+                    </Tooltip>
+
+                    <Tooltip id="tooltip-settings" title="Settings">
+                        <IconButton color="inherit" onClick={this.toggleSettings(true)}>
+                            <Icon>settings</Icon>
+                        </IconButton>
+                    </Tooltip>
+
+                    <Tooltip id="tooltip-account" title="Account">
+                        <IconButton color="inherit" onClick={() => dispatch(logout())}>
+                            <Icon>account_circle</Icon>
+                        </IconButton>
+                    </Tooltip>
                 </NavBar>
+
                 <div>
                     <div className={classes.toolbar} />
                     <SideBar />
                 </div>
+
                 <main role="main" className={classes.content}>
                     <div className={classes.toolbar} />
                     {children}
