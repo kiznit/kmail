@@ -87,6 +87,8 @@ onLocationChange(currentLocation);
 
 
 if (module.hot) {
+    module.hot.accept('./router');
+
     module.hot.accept('./features/auth/Auth', () => {
         onLocationChange(currentLocation);
     });
