@@ -2,6 +2,7 @@ import React from 'react';
 
 import Layout from 'components/Layout';
 import AdminLayout from 'features/admin/AdminLayout';
+import DomainDialog from 'features/admin/DomainDialog';
 
 
 const routes = {
@@ -18,7 +19,32 @@ const routes = {
         },
         {
             path: '/admin',
-            action: () => <AdminLayout />,
+            async action({ next }) {
+                const route = await next();
+                if (!route) {
+                    return { redirect: '/admin/domain' };
+                }
+
+                return (
+                    <AdminLayout>
+                        {route.component || route}
+                    </AdminLayout>
+                );
+            },
+            children: [
+                {
+                    path: '/about',
+                    action: () => <h1>About</h1>,
+                },
+                {
+                    path: '/domain',
+                    action: () => <DomainDialog />,
+                },
+                {
+                    path: '/security',
+                    action: () => <h1>Security</h1>,
+                },
+            ],
         },
         {
             path: '(.*)',

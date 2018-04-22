@@ -34,6 +34,11 @@ const render = async (req, res) => {
         query: req.query,
     });
 
+    if (route.redirect) {
+        res.redirect(route.redirect);
+        return;
+    }
+
     const component = route.component || route;
 
     const scripts = [assets.vendor.js, assets.client.js];

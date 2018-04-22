@@ -52,6 +52,11 @@ const onLocationChange = async (location, action) => {
             return;
         }
 
+        if (route.redirect) {
+            history.replace(route.redirect);
+            return;
+        }
+
         // Render the route
         const component = route.component || route;
 
