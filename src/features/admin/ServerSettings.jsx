@@ -3,12 +3,20 @@ import React from 'react';
 
 import { FormControl } from 'material-ui/Form';
 import { InputLabel } from 'material-ui/Input';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import ListSubheader from 'material-ui/List/ListSubheader';
+import List, { ListItem } from 'material-ui/List';
 import { MenuItem } from 'material-ui/Menu';
 import Paper from 'material-ui/Paper';
 import Select from 'material-ui/Select';
+import { withStyles } from 'material-ui/styles';
 import TextField from 'material-ui/TextField';
+import Typography from 'material-ui/Typography';
+
+
+const styles = theme => ({
+    title: {
+        margin: `${theme.spacing.unit * 4}px 0 ${theme.spacing.unit * 2}px`,
+    },
+});
 
 
 class ServerSettings extends React.PureComponent {
@@ -23,12 +31,16 @@ class ServerSettings extends React.PureComponent {
     }
 
     render() {
-        const { title } = this.props;
+        const { classes, title } = this.props;
         const { url, port, security } = this.state;
 
         return (
             <div>
-                <List component="nav" subheader={<ListSubheader component="div">{title}</ListSubheader>}>
+                <Typography variant="title" className={classes.title}>
+                    {title}
+                </Typography>
+
+                <List component="nav">
                     <Paper>
                         <ListItem>
                             <TextField label="Server" value={url} />
@@ -55,16 +67,17 @@ class ServerSettings extends React.PureComponent {
 
 
 ServerSettings.propTypes = {
+    classes: PropTypes.shape({}).isRequired,
+    port: PropTypes.number,
     title: PropTypes.string.isRequired,
     url: PropTypes.string,
-    port: PropTypes.number,
 };
 
 
 ServerSettings.defaultProps = {
-    url: '',
     port: 0,
+    url: '',
 };
 
 
-export default ServerSettings;
+export default withStyles(styles)(ServerSettings);

@@ -5,10 +5,6 @@ import ServerSettings from './ServerSettings';
 
 
 class DomainSettings extends React.PureComponent {
-    onSubmit(event) {
-        event.preventDefault();
-    }
-
     render() {
         return (
             <div>
