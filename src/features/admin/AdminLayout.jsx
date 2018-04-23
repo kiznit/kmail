@@ -17,7 +17,7 @@ import { logout } from '../auth/actions';
 const styles = theme => ({
     root: {
         flexGrow: 1,
-        height: 430,
+        height: '100%',
         zIndex: 1,
         overflow: 'hidden',
         position: 'relative',
