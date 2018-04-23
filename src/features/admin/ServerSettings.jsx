@@ -13,6 +13,10 @@ import Typography from 'material-ui/Typography';
 
 
 const styles = theme => ({
+    paper: {
+        //margin: theme.spacing.unit,
+        //padding: theme.spacing.unit * 2,
+    },
     title: {
         margin: `${theme.spacing.unit * 4}px 0 ${theme.spacing.unit * 2}px`,
     },
@@ -47,7 +51,7 @@ class ServerSettings extends React.PureComponent {
                 </Typography>
 
                 <List component="nav">
-                    <Paper>
+                    <Paper className={classes.paper}>
                         <ListItem>
                             <TextField label="Server" value={url} onChange={this.handleChange('url')} />
                         </ListItem>

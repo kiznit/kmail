@@ -2,6 +2,7 @@ import React from 'react';
 
 import Layout from 'components/Layout';
 import AdminLayout from 'features/admin/AdminLayout';
+import AdminSettings from 'features/admin/AdminSettings';
 import DomainSettings from 'features/admin/DomainSettings';
 
 
@@ -32,6 +33,10 @@ const routes = {
                 );
             },
             children: [
+                {
+                    path: '/',
+                    action: () => <AdminSettings />
+                },
                 {
                     path: '/about',
                     action: () => <h1>About</h1>,
