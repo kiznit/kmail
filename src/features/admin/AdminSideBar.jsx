@@ -34,7 +34,7 @@ class AdminSideBar extends React.PureComponent {
                 <MenuItem component={Link} to="/admin/domain">Domain</MenuItem>
                 <MenuItem component={Link} to="/admin/security">Security</MenuItem>
                 <Divider />
-                <MenuItem component={Link} to="/admin">About</MenuItem>
+                <MenuItem component={Link} to="/admin/about">About</MenuItem>
             </Drawer>
         );
     }

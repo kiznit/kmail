@@ -11,7 +11,7 @@ import Select from 'material-ui/Select';
 import TextField from 'material-ui/TextField';
 
 
-class DomainDialog extends React.PureComponent {
+class DomainSettings extends React.PureComponent {
     onSubmit(event) {
         event.preventDefault();
     }
@@ -64,9 +64,9 @@ class DomainDialog extends React.PureComponent {
 }
 
 
-DomainDialog.propTypes = {
+DomainSettings.propTypes = {
 
 };
 
 
-export default DomainDialog;
+export default DomainSettings;

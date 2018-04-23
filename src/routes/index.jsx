@@ -2,7 +2,7 @@ import React from 'react';
 
 import Layout from 'components/Layout';
 import AdminLayout from 'features/admin/AdminLayout';
-import DomainDialog from 'features/admin/DomainDialog';
+import DomainSettings from 'features/admin/DomainSettings';
 
 
 const routes = {
@@ -38,7 +38,7 @@ const routes = {
                 },
                 {
                     path: '/domain',
-                    action: () => <DomainDialog />,
+                    action: () => <DomainSettings />,
                 },
                 {
                     path: '/security',
