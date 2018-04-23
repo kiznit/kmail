@@ -30,6 +30,12 @@ class ServerSettings extends React.PureComponent {
         };
     }
 
+    handleChange = name => event => {
+        this.setState({
+            [name]: event.target.value,
+        });
+    };
+
     render() {
         const { classes, title } = this.props;
         const { url, port, security } = this.state;
@@ -43,15 +49,15 @@ class ServerSettings extends React.PureComponent {
                 <List component="nav">
                     <Paper>
                         <ListItem>
-                            <TextField label="Server" value={url} />
+                            <TextField label="Server" value={url} onChange={this.handleChange('url')} />
                         </ListItem>
                         <ListItem>
-                            <TextField label="Port" value={port} />
+                            <TextField label="Port" type="number" min={0} max={65535} value={port} onChange={this.handleChange('port')} />
                         </ListItem>
                         <ListItem>
                             <FormControl>
                                 <InputLabel htmlFor="controlled-open-select-imap">Secure</InputLabel>
-                                <Select value={security} label="Security" inputProps={{ name: 'security', id: 'controlled-open-select-imap' }}>
+                                <Select value={security} label="Security" inputProps={{ name: 'security', id: 'controlled-open-select-imap' }} onChange={this.handleChange('security')}>
                                     <MenuItem value={0}>None</MenuItem>
                                     <MenuItem value={1}>SSL/TLS</MenuItem>
                                     <MenuItem value={2}>STARTTLS</MenuItem>
