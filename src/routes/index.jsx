@@ -3,7 +3,6 @@ import React from 'react';
 import Layout from 'components/Layout';
 import AdminLayout from 'features/admin/AdminLayout';
 import AdminSettings from 'features/admin/AdminSettings';
-import DomainSettings from 'features/admin/DomainSettings';
 
 
 const routes = {
@@ -23,7 +22,7 @@ const routes = {
             async action({ next }) {
                 const route = await next();
                 if (!route) {
-                    return { redirect: '/admin/domain' };
+                    return { redirect: '/admin/settings' };
                 }
 
                 return (
@@ -34,20 +33,8 @@ const routes = {
             },
             children: [
                 {
-                    path: '/',
-                    action: () => <AdminSettings />
-                },
-                {
-                    path: '/about',
-                    action: () => <h1>About</h1>,
-                },
-                {
-                    path: '/domain',
-                    action: () => <DomainSettings />,
-                },
-                {
-                    path: '/security',
-                    action: () => <h1>Security</h1>,
+                    path: '/settings',
+                    action: () => <AdminSettings />,
                 },
             ],
         },

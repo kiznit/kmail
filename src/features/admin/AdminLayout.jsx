@@ -2,14 +2,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import Grid from 'material-ui/Grid';
 import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
 import Tooltip from 'material-ui/Tooltip';
 import { MuiThemeProvider, withStyles } from 'material-ui/styles';
 
 import NavBar from 'components/NavBar';
-import AdminSideBar from './AdminSideBar';
 
 import createTheme from './theme';
 import { logout } from '../auth/actions';
@@ -17,25 +15,18 @@ import { logout } from '../auth/actions';
 
 const styles = theme => ({
     root: {
-        //flexGrow: 1,
-        //height: '100%',
-        //zIndex: 1,
         overflow: 'hidden',
-        //position: 'relative',
-        //display: 'flex',
-        //padding: `0 ${theme.spacing.unit * 3}px`,
     },
     content: {
-        //display: 'block',           // IE 11 doesn't understand <main>, so we emulate it
-        //flexGrow: 1,
-        //backgroundColor: theme.palette.background.default,
-        //paddingLeft: theme.spacing.unit,
-        //paddingRight: theme.spacing.unit,
-        //minWidth: 0,                // So the Typography noWrap works
-        //top: 0,
+        display: 'block',           // IE 11 doesn't understand <main>, so we emulate it
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
     },
     wrapper: {
-        //maxWidth: 680,
+        maxWidth: 680,
+        minWidth: 544,
+        marginLeft: 'auto',
+        marginRight: 'auto',
     },
     toolbar: theme.mixins.toolbar,  // This is used to offset content by the height of the toolbar
 });
@@ -59,19 +50,11 @@ class AdminLayout extends React.PureComponent {
                         </Tooltip>
                     </NavBar>
 
-                    <div>
-                        <div className={classes.toolbar} />
-                    </div>
-
                     <main role="main" className={classes.content}>
                         <div className={classes.toolbar} />
-                        <Grid container justify="center" zeroMinWidth>
-                            <Grid xs={7} item>
-                                <div className={classes.wrapper}>
-                                    {children}
-                                </div>
-                            </Grid>
-                        </Grid>
+                        <div className={classes.wrapper}>
+                            {children}
+                        </div>
                     </main>
                 </div>
 
