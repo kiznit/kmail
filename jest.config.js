@@ -60,7 +60,9 @@ module.exports = {
     },
 
     // modulePathIgnorePatterns: // [array<string>]
-    // modulePaths: // [array<string>]
+
+    modulePaths: ['src'],
+
     // notify: false, // [boolean]
     // preset: // [string]
     // projects: // [array<string>]
