@@ -12,8 +12,8 @@ class AdminSettings extends React.PureComponent {
         return (
             <div>
                 <SettingsCategory title="Mail servers">
-                    <Setting title="Inbound mail server" description="Configure the incoming mail server (IMAP)" />
-                    <Setting title="Outbound mail server" description="Configure the outgoing mail server (SMTP)" />
+                    <Setting primary="Inbound mail server" secondary="Configure the incoming mail server (IMAP)" onClick={() => console.log("clicked!")} />
+                    <Setting primary="Outbound mail server" secondary="Configure the outgoing mail server (SMTP)" />
                 </SettingsCategory>
 
                 <ServerSettings title="IMAP server (Inbound)" url="imap.domain.com" port={993} />
