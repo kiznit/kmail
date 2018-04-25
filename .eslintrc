@@ -22,7 +22,7 @@
     "rules": {
         // Javascript
         "arrow-body-style": [1, "as-needed"],
-        "arrow-parens": [1],
+        "arrow-parens": [1, "as-needed"],
         "brace-style": [1],
         "comma-dangle": [2, "always-multiline"],
         "function-paren-newline": [2, "consistent"],

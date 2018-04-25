@@ -29,7 +29,7 @@ class MailServerForm extends React.Component {
     }
 
 
-    onSubmit = event => {
+    handleSubmit = event => {
         event.preventDefault();
         this.props.onSave();
     };
@@ -48,7 +48,7 @@ class MailServerForm extends React.Component {
 
         return (
             <Dialog {...other} aria-labelledby="mail-server-form-title">
-                <form onSubmit={this.onSubmit}>
+                <form onSubmit={this.handleSubmit}>
                     <div style={{ display: 'flex' }}>
                         <div style={{ display: 'flex', flexGrow: 1 }}>
                             <DialogTitle id="mail-server-form-title">
@@ -63,7 +63,6 @@ class MailServerForm extends React.Component {
                     </div>
                     <DialogContent>
                         <TextField fullWidth margin="dense" autoFocus label="Mail server" value={url} onChange={this.handleChange('url')} />
-                        <TextField fullWidth margin="dense" label="Port" type="number" min={0} max={65535} value={port} onChange={this.handleChange('port')} />
                         <FormControl fullWidth margin="dense">
                             <InputLabel htmlFor="controlled-open-select-imap">Security</InputLabel>
                             <Select value={security} label="Security" inputProps={{ name: 'security', id: 'controlled-open-select-imap' }} onChange={this.handleChange('security')}>
@@ -72,6 +71,7 @@ class MailServerForm extends React.Component {
                                 <MenuItem value={2}>STARTTLS</MenuItem>
                             </Select>
                         </FormControl>
+                        <TextField fullWidth margin="dense" label="Port" type="number" min={0} max={65535} value={port} onChange={this.handleChange('port')} />
                     </DialogContent>
                     <DialogActions>
                         <Button color="primary" onClick={onCancel}>

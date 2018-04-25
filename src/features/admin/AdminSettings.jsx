@@ -11,7 +11,7 @@ class AdminSettings extends React.PureComponent {
     render() {
         return (
             <div>
-                <SettingsCategory title="Mail servers">
+                <SettingsCategory title="Mail">
                     <Setting primary="Inbound mail server" secondary="Configure the incoming mail server (IMAP)" form={MailServerForm} />
                     <Setting primary="Outbound mail server" secondary="Configure the outgoing mail server (SMTP)" form={MailServerForm} />
                 </SettingsCategory>
@@ -25,7 +25,6 @@ class AdminSettings extends React.PureComponent {
 
 
 AdminSettings.propTypes = {
-
 };
 
 

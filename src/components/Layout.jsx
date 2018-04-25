@@ -56,7 +56,7 @@ class Layout extends React.Component {
             <div className={classes.root}>
                 <NavBar title="KMail">
 
-                    <Tooltip id="tooltip-mail" title="E-mail">
+                    <Tooltip id="tooltip-mail" title="Mail">
                         <Button color="inherit" component={Link} to="/mail">Mail</Button>
                     </Tooltip>
 
