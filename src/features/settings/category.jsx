@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import List, { ListItem } from 'material-ui/List';
+import List from 'material-ui/List';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
@@ -21,13 +21,7 @@ const Category = ({ children, classes, title }) => (
         </Typography>
         <List component="nav">
             <Paper>
-                {
-                    React.Children.map(children, child => (
-                        <ListItem>
-                            { child }
-                        </ListItem>
-                    ))
-                }
+                { children }
             </Paper>
         </List>
     </div>

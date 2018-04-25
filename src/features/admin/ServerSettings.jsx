@@ -10,13 +10,6 @@ import TextField from 'material-ui/TextField';
 import SettingsCategory from 'features/settings/category';
 
 
-const styles = theme => ({
-    title: {
-        margin: `${theme.spacing.unit * 4}px 0 ${theme.spacing.unit}px`,
-    },
-});
-
-
 class ServerSettings extends React.Component {
     constructor(props) {
         super(props);
