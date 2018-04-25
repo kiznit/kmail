@@ -44,7 +44,7 @@ class Setting extends React.Component {
 
 
 Setting.propTypes = {
-    form: PropTypes.node,
+    form: PropTypes.func,
     onClick: PropTypes.func,
     primary: PropTypes.string.isRequired,
 };

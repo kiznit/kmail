@@ -15,6 +15,9 @@ class AdminSettings extends React.PureComponent {
                     <Setting primary="Inbound mail server" secondary="Configure the incoming mail server (IMAP)" form={MailServerForm} />
                     <Setting primary="Outbound mail server" secondary="Configure the outgoing mail server (SMTP)" form={MailServerForm} />
                 </SettingsCategory>
+                <SettingsCategory title="Security">
+                    <Setting primary="Admin password" secondary="Change the admin password" />
+                </SettingsCategory>
             </div>
         );
     }
