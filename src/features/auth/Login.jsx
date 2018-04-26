@@ -93,9 +93,9 @@ class Login extends React.PureComponent {
         return (
             <div className={classes.root}>
                 <Paper className={classes.paper} elevation={24}>
-                    <DialogTitle>Log in</DialogTitle>
-                    <DialogContent>
-                        <form onSubmit={event => this.handleSubmit(event)}>
+                    <form onSubmit={event => this.handleSubmit(event)}>
+                        <DialogTitle>Log in</DialogTitle>
+                        <DialogContent>
                             <DialogContentText>
                                 Please enter your username and password.
                             </DialogContentText>
@@ -152,13 +152,13 @@ class Login extends React.PureComponent {
                                     }
                                 </Button>
                             </div>
-                        </form>
-                        <div>
-                            <NoScript>
-                                <p>{"Warning: This webmail service requires Javascript! In order to use it please enable Javascript in your browser's settings."}</p>
-                            </NoScript>
-                        </div>
-                    </DialogContent>
+                            <div>
+                                <NoScript>
+                                    <p>{"Warning: This webmail service requires Javascript! In order to use it please enable Javascript in your browser's settings."}</p>
+                                </NoScript>
+                            </div>
+                        </DialogContent>
+                    </form>
                 </Paper>
                 { this.state.showErrorDialog && errorMessage && this.renderError() }
             </div>
