@@ -25,6 +25,36 @@ const styles = {
 
 
 class Form extends React.PureComponent {
+
+    getChildContext = () => ({
+        form: {
+            attach: this.attach,
+            detach: this.detach,
+        },
+    });
+
+
+    // Children that support validation will hook into the Form with attach() / detach().
+    // This allows the Form to block submission if any field has error(s).
+    childs = [];
+
+
+    attach = component => {
+        if (this.childs.indexOf(component) === -1) {
+            this.childs.push(component);
+        }
+    };
+
+
+    detach = component => {
+        const index = this.childs.indexOf(component);
+        if (index !== -1) {
+            this.childs = this.childs.slice(0, index)
+                .concat(this.childs.slice(index + 1));
+        }
+    }
+
+
     render() {
         const { children, classes, onCancel, onSave, open, title, ...other } = this.props;
 
@@ -59,6 +89,14 @@ class Form extends React.PureComponent {
         );
     }
 }
+
+
+Form.childContextTypes = {
+    form: PropTypes.shape({
+        attach: PropTypes.func.isRequired,
+        detach: PropTypes.func.isRequired,
+    }).isRequired,
+};
 
 
 Form.propTypes = {

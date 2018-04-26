@@ -17,6 +17,26 @@ class TextInput extends React.PureComponent {
     }
 
 
+    componentDidMount() {
+        if (this.props.validate) {
+            const { form } = this.context;
+            if (form) {
+                form.attach(this);
+            }
+        }
+    }
+
+
+    componentWillUnmount() {
+        if (this.props.validate) {
+            const { form } = this.context;
+            if (form) {
+                form.detach(this);
+            }
+        }
+    }
+
+
     onBlur = event => {
         const { onBlur, validate } = this.props;
 
@@ -46,6 +66,14 @@ class TextInput extends React.PureComponent {
         );
     }
 }
+
+
+TextInput.contextTypes = {
+    form: PropTypes.shape({
+        attach: PropTypes.func.isRequired,
+        detach: PropTypes.func.isRequired,
+    }).isRequired,
+};
 
 
 TextInput.propTypes = {
