@@ -2,11 +2,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import Login from './Login';
+import LoginForm from './LoginForm';
 
 
 const Auth = ({ children, authenticated }) => (
-    authenticated ? children : <Login />
+    authenticated ? children : <LoginForm />
 );
 
 
