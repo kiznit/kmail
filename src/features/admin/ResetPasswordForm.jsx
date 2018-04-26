@@ -1,9 +1,26 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import TextField from 'material-ui/TextField';
-
 import Form from 'components/Form';
+import TextInput from 'components/TextInput';
+
+
+const required = value => {
+    if (!value) {
+        return 'This field is required';
+    }
+
+    return null;
+};
+
+
+const passwordMatch = newPassword => value => {
+    if (value !== newPassword) {
+        return "Passwords don't match";
+    }
+
+    return null;
+};
 
 
 class ResetPasswordForm extends React.PureComponent {
@@ -11,9 +28,9 @@ class ResetPasswordForm extends React.PureComponent {
         super(props);
 
         this.state = {
-            currentPassword: null,
-            newPassword: null,
-            repeatPassword: null,
+            currentPassword: '',
+            newPassword: '',
+            repeatPassword: '',
         };
     }
 
@@ -36,7 +53,7 @@ class ResetPasswordForm extends React.PureComponent {
 
         return (
             <Form {...other} onSubmit={this.handleSubmit}>
-                <TextField
+                <TextInput
                     autoFocus
                     fullWidth
                     margin="dense"
@@ -45,8 +62,9 @@ class ResetPasswordForm extends React.PureComponent {
                     label="Current password"
                     name="currentPassword"
                     onChange={this.handleChange}
+                    validate={required}
                 />
-                <TextField
+                <TextInput
                     fullWidth
                     margin="dense"
                     type="password"
@@ -54,8 +72,9 @@ class ResetPasswordForm extends React.PureComponent {
                     label="New password"
                     name="newPassword"
                     onChange={this.handleChange}
+                    validate={required}
                 />
-                <TextField
+                <TextInput
                     fullWidth
                     margin="dense"
                     type="password"
@@ -63,6 +82,7 @@ class ResetPasswordForm extends React.PureComponent {
                     label="Repeat new password"
                     name="repeatPassword"
                     onChange={this.handleChange}
+                    validate={passwordMatch(this.state.newPassword)}
                 />
             </Form>
         );
