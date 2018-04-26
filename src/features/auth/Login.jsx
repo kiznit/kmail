@@ -40,7 +40,7 @@ class Login extends React.PureComponent {
     }
 
 
-    onSubmit(event) {
+    handleSubmit(event) {
         event.preventDefault();
 
         const username = this.username.value.trim();
@@ -95,7 +95,7 @@ class Login extends React.PureComponent {
                 <Paper className={classes.paper} elevation={24}>
                     <DialogTitle>Log in</DialogTitle>
                     <DialogContent>
-                        <form onSubmit={event => this.onSubmit(event)}>
+                        <form onSubmit={event => this.handleSubmit(event)}>
                             <DialogContentText>
                                 Please enter your username and password.
                             </DialogContentText>

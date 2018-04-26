@@ -31,7 +31,6 @@ class Setting extends React.Component {
                 { Form &&
                     <Form
                         open={this.state.open}
-                        onEscapeKeyDown={this.handleClose}
                         onCancel={this.handleClose}
                         onSave={this.handleClose}
                         title={`${this.props.primary} settings`}
