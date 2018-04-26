@@ -11,9 +11,9 @@ class ResetPasswordForm extends React.PureComponent {
         super(props);
 
         this.state = {
-            currentPassword: '',
-            newPassword: '',
-            repeatPassword: '',
+            currentPassword: null,
+            newPassword: null,
+            repeatPassword: null,
         };
     }
 
@@ -33,7 +33,6 @@ class ResetPasswordForm extends React.PureComponent {
 
     render() {
         const { ...other } = this.props;
-        const { currentPassword, newPassword, repeatPassword } = this.state;
 
         return (
             <Form {...other} onSubmit={this.handleSubmit}>
@@ -44,7 +43,6 @@ class ResetPasswordForm extends React.PureComponent {
                     type="password"
                     autoComplete="current-password"
                     label="Current password"
-                    value={currentPassword}
                     name="currentPassword"
                     onChange={this.handleChange}
                 />
@@ -54,7 +52,6 @@ class ResetPasswordForm extends React.PureComponent {
                     type="password"
                     autoComplete="new-password"
                     label="New password"
-                    value={newPassword}
                     name="newPassword"
                     onChange={this.handleChange}
                 />
@@ -64,7 +61,6 @@ class ResetPasswordForm extends React.PureComponent {
                     type="password"
                     autoComplete="new-password"
                     label="Repeat new password"
-                    value={repeatPassword}
                     name="repeatPassword"
                     onChange={this.handleChange}
                 />
