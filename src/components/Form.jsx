@@ -5,28 +5,40 @@ import Button from 'material-ui/Button';
 import Dialog, { DialogActions, DialogContent, DialogTitle } from 'material-ui/Dialog';
 import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
+import { withStyles } from 'material-ui/styles';
 
 
-const closeButtonStyle = {
-    float: 'right',
+const styles = {
+    closeButton: {
+        float: 'right',
+        display: 'block',
+        padding: '10px 12px',
+    },
+    header: {
+        display: 'flex',
+    },
+    title: {
+        display: 'flex',
+        flexGrow: 1,
+    },
 };
 
 
 class Form extends React.PureComponent {
     render() {
-        const { children, onCancel, onSave, open, title, ...other } = this.props;
+        const { children, classes, onCancel, onSave, open, title, ...other } = this.props;
 
         return (
             <Dialog open={open} onEscapeKeyDown={onCancel} aria-labelledby="form-title">
                 <form {...other}>
-                    <div style={{ display: 'flex' }}>
-                        <div style={{ display: 'flex', flexGrow: 1 }}>
+                    <div className={classes.header}>
+                        <div className={classes.title}>
                             <DialogTitle id="form-title">
                                 {title}
                             </DialogTitle>
                         </div>
-                        <div style={{ display: 'block', padding: '10px 12px' }}>
-                            <IconButton style={closeButtonStyle} onClick={onCancel}>
+                        <div className={classes.closeButton}>
+                            <IconButton onClick={onCancel}>
                                 <Icon>close</Icon>
                             </IconButton>
                         </div>
@@ -51,6 +63,7 @@ class Form extends React.PureComponent {
 
 Form.propTypes = {
     children: PropTypes.node.isRequired,
+    classes: PropTypes.shape({}).isRequired,
     onCancel: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
     open: PropTypes.bool,
@@ -63,4 +76,4 @@ Form.defaultProps = {
 };
 
 
-export default Form;
+export default withStyles(styles)(Form);
