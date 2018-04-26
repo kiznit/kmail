@@ -40,7 +40,7 @@ class TextInput extends React.PureComponent {
             <TextField
                 {...rest}
                 error={!!error}
-                helperText={error || helperText || ' '} // The space prevents the TextField to change height
+                helperText={error || helperText || ' '} // The space prevents the TextField from changing height on errors
                 onBlur={this.onBlur}
             />
         );
