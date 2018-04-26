@@ -107,6 +107,7 @@ class Login extends React.PureComponent {
                                 margin="dense"
                                 label="Username"
                                 //type="email"
+                                autoComplete="username"
                                 fullWidth
                                 inputRef={(node) => { this.username = node; }}
                                 onBlur={() => {
@@ -122,6 +123,7 @@ class Login extends React.PureComponent {
                                 margin="dense"
                                 label="Password"
                                 type="password"
+                                autoComplete="current-password"
                                 fullWidth
                                 inputRef={(node) => { this.password = node; }}
                                 onBlur={() => {
