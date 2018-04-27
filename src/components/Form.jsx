@@ -26,7 +26,9 @@ const styles = {
 };
 
 
-class Form extends React.PureComponent {
+/* If I make Form a React.PureComponent, validations() doesn't work properly for password anymore. */
+/* eslint-disable-next-line react/prefer-stateless-function */
+class Form extends React.Component {
     render() {
         const { children, classes, getValues, hideError, onCancel, onSave, open, showError, title, validate, validateAll, ...props } = this.props;
 
