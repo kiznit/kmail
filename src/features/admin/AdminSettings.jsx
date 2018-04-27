@@ -8,25 +8,29 @@ import MailServerForm from './MailServerForm';
 import ResetPasswordForm from './ResetPasswordForm';
 
 
-class AdminSettings extends React.PureComponent {
-    render() {
-        return (
-            <div>
-                <SettingsCategory title="Mail">
-                    <Setting primary="Inbound mail server" secondary="Configure the incoming mail server (IMAP)" form={MailServerForm} />
-                    <Setting primary="Outbound mail server" secondary="Configure the outgoing mail server (SMTP)" form={MailServerForm} />
-                </SettingsCategory>
-                <SettingsCategory title="Security">
-                    <Setting primary="Admin password" secondary="Change the admin password" form={ResetPasswordForm} />
-                </SettingsCategory>
-            </div>
-        );
-    }
-}
-
-
-AdminSettings.propTypes = {
-};
+const AdminSettings = () => (
+    <div>
+        <SettingsCategory title="Mail">
+            <Setting
+                primary="Inbound mail server"
+                secondary="Configure the incoming mail server (IMAP)"
+                form={props => <MailServerForm {...props} url="imap.domain.com" port={993} />}
+            />
+            <Setting
+                primary="Outbound mail server"
+                secondary="Configure the outgoing mail server (SMTP)"
+                form={props => <MailServerForm {...props} url="smtp.domain.com" port={465} />}
+            />
+        </SettingsCategory>
+        <SettingsCategory title="Security">
+            <Setting
+                primary="Admin password"
+                secondary="Change the admin password"
+                form={props => <ResetPasswordForm {...props} username="admin" />}
+            />
+        </SettingsCategory>
+    </div>
+);
 
 
 export default AdminSettings;

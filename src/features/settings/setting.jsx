@@ -20,22 +20,20 @@ class Setting extends React.Component {
     }
 
     render() {
-        const { form: Form, ...other } = this.props;
+        const { form, ...other } = this.props;
         return (
             <div>
                 <ListItem button dense disableRipple onClick={this.handleClickOpen}>
                     <ListItemText {...other} />
-                    { Form ? <Icon>arrow_right</Icon> : null }
+                    { form ? <Icon>arrow_right</Icon> : null }
                 </ListItem>
                 <Divider />
-                { Form &&
-                    <Form
-                        open={this.state.open}
-                        onCancel={this.handleClose}
-                        onSave={this.handleClose}
-                        title={`${this.props.primary} settings`}
-                    />
-                }
+                { form && form({
+                    open: this.state.open,
+                    onCancel: this.handleClose,
+                    onSave: this.handleClose,
+                    title: `${this.props.primary} settings`,
+                })}
             </div>
         );
     }

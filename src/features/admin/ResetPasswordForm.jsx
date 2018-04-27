@@ -50,10 +50,17 @@ class ResetPasswordForm extends React.Component {
 
 
     render() {
-        const { ...other } = this.props;
+        const { username, ...other } = this.props;
 
         return (
             <Form {...other} onSubmit={this.handleSubmit}>
+                <input
+                    type="text"
+                    autoComplete="username"
+                    name="username"
+                    defaultValue={username}
+                    style={{ display: 'none' }}
+                />
                 <TextInput
                     autoFocus
                     fullWidth
@@ -96,6 +103,7 @@ ResetPasswordForm.propTypes = {
     port: PropTypes.number,
     title: PropTypes.string.isRequired,
     url: PropTypes.string,
+    username: PropTypes.string.isRequired,
 };
 
 
