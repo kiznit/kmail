@@ -76,6 +76,7 @@
     "react-hot-loader": "^4.0.0-rc.0",
     "react-jss": "^8.4.0",
     "react-redux": "^5.0.6",
+    "react-validation": "^3.0.7",
     "redux": "^3.7.2",
     "redux-pack": "^0.1.5",
     "source-map-support": "^0.5.4",

@@ -7,6 +7,8 @@ import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
 import { withStyles } from 'material-ui/styles';
 
+import { form as withValidation } from 'react-validation';
+
 
 const styles = {
     closeButton: {
@@ -25,42 +27,12 @@ const styles = {
 
 
 class Form extends React.PureComponent {
-
-    getChildContext = () => ({
-        form: {
-            attach: this.attach,
-            detach: this.detach,
-        },
-    });
-
-
-    // Children that support validation will hook into the Form with attach() / detach().
-    // This allows the Form to block submission if any field has error(s).
-    childs = [];
-
-
-    attach = component => {
-        if (this.childs.indexOf(component) === -1) {
-            this.childs.push(component);
-        }
-    };
-
-
-    detach = component => {
-        const index = this.childs.indexOf(component);
-        if (index !== -1) {
-            this.childs = this.childs.slice(0, index)
-                .concat(this.childs.slice(index + 1));
-        }
-    }
-
-
     render() {
-        const { children, classes, onCancel, onSave, open, title, ...other } = this.props;
+        const { children, classes, getValues, hideError, onCancel, onSave, open, showError, title, validate, validateAll, ...props } = this.props;
 
         return (
             <Dialog open={open} onEscapeKeyDown={onCancel} aria-labelledby="form-title">
-                <form {...other}>
+                <form {...props}>
                     <div className={classes.header}>
                         <div className={classes.title}>
                             <DialogTitle id="form-title">
@@ -91,14 +63,6 @@ class Form extends React.PureComponent {
 }
 
 
-Form.childContextTypes = {
-    form: PropTypes.shape({
-        attach: PropTypes.func.isRequired,
-        detach: PropTypes.func.isRequired,
-    }).isRequired,
-};
-
-
 Form.propTypes = {
     children: PropTypes.node.isRequired,
     classes: PropTypes.shape({}).isRequired,
@@ -114,4 +78,4 @@ Form.defaultProps = {
 };
 
 
-export default withStyles(styles)(Form);
+export default withStyles(styles)(withValidation(Form));

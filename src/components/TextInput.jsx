@@ -3,84 +3,34 @@ import React from 'react';
 
 import TextField from 'material-ui/TextField';
 
+import { control as withValidation } from 'react-validation';
+
 
 /*
     Provides validation on top of TextField
 */
 class TextInput extends React.PureComponent {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            error: null,
-        };
-    }
-
-
-    componentDidMount() {
-        if (this.props.validate) {
-            const { form } = this.context;
-            if (form) {
-                form.attach(this);
-            }
-        }
-    }
-
-
-    componentWillUnmount() {
-        if (this.props.validate) {
-            const { form } = this.context;
-            if (form) {
-                form.detach(this);
-            }
-        }
-    }
-
-
-    onBlur = event => {
-        const { onBlur, validate } = this.props;
-
-        if (validate) {
-            this.setState({
-                error: this.props.validate(event.target.value),
-            });
-        }
-
-        if (onBlur) {
-            onBlur(event);
-        }
-    };
-
-
     render() {
-        const { helperText, validate, ...rest } = this.props;
-        const { error } = this.state;
+        const { helperText, error, isChanged, isUsed, ...props } = this.props;
 
         return (
             <TextField
-                {...rest}
-                error={!!error}
-                helperText={error || helperText || ' '} // The space prevents the TextField from changing height on errors
-                onBlur={this.onBlur}
+                {...props}
+                error={isUsed && !!error}
+                helperText={isUsed && error ? error : helperText || ' '} // The space prevents the TextField from changing height on errors}
             />
         );
     }
 }
 
 
-TextInput.contextTypes = {
-    form: PropTypes.shape({
-        attach: PropTypes.func.isRequired,
-        detach: PropTypes.func.isRequired,
-    }).isRequired,
-};
-
-
 TextInput.propTypes = {
-    onBlur: PropTypes.func,
+    error: PropTypes.node,
     helperText: PropTypes.node,
-    validate: PropTypes.func,
+    isChanged: PropTypes.bool,
+    isUsed: PropTypes.bool,
+    name: PropTypes.string.isRequired,  // Required by react-validation to track input components
 };
 
 
-export default TextInput;
+export default withValidation(TextInput);

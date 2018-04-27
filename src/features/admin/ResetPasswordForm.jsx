@@ -14,7 +14,8 @@ const required = value => {
 };
 
 
-const passwordMatch = newPassword => value => {
+const passwordMatch = inputName => (value, props, components) => {
+    const newPassword = components[inputName][0].value;
     if (value !== newPassword) {
         return "Passwords don't match";
     }
@@ -23,7 +24,7 @@ const passwordMatch = newPassword => value => {
 };
 
 
-class ResetPasswordForm extends React.PureComponent {
+class ResetPasswordForm extends React.Component {
     constructor(props) {
         super(props);
 
@@ -62,7 +63,7 @@ class ResetPasswordForm extends React.PureComponent {
                     label="Current password"
                     name="currentPassword"
                     onChange={this.handleChange}
-                    validate={required}
+                    validations={[required]}
                 />
                 <TextInput
                     fullWidth
@@ -72,7 +73,7 @@ class ResetPasswordForm extends React.PureComponent {
                     label="New password"
                     name="newPassword"
                     onChange={this.handleChange}
-                    validate={required}
+                    validations={[required]}
                 />
                 <TextInput
                     fullWidth
@@ -82,7 +83,7 @@ class ResetPasswordForm extends React.PureComponent {
                     label="Repeat new password"
                     name="repeatPassword"
                     onChange={this.handleChange}
-                    validate={passwordMatch(this.state.newPassword)}
+                    validations={[required, passwordMatch('newPassword')]}
                 />
             </Form>
         );
