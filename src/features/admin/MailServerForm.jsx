@@ -29,18 +29,12 @@ class MailServerForm extends React.Component {
     };
 
 
-    handleSubmit = event => {
-        event.preventDefault();
-        this.props.onSave();
-    };
-
-
     render() {
         const { ...other } = this.props;
         const { url, port, security } = this.state;
 
         return (
-            <Form {...other} onSubmit={this.handleSubmit}>
+            <Form {...other}>
                 <TextField fullWidth margin="dense" autoFocus label="Mail server" value={url} name="url" onChange={this.handleChange} />
                 <FormControl fullWidth margin="dense">
                     <InputLabel htmlFor="controlled-open-select-imap">Security</InputLabel>
@@ -58,7 +52,6 @@ class MailServerForm extends React.Component {
 
 
 MailServerForm.propTypes = {
-    onSave: PropTypes.func.isRequired,
     port: PropTypes.number,
     title: PropTypes.string.isRequired,
     url: PropTypes.string,

@@ -31,7 +31,7 @@ class Setting extends React.Component {
                 { form && form({
                     open: this.state.open,
                     onCancel: this.handleClose,
-                    onSave: this.handleClose,
+                    onSubmit: this.handleClose,
                     title: `${this.props.primary} settings`,
                 })}
             </div>

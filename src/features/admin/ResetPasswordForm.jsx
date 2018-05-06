@@ -14,8 +14,7 @@ const required = value => {
 };
 
 
-const passwordMatch = inputName => (value, props, components) => {
-    const newPassword = components[inputName][0].value;
+const passwordMatch = newPassword => value => {
     if (value !== newPassword) {
         return "Passwords don't match";
     }
@@ -43,17 +42,11 @@ class ResetPasswordForm extends React.Component {
     };
 
 
-    handleSubmit = event => {
-        event.preventDefault();
-        this.props.onSave();
-    };
-
-
     render() {
         const { username, ...other } = this.props;
 
         return (
-            <Form {...other} onSubmit={this.handleSubmit}>
+            <Form {...other}>
                 <input
                     type="text"
                     autoComplete="username"
@@ -70,7 +63,7 @@ class ResetPasswordForm extends React.Component {
                     label="Current password"
                     name="currentPassword"
                     onChange={this.handleChange}
-                    validations={[required]}
+                    validate={required}
                 />
                 <TextInput
                     fullWidth
@@ -80,7 +73,7 @@ class ResetPasswordForm extends React.Component {
                     label="New password"
                     name="newPassword"
                     onChange={this.handleChange}
-                    validations={[required]}
+                    validate={required}
                 />
                 <TextInput
                     fullWidth
@@ -90,7 +83,7 @@ class ResetPasswordForm extends React.Component {
                     label="Repeat new password"
                     name="repeatPassword"
                     onChange={this.handleChange}
-                    validations={[required, passwordMatch('newPassword')]}
+                    validate={[required, passwordMatch(this.state.newPassword)]}
                 />
             </Form>
         );
@@ -99,7 +92,6 @@ class ResetPasswordForm extends React.Component {
 
 
 ResetPasswordForm.propTypes = {
-    onSave: PropTypes.func.isRequired,
     port: PropTypes.number,
     title: PropTypes.string.isRequired,
     url: PropTypes.string,
