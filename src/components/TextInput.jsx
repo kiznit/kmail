@@ -29,30 +29,32 @@ class TextInput extends React.PureComponent {
     }
 
 
-    validate(value) {
+    validate() {
         const { validate } = this.props;
 
         if (!validate) {
             return;
         }
 
+        const { value } = this.state;
+
         let error = null;
+        const rules = Array.isArray(validate) ? validate : [validate];
 
-        if (Array.isArray(validate)) {
-            validate.forEach(rule => {
-                error = error || rule(value);
-            });
-        } else {
-            error = validate(value);
-        }
+        rules.forEach(rule => {
+            error = error || rule(value);
+        });
 
-        this.setState({ value, error });
+        this.setState({ error });
     }
 
 
     handleBlur = event => {
         const { value } = event.target;
-        this.validate(value);
+
+        this.setState({ value }, () => {
+            this.context.form.validate();
+        });
 
         const { onBlur } = this.props;
 
@@ -64,7 +66,10 @@ class TextInput extends React.PureComponent {
 
     handleChange = event => {
         const { value } = event.target;
-        this.validate(value);
+
+        this.setState({ value }, () => {
+            this.context.form.validate();
+        });
 
         const { onChange } = this.props;
 
@@ -96,6 +101,7 @@ TextInput.contextTypes = {
     form: PropTypes.shape({
         register: PropTypes.func.isRequired,
         unregister: PropTypes.func.isRequired,
+        validate: PropTypes.func.isRequired,
     }).isRequired,
 };
 

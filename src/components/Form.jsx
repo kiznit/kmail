@@ -30,31 +30,40 @@ class Form extends React.Component {
             form: {
                 register: this.register,
                 unregister: this.unregister,
+                validate: this.validate,
             },
         };
     }
 
     // Child controls will register to enable form-wide validation.
-    childs = [];
+    children = [];
 
 
     register = component => {
-        if (this.childs.indexOf(component) === -1) {
-            this.childs.push(component);
+        if (this.children.indexOf(component) === -1) {
+            this.children.push(component);
         }
     };
 
 
     unregister = component => {
-        this.childs = this.childs.filter(child => child !== component);
+        this.children = this.children.filter(child => child !== component);
+    };
+
+
+    validate = () => {
+        // Validate all the children. This is required because there might
+        // be dependencies between different fields when validating. An
+        // example of this is verifying that two passwords match.
+        this.children.forEach(child => child.validate());
     };
 
 
     handleSubmit = event => {
         event.preventDefault();
 
-// TODO: validate all childs. If any of them has errors, block the submission. Perhaps focus the first one with errors
-// --> All childs are already validated unless they were never edited / focused, we can just look for component.state.error
+// TODO: validate all children. If any of them has errors, block the submission. Perhaps focus the first one with errors
+// --> All children are already validated unless they were never edited / focused, we can just look for component.state.error
 
         const { onSubmit } = this.props;
 
@@ -102,6 +111,7 @@ Form.childContextTypes = {
     form: PropTypes.shape({
         register: PropTypes.func.isRequired,
         unregister: PropTypes.func.isRequired,
+        validate: PropTypes.func.isRequired,
     }).isRequired,
 };
 
