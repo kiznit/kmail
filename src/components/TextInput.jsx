@@ -15,6 +15,7 @@ class TextInput extends React.PureComponent {
 
         this.state = {
             value,
+            touched: false,
         };
     }
 
@@ -52,7 +53,7 @@ class TextInput extends React.PureComponent {
     handleBlur = event => {
         const { value } = event.target;
 
-        this.setState({ value }, () => {
+        this.setState({ value, touched: true }, () => {
             this.context.form.validate();
         });
 
@@ -81,13 +82,13 @@ class TextInput extends React.PureComponent {
 
     render() {
         const { helperText, validate, ...props } = this.props;
-        const { error } = this.state;
+        const { error, touched } = this.state;
 
         return (
             <TextField
                 {...props}
-                error={!!error}
-                helperText={error || helperText || ' '} // The space prevents the TextField from changing height on errors}
+                error={!!error && touched}
+                helperText={(touched && error) || helperText || ' '} // The space prevents the TextField from changing height on errors}
                 onBlur={this.handleBlur}
                 onChange={this.handleChange}
                 value={this.state.value}
