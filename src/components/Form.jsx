@@ -55,15 +55,25 @@ class Form extends React.Component {
         // Validate all the children. This is required because there might
         // be dependencies between different fields when validating. An
         // example of this is verifying that two passwords match.
-        this.children.forEach(child => child.validate());
+        let success = true;
+
+        this.children.forEach(child => {
+            if (!child.validate()) {
+                success = false;
+            }
+        });
+
+        return success;
     };
 
 
     handleSubmit = event => {
         event.preventDefault();
 
-// TODO: validate all children. If any of them has errors, block the submission. Perhaps focus the first one with errors
-// --> All children are already validated unless they were never edited / focused, we can just look for component.state.error
+        if (!this.validate()) {
+            // TODO: focus on the first field with an error?
+            return;
+        }
 
         const { onSubmit } = this.props;
 

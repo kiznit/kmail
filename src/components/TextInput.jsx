@@ -34,7 +34,7 @@ class TextInput extends React.PureComponent {
         const { validate } = this.props;
 
         if (!validate) {
-            return;
+            return true;
         }
 
         const { value } = this.state;
@@ -46,7 +46,12 @@ class TextInput extends React.PureComponent {
             error = error || rule(value);
         });
 
-        this.setState({ error });
+        this.setState({
+            error,
+            touched: true,
+        });
+
+        return error === null;
     }
 
 
