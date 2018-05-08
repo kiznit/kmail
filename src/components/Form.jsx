@@ -51,14 +51,14 @@ class Form extends React.Component {
     };
 
 
-    validate = () => {
+    validate = (submitting) => {
         // Validate all the children. This is required because there might
         // be dependencies between different fields when validating. An
         // example of this is verifying that two passwords match.
         let success = true;
 
         this.children.forEach(child => {
-            if (!child.validate()) {
+            if (!child.validate(submitting)) {
                 success = false;
             }
         });
@@ -70,7 +70,7 @@ class Form extends React.Component {
     handleSubmit = event => {
         event.preventDefault();
 
-        if (!this.validate()) {
+        if (!this.validate(true)) {
             // TODO: focus on the first field with an error?
             return;
         }
