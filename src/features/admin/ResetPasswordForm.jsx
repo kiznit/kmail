@@ -2,25 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import Form from 'components/Form';
-import TextInput from 'components/TextInput';
-
-
-const required = value => {
-    if (!value) {
-        return 'This field is required';
-    }
-
-    return null;
-};
-
-
-const passwordMatch = newPassword => value => {
-    if (value !== newPassword) {
-        return "Passwords don't match";
-    }
-
-    return null;
-};
+import TextInput, { required, match } from 'components/TextInput';
 
 
 class ResetPasswordForm extends React.Component {
@@ -83,7 +65,7 @@ class ResetPasswordForm extends React.Component {
                     label="Repeat new password"
                     name="repeatPassword"
                     onChange={this.handleChange}
-                    validate={[required, passwordMatch(this.state.newPassword)]}
+                    validate={[required, match(this.state.newPassword, "Passwords don't match")]}
                 />
             </Form>
         );

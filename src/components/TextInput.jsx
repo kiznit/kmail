@@ -5,6 +5,15 @@ import TextField from 'material-ui/TextField';
 
 
 /*
+    Some validation rules
+*/
+
+export const required = value => (value ? null : 'This field is required');
+
+export const match = (targetValue, message) => value => (value === targetValue ? null : message);
+
+
+/*
     Provides validation on top of TextField
 */
 class TextInput extends React.PureComponent {
@@ -30,7 +39,7 @@ class TextInput extends React.PureComponent {
     }
 
 
-    validate() {
+    validate(submitting) {
         const { validate } = this.props;
 
         if (!validate) {
@@ -48,7 +57,7 @@ class TextInput extends React.PureComponent {
 
         this.setState({
             error,
-            touched: true,
+            touched: this.state.touched || submitting,
         });
 
         return error === null;
