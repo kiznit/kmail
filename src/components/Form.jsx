@@ -92,11 +92,13 @@ class Form extends React.Component {
                             {title}
                         </DialogTitle>
                     </div>
-                    <div className={classes.closeButton}>
-                        <IconButton onClick={onCancel}>
-                            <Icon>close</Icon>
-                        </IconButton>
-                    </div>
+                    { onCancel &&
+                        <div className={classes.closeButton}>
+                            <IconButton onClick={onCancel}>
+                                <Icon>close</Icon>
+                            </IconButton>
+                        </div>
+                    }
                 </div>
                 <DialogContent>
                     { children }
