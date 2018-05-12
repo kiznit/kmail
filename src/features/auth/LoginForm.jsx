@@ -6,10 +6,11 @@ import Button from 'material-ui/Button';
 import Dialog, { DialogActions, DialogContent, DialogContentText, DialogTitle } from 'material-ui/Dialog';
 import { CircularProgress } from 'material-ui/Progress';
 import Paper from 'material-ui/Paper';
-import TextField from 'material-ui/TextField';
 import { withStyles } from 'material-ui/styles';
 
+import Form from 'components/Form';
 import NoScript from 'components/NoScript';
+import TextInput, { required } from 'components/TextInput';
 
 import { login } from './actions';
 
@@ -29,43 +30,35 @@ const styles = theme => ({
 });
 
 
-class Login extends React.PureComponent {
+class Login extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
-            showErrorDialog: true,
-            errorUsername: null,
-            errorPassword: null,
+            username: '',
+            password: '',
         };
     }
 
 
-    handleSubmit(event) {
+    handleChange = event => {
+        this.setState({
+            [event.target.name]: event.target.value,
+        });
+    };
+
+
+    handleSubmit = event => {
         event.preventDefault();
 
-        const username = this.username.value.trim();
-        const password = this.password.value;           // Do not trim() password, spaces are valid!
-
-        this.setState({
-            errorUsername: username ? null : "A username is required",
-            errorPassword: password ? null : "A password is required",
-        });
-
-        if (username && password) {
-            this.props.dispatch(login(username, password));
-            this.setState({ showErrorDialog: true });
-        } else if (username) {
-            this.password.focus();
-        } else if (password) {
-            this.username.focus();
-        } else {
-            this.username.focus();
-        }
+        const { username, password } = this.state;
+        this.props.dispatch(login(username, password));
+        this.setState({ showErrorDialog: true });
     }
 
 
     renderError() {
-        const { errorMessage } = this.props;
+        const { loginError } = this.props;
 
         const onClose = () => this.setState({ showErrorDialog: false });
 
@@ -74,7 +67,7 @@ class Login extends React.PureComponent {
                 <DialogTitle>Could not log you in</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        { errorMessage }
+                        { loginError }
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -88,81 +81,65 @@ class Login extends React.PureComponent {
 
 
     render() {
-        const { classes, errorMessage, isAuthenticating } = this.props;
+        const { classes, dispatch, isAuthenticating, loginError, ...other } = this.props;
 
         return (
             <div className={classes.root}>
                 <Paper className={classes.paper} elevation={24}>
-                    <form onSubmit={event => this.handleSubmit(event)}>
-                        <DialogTitle>Log in</DialogTitle>
-                        <DialogContent>
-                            <DialogContentText>
-                                Please enter your username and password.
-                            </DialogContentText>
-                            <TextField
-                                autoFocus
-                                disabled={isAuthenticating}
-                                error={!!(this.state.errorUsername)}
-                                helperText={this.state.errorUsername || 'Enter your username'}
-                                margin="dense"
-                                label="Username"
-                                //type="email"
-                                autoComplete="username"
+                    <Form {...other} onSubmit={this.handleSubmit} showActions={false}>
+                        <DialogContentText>
+                            Please enter your username and password.
+                        </DialogContentText>
+                        <TextInput
+                            autoFocus
+                            fullWidth
+                            margin="dense"
+                            type="text"
+                            autoComplete="username"
+                            label="Username"
+                            name="username"
+                            onChange={this.handleChange}
+                            validate={required}
+                        />
+                        <TextInput
+                            fullWidth
+                            margin="dense"
+                            type="password"
+                            autoComplete="current-password"
+                            label="Password"
+                            name="password"
+                            onChange={this.handleChange}
+                            validate={required}
+                        />
+                        <div style={{ marginTop: '16px', display: 'block' }}>
+                            <Button
                                 fullWidth
-                                inputRef={(node) => { this.username = node; }}
-                                onBlur={() => {
-                                    this.setState({
-                                        errorUsername: this.username.value.trim() ? null : "A username is required",
-                                    });
-                                }}
-                            />
-                            <TextField
+                                type="submit"
                                 disabled={isAuthenticating}
-                                error={!!(this.state.errorPassword)}
-                                helperText={this.state.errorPassword || 'Enter your password'}
-                                margin="dense"
-                                label="Password"
-                                type="password"
-                                autoComplete="current-password"
-                                fullWidth
-                                inputRef={(node) => { this.password = node; }}
-                                onBlur={() => {
-                                    this.setState({
-                                        errorPassword: this.password.value ? null : "A password is required",
-                                    });
-                                }}
-                            />
-                            <div style={{ marginTop: '16px', display: 'block' }}>
-                                <Button
-                                    type="submit"
-                                    disabled={isAuthenticating}
-                                    ref={(node) => { this.submit = node; }}
-                                    fullWidth
-                                    style={{ height: '50px' }}
-                                    variant="raised"
-                                    color="primary"
-                                >
-                                    <span>Log in</span>
-                                    { isAuthenticating &&
-                                        <div style={{ display: 'inline-block', marginLeft: '5%' }}>
-                                            <div margin="4px">
-                                                <div style={{ borderWidth: '2px' }}>
-                                                    <CircularProgress style={{ width: '20px', height: '20px' }} />
-                                                </div>
+                                style={{ height: '50px' }}
+                                variant="raised"
+                                color="primary"
+                            >
+                                <span>Log in</span>
+                                { isAuthenticating &&
+                                    <div style={{ display: 'inline-block', marginLeft: '5%' }}>
+                                        <div margin="4px">
+                                            <div style={{ borderWidth: '2px' }}>
+                                                <CircularProgress style={{ width: '20px', height: '20px' }} />
                                             </div>
                                         </div>
-                                    }
-                                </Button>
-                            </div>
-                            <div>
-                                <NoScript>
-                                    <p>{"Warning: This webmail service requires Javascript! In order to use it please enable Javascript in your browser's settings."}</p>
-                                </NoScript>
-                            </div>
-                        </DialogContent>
-                    </form>
+                                    </div>
+                                }
+                            </Button>
+                        </div>
+                        <div>
+                            <NoScript>
+                                <p>{"Warning: This webmail service requires Javascript! In order to use it please enable Javascript in your browser's settings."}</p>
+                            </NoScript>
+                        </div>
+                    </Form>
                 </Paper>
-                { this.state.showErrorDialog && errorMessage && this.renderError() }
+                { this.state.showErrorDialog && loginError && this.renderError() }
             </div>
         );
     }
@@ -172,13 +149,19 @@ class Login extends React.PureComponent {
 Login.propTypes = {
     classes: PropTypes.shape({}).isRequired,
     dispatch: PropTypes.func.isRequired,
-    errorMessage: PropTypes.string.isRequired,
+    loginError: PropTypes.string.isRequired,
     isAuthenticating: PropTypes.bool.isRequired,
+    title: PropTypes.string,
+};
+
+
+Login.defaultProps = {
+    title: 'Log in',
 };
 
 
 const mapStateToProps = state => ({
-    errorMessage: state.auth.errorMessage,
+    loginError: state.auth.errorMessage,
     isAuthenticating: state.auth.isAuthenticating,
 });
 

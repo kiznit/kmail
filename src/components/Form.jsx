@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import Button from 'material-ui/Button';
-import Dialog, { DialogActions, DialogContent, DialogTitle } from 'material-ui/Dialog';
+import { DialogActions, DialogContent, DialogTitle } from 'material-ui/Dialog';
 import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
 import { withStyles } from 'material-ui/styles';
@@ -51,7 +51,7 @@ class Form extends React.Component {
     };
 
 
-    validate = (submitting) => {
+    validate = submitting => {
         // Validate all the children. This is required because there might
         // be dependencies between different fields when validating. An
         // example of this is verifying that two passwords match.
@@ -82,36 +82,38 @@ class Form extends React.Component {
 
 
     render() {
-        const { children, classes, onCancel, onSubmit, open, title, ...props } = this.props;
+        const { children, classes, onCancel, onSubmit, showActions, title, ...props } = this.props;
 
         return (
-            <Dialog open={open} onEscapeKeyDown={onCancel} aria-labelledby="form-title">
-                <form {...props} onSubmit={this.handleSubmit}>
-                    <div className={classes.header}>
-                        <div className={classes.title}>
-                            <DialogTitle id="form-title">
-                                {title}
-                            </DialogTitle>
-                        </div>
-                        <div className={classes.closeButton}>
-                            <IconButton onClick={onCancel}>
-                                <Icon>close</Icon>
-                            </IconButton>
-                        </div>
+            <form {...props} onSubmit={this.handleSubmit}>
+                <div className={classes.header}>
+                    <div className={classes.title}>
+                        <DialogTitle id="form-title">
+                            {title}
+                        </DialogTitle>
                     </div>
-                    <DialogContent>
-                        { children }
-                    </DialogContent>
+                    <div className={classes.closeButton}>
+                        <IconButton onClick={onCancel}>
+                            <Icon>close</Icon>
+                        </IconButton>
+                    </div>
+                </div>
+                <DialogContent>
+                    { children }
+                </DialogContent>
+                { showActions &&
                     <DialogActions>
-                        <Button color="primary" onClick={onCancel}>
-                            Cancel
-                        </Button>
-                        <Button type="submit" color="primary"onClick={this.handleSubmit}>
+                        { onCancel &&
+                            <Button color="primary" onClick={onCancel}>
+                                Cancel
+                            </Button>
+                        }
+                        <Button type="submit" color="primary">
                             Submit
                         </Button>
                     </DialogActions>
-                </form>
-            </Dialog>
+                }
+            </form>
         );
     }
 }
@@ -127,17 +129,17 @@ Form.childContextTypes = {
 
 
 Form.propTypes = {
+    showActions: PropTypes.bool,
     children: PropTypes.node.isRequired,
     classes: PropTypes.shape({}).isRequired,
-    onCancel: PropTypes.func.isRequired,
+    onCancel: PropTypes.func,
     onSubmit: PropTypes.func.isRequired,
-    open: PropTypes.bool,
     title: PropTypes.string.isRequired,
 };
 
 
 Form.defaultProps = {
-    open: false,
+    showActions: true,
 };
 
 

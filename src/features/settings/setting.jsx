@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import Dialog from 'material-ui/Dialog';
 import Divider from 'material-ui/Divider';
 import Icon from 'material-ui/Icon';
 import { ListItem, ListItemText } from 'material-ui/List';
@@ -28,12 +29,15 @@ class Setting extends React.Component {
                     { form ? <Icon>arrow_right</Icon> : null }
                 </ListItem>
                 <Divider />
-                { form && form({
-                    open: this.state.open,
-                    onCancel: this.handleClose,
-                    onSubmit: this.handleClose,
-                    title: `${this.props.primary} settings`,
-                })}
+                { form &&
+                    <Dialog open={this.state.open} onEscapeKeyDown={this.handleClose} aria-labelledby="form-title">
+                        {form({
+                            onCancel: this.handleClose,
+                            onSubmit: this.handleClose,
+                            title: `${this.props.primary} settings`,
+                        })}
+                    </Dialog>
+                }
             </div>
         );
     }
