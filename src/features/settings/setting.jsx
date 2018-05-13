@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import Button from 'material-ui/Button';
 import Dialog from 'material-ui/Dialog';
 import Divider from 'material-ui/Divider';
 import Icon from 'material-ui/Icon';
@@ -32,9 +33,17 @@ class Setting extends React.Component {
                 { form &&
                     <Dialog open={this.state.open} onEscapeKeyDown={this.handleClose} aria-labelledby="form-title">
                         {form({
-                            onCancel: this.handleClose,
+                            onClose: this.handleClose,
                             onSubmit: this.handleClose,
                             title: `${this.props.primary} settings`,
+                            actions: [
+                                <Button key="cancel" color="primary" onClick={this.handleClose}>
+                                    Cancel
+                                </Button>,
+                                <Button key="submit" type="submit" color="primary">
+                                    Submit
+                                </Button>,
+                            ],
                         })}
                     </Dialog>
                 }

@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import Button from 'material-ui/Button';
 import { DialogActions, DialogContent, DialogTitle } from 'material-ui/Dialog';
 import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
@@ -82,7 +81,7 @@ class Form extends React.Component {
 
 
     render() {
-        const { children, classes, onCancel, onSubmit, showActions, title, ...props } = this.props;
+        const { actions, children, classes, onClose, onSubmit, title, ...props } = this.props;
 
         return (
             <form {...props} onSubmit={this.handleSubmit}>
@@ -92,9 +91,9 @@ class Form extends React.Component {
                             {title}
                         </DialogTitle>
                     </div>
-                    { onCancel &&
+                    { onClose &&
                         <div className={classes.closeButton}>
-                            <IconButton onClick={onCancel}>
+                            <IconButton onClick={onClose}>
                                 <Icon>close</Icon>
                             </IconButton>
                         </div>
@@ -103,16 +102,9 @@ class Form extends React.Component {
                 <DialogContent>
                     { children }
                 </DialogContent>
-                { showActions &&
+                { actions &&
                     <DialogActions>
-                        { onCancel &&
-                            <Button color="primary" onClick={onCancel}>
-                                Cancel
-                            </Button>
-                        }
-                        <Button type="submit" color="primary">
-                            Submit
-                        </Button>
+                        { actions }
                     </DialogActions>
                 }
             </form>
@@ -131,17 +123,12 @@ Form.childContextTypes = {
 
 
 Form.propTypes = {
-    showActions: PropTypes.bool,
+    actions: PropTypes.arrayOf(PropTypes.node),
     children: PropTypes.node.isRequired,
     classes: PropTypes.shape({}).isRequired,
-    onCancel: PropTypes.func,
+    onClose: PropTypes.func,
     onSubmit: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
-};
-
-
-Form.defaultProps = {
-    showActions: true,
 };
 
 

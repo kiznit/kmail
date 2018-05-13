@@ -86,7 +86,7 @@ class Login extends React.Component {
         return (
             <div className={classes.root}>
                 <Paper className={classes.paper} elevation={24}>
-                    <Form {...other} onSubmit={this.handleSubmit} showActions={false}>
+                    <Form {...other} onSubmit={this.handleSubmit}>
                         <DialogContentText>
                             Please enter your username and password.
                         </DialogContentText>
