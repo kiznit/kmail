@@ -12,6 +12,16 @@ export const required = value => (value ? null : 'This field is required');
 
 export const match = (targetValue, message) => value => (value === targetValue ? null : message);
 
+export const range = (min, max) => value => {
+    if (value < min) {
+        return `Value must be greater than or equal to ${min}`;
+    } else if (value > max) {
+        return `Value must be less than or equal to ${max}`;
+    } else {
+        return null;
+    }
+};
+
 
 /*
     Provides validation on top of TextField

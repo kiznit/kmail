@@ -5,9 +5,9 @@ import { FormControl } from 'material-ui/Form';
 import { InputLabel } from 'material-ui/Input';
 import { MenuItem } from 'material-ui/Menu';
 import Select from 'material-ui/Select';
-import TextField from 'material-ui/TextField';
 
 import Form from 'components/Form';
+import TextInput, { range, required } from 'components/TextInput';
 
 
 class MailServerForm extends React.Component {
@@ -35,16 +35,34 @@ class MailServerForm extends React.Component {
 
         return (
             <Form {...other}>
-                <TextField fullWidth margin="dense" autoFocus label="Mail server" value={url} name="url" onChange={this.handleChange} />
+                <TextInput
+                    autoFocus
+                    fullWidth
+                    margin="dense"
+                    label="Mail server"
+                    value={url}
+                    name="url"
+                    onChange={this.handleChange}
+                    validate={required}
+                />
                 <FormControl fullWidth margin="dense">
-                    <InputLabel htmlFor="controlled-open-select-imap">Security</InputLabel>
-                    <Select value={security} label="Security" inputProps={{ name: 'security', id: 'controlled-open-select-imap' }} name="security" onChange={this.handleChange}>
+                    <InputLabel htmlFor="select-security">Security</InputLabel>
+                    <Select value={security} label="Security" inputProps={{ name: 'security', id: 'select-security' }} name="security" onChange={this.handleChange}>
                         <MenuItem value={0}>None</MenuItem>
                         <MenuItem value={1}>SSL/TLS</MenuItem>
                         <MenuItem value={2}>STARTTLS</MenuItem>
                     </Select>
                 </FormControl>
-                <TextField fullWidth margin="dense" label="Port" type="number" min={0} max={65535} value={port} name="port" onChange={this.handleChange} />
+                <TextInput
+                    fullWidth
+                    margin="dense"
+                    label="Port"
+                    type="number"
+                    value={port}
+                    name="port"
+                    onChange={this.handleChange}
+                    validate={range(0, 65535)}
+                />
             </Form>
         );
     }
