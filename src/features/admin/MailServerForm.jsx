@@ -37,8 +37,6 @@ class MailServerForm extends React.Component {
             <Form {...other}>
                 <TextInput
                     autoFocus
-                    fullWidth
-                    margin="dense"
                     label="Mail server"
                     value={url}
                     name="url"
@@ -54,11 +52,9 @@ class MailServerForm extends React.Component {
                     </Select>
                 </FormControl>
                 <TextInput
-                    fullWidth
-                    margin="dense"
                     label="Port"
                     type="number"
-                    value={port}
+                    value={String(port)}
                     name="port"
                     onChange={this.handleChange}
                     validate={range(0, 65535)}

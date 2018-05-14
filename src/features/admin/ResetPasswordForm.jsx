@@ -38,8 +38,6 @@ class ResetPasswordForm extends React.Component {
                 />
                 <TextInput
                     autoFocus
-                    fullWidth
-                    margin="dense"
                     type="password"
                     autoComplete="current-password"
                     label="Current password"
@@ -48,8 +46,6 @@ class ResetPasswordForm extends React.Component {
                     validate={required}
                 />
                 <TextInput
-                    fullWidth
-                    margin="dense"
                     type="password"
                     autoComplete="new-password"
                     label="New password"
@@ -58,8 +54,6 @@ class ResetPasswordForm extends React.Component {
                     validate={required}
                 />
                 <TextInput
-                    fullWidth
-                    margin="dense"
                     type="password"
                     autoComplete="new-password"
                     label="Repeat new password"

@@ -132,7 +132,9 @@ TextInput.contextTypes = {
 
 
 TextInput.propTypes = {
+    fullWidth: PropTypes.bool,
     helperText: PropTypes.node,
+    margin: PropTypes.string,
     onBlur: PropTypes.func,
     onChange: PropTypes.func,
     validate: PropTypes.oneOfType([
@@ -144,6 +146,8 @@ TextInput.propTypes = {
 
 
 TextInput.defaultProps = {
+    fullWidth: true,
+    margin: 'dense',
     value: '',
 };
 

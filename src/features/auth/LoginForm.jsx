@@ -92,8 +92,6 @@ class Login extends React.Component {
                         </DialogContentText>
                         <TextInput
                             autoFocus
-                            fullWidth
-                            margin="dense"
                             type="text"
                             autoComplete="username"
                             label="Username"
@@ -102,8 +100,6 @@ class Login extends React.Component {
                             validate={required}
                         />
                         <TextInput
-                            fullWidth
-                            margin="dense"
                             type="password"
                             autoComplete="current-password"
                             label="Password"
