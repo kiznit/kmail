@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { hot } from 'react-hot-loader';
 import { Provider as ReduxProvider } from 'react-redux';
-import CssBaseline from 'material-ui/CssBaseline';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 
 const App = ({ children, store }) => (

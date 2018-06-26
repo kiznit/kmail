@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import Button from 'material-ui/Button';
-import Dialog from 'material-ui/Dialog';
-import Divider from 'material-ui/Divider';
-import Icon from 'material-ui/Icon';
-import { ListItem, ListItemText } from 'material-ui/List';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import Divider from '@material-ui/core/Divider';
+import Icon from '@material-ui/core/Icon';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 
 class Setting extends React.Component {
@@ -40,7 +41,7 @@ class Setting extends React.Component {
                                 <Button key="cancel" color="primary" onClick={this.handleClose}>
                                     Cancel
                                 </Button>,
-                                <Button key="submit" type="submit" color="primary">
+                                <Button key="submit" type="submit" color="primary" variant="contained">
                                     Submit
                                 </Button>,
                             ],

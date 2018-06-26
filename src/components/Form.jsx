@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { DialogActions, DialogContent, DialogTitle } from 'material-ui/Dialog';
-import Icon from 'material-ui/Icon';
-import IconButton from 'material-ui/IconButton';
-import { withStyles } from 'material-ui/styles';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Icon from '@material-ui/core/Icon';
+import IconButton from '@material-ui/core/IconButton';
+import { withStyles } from '@material-ui/core/styles';
 
 
 const styles = {

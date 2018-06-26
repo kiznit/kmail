@@ -2,10 +2,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import Icon from 'material-ui/Icon';
-import IconButton from 'material-ui/IconButton';
-import Tooltip from 'material-ui/Tooltip';
-import { MuiThemeProvider, withStyles } from 'material-ui/styles';
+import Icon from '@material-ui/core/Icon';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
 
 import NavBar from 'components/NavBar';
 
