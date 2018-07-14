@@ -13,7 +13,7 @@ export const login = (username, password) => {
         password,
     })
         .then(response => response.data)
-        .catch((error) => {
+        .catch(error => {
             if (error.response) {
                 throw new Error(error.response.data.message);
             }
