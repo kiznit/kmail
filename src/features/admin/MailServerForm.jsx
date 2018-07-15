@@ -45,7 +45,13 @@ class MailServerForm extends React.Component {
                 />
                 <FormControl fullWidth margin="dense">
                     <InputLabel htmlFor="select-security">Security</InputLabel>
-                    <Select value={security} label="Security" inputProps={{ name: 'security', id: 'select-security' }} name="security" onChange={this.handleChange}>
+                    <Select
+                        value={security}
+                        label="Security"
+                        inputProps={{ name: 'security', id: 'select-security' }}
+                        name="security"
+                        onChange={this.handleChange}
+                    >
                         <MenuItem value={0}>None</MenuItem>
                         <MenuItem value={1}>SSL/TLS</MenuItem>
                         <MenuItem value={2}>STARTTLS</MenuItem>
