@@ -1,84 +1,98 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { withFormik } from 'formik';
+import * as Yup from 'yup';
 
-import Form from 'components/Form';
-import TextInput, { required, match } from 'components/TextInput';
-
-
-class ResetPasswordForm extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            currentPassword: '',
-            newPassword: '',
-            repeatPassword: '',
-        };
-    }
+import TextInput from 'components/TextInput';
+import SettingForm from 'features/settings/SettingForm';
 
 
-    handleChange = event => {
-        this.setState({
-            [event.target.name]: event.target.value,
-        });
-    };
-
-
-    render() {
-        const { username, ...other } = this.props;
-
-        return (
-            <Form {...other}>
-                <input
-                    type="text"
-                    autoComplete="username"
-                    name="username"
-                    defaultValue={username}
-                    style={{ display: 'none' }}
-                />
-                <TextInput
-                    autoFocus
-                    type="password"
-                    autoComplete="current-password"
-                    label="Current password"
-                    name="currentPassword"
-                    onChange={this.handleChange}
-                    validate={required}
-                />
-                <TextInput
-                    type="password"
-                    autoComplete="new-password"
-                    label="New password"
-                    name="newPassword"
-                    onChange={this.handleChange}
-                    validate={required}
-                />
-                <TextInput
-                    type="password"
-                    autoComplete="new-password"
-                    label="Repeat new password"
-                    name="repeatPassword"
-                    onChange={this.handleChange}
-                    validate={[required, match(this.state.newPassword, "Passwords don't match")]}
-                />
-            </Form>
-        );
-    }
-}
+const ResetPasswordForm = ({
+    errors,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    touched,
+    values,
+    onClose,
+    title,
+    visible,
+    ...otherProps
+}) => (
+    <SettingForm title={title} visible={visible} onSubmit={handleSubmit} onClose={onClose}>
+        <input
+            readOnly
+            type="text"
+            name="username"
+            value={values.username}
+            autoComplete="username"
+            style={{ display: 'none' }}
+        />
+        <TextInput
+            autoFocus
+            name="currentPassword"
+            onBlur={handleBlur}
+            onChange={handleChange}
+            value={values.currentPassword}
+            autoComplete="current-password"
+            label="Current password"
+            error={errors.currentPassword}
+            touched={touched.currentPassword}
+        />
+        <TextInput
+            name="newPassword"
+            onBlur={handleBlur}
+            onChange={handleChange}
+            value={values.newPassword}
+            autoComplete="new-password"
+            label="New password"
+            error={errors.newPassword}
+            touched={touched.newPassword}
+        />
+        <TextInput
+            name="repeatPassword"
+            onBlur={handleBlur}
+            onChange={handleChange}
+            value={values.repeatPassword}
+            autoComplete="new-password"
+            label="Repeat new password"
+            error={errors.repeatPassword}
+            touched={touched.repeatPassword}
+        />
+    </SettingForm>
+);
 
 
 ResetPasswordForm.propTypes = {
-    port: PropTypes.number,
     title: PropTypes.string.isRequired,
-    url: PropTypes.string,
-    username: PropTypes.string.isRequired,
+    visible: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
 };
 
 
-ResetPasswordForm.defaultProps = {
-    port: 0,
-    url: 'mail.server.com',
-};
+export default withFormik({
+    mapPropsToValues: props => ({
+        username: props.username,
+        currentPassword: '',
+        newPassword: '',
+        repeatPassword: '',
+    }),
+
+    validationSchema: Yup.object().shape({
+        currentPassword: Yup.string().required('Enter your current password'),
+        newPassword: Yup.string().required('Enter a new password'),
+        repeatPassword: Yup.string()
+            .required('Enter your new password again')
+            .oneOf([Yup.ref('newPassword')], 'Passwords do not match'),
+    }),
 
 
-export default ResetPasswordForm;
+    handleSubmit: (values, { props }) => {
+        const { onClose } = props;
+
+        //todo
+        console.log("handleSubmit(): values =", values);
+
+        onClose();
+    },
+})(ResetPasswordForm);

@@ -4,10 +4,8 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 
 
-/*
-    Some validation rules
-*/
 
+//TODO: replace validation rules this with Yup
 export const required = value => (value ? null : 'This field is required');
 
 export const match = (targetValue, message) => value => (value === targetValue ? null : message);
@@ -40,12 +38,12 @@ class TextInput extends React.PureComponent {
 
 
     componentDidMount() {
-        this.context.form.register(this);
+        //this.context.form.register(this);
     }
 
 
     componentWillUnmount() {
-        this.context.form.unregister(this);
+        //this.context.form.unregister(this);
     }
 
 
@@ -78,7 +76,7 @@ class TextInput extends React.PureComponent {
         const { value } = event.target;
 
         this.setState({ value, touched: true }, () => {
-            this.context.form.validate();
+            //this.context.form.validate();
         });
 
         const { onBlur } = this.props;
@@ -93,7 +91,7 @@ class TextInput extends React.PureComponent {
         const { value } = event.target;
 
         this.setState({ value }, () => {
-            this.context.form.validate();
+            //this.context.form.validate();
         });
 
         const { onChange } = this.props;
@@ -105,8 +103,7 @@ class TextInput extends React.PureComponent {
 
 
     render() {
-        const { helperText, validate, ...props } = this.props;
-        const { error, touched } = this.state;
+        const { error, helperText, touched, validate, ...props } = this.props;
 
         return (
             <TextField
@@ -122,21 +119,23 @@ class TextInput extends React.PureComponent {
 }
 
 
-TextInput.contextTypes = {
-    form: PropTypes.shape({
-        register: PropTypes.func.isRequired,
-        unregister: PropTypes.func.isRequired,
-        validate: PropTypes.func.isRequired,
-    }).isRequired,
-};
+// TextInput.contextTypes = {
+//     form: PropTypes.shape({
+//         register: PropTypes.func.isRequired,
+//         unregister: PropTypes.func.isRequired,
+//         validate: PropTypes.func.isRequired,
+//     }).isRequired,
+// };
 
 
 TextInput.propTypes = {
+    error: PropTypes.string,
     fullWidth: PropTypes.bool,
     helperText: PropTypes.node,
     margin: PropTypes.string,
     onBlur: PropTypes.func,
     onChange: PropTypes.func,
+    touched: PropTypes.bool,
     validate: PropTypes.oneOfType([
         PropTypes.func,
         PropTypes.arrayOf(PropTypes.func),

@@ -60,6 +60,7 @@
     "dotenv": "^5.0.1",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
+    "formik": "^1.0.1",
     "getenv": "^0.7.0",
     "helmet": "^3.11.0",
     "history": "^4.7.2",
@@ -85,7 +86,8 @@
     "sqlite3": "^4.0.0",
     "universal-router": "^6.0.0",
     "value-equal": "^0.4.0",
-    "winston": "^2.4.1"
+    "winston": "^2.4.1",
+    "yup": "^0.25.1"
   },
   "devDependencies": {
     "assets-webpack-plugin": "^3.5.1",

@@ -8,6 +8,8 @@ import Icon from '@material-ui/core/Icon';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
+import Form from 'components/Form';
+
 
 class Setting extends React.Component {
     state = {
@@ -31,23 +33,11 @@ class Setting extends React.Component {
                     { form ? <Icon>arrow_right</Icon> : null }
                 </ListItem>
                 <Divider />
-                { form &&
-                    <Dialog open={this.state.open} onEscapeKeyDown={this.handleClose} aria-labelledby="form-title">
-                        {form({
-                            onClose: this.handleClose,
-                            onSubmit: this.handleClose,
-                            title: `${this.props.primary} settings`,
-                            actions: [
-                                <Button key="cancel" color="primary" onClick={this.handleClose}>
-                                    Cancel
-                                </Button>,
-                                <Button key="submit" type="submit" color="primary" variant="contained">
-                                    Submit
-                                </Button>,
-                            ],
-                        })}
-                    </Dialog>
-                }
+                { form({
+                    visible: this.state.open,
+                    title: `${this.props.primary} settings`,
+                    onClose: this.handleClose,
+                }) }
             </div>
         );
     }
