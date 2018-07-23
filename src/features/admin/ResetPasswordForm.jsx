@@ -16,10 +16,9 @@ const ResetPasswordForm = ({
     values,
     onClose,
     title,
-    visible,
     ...otherProps
 }) => (
-    <SettingForm title={title} visible={visible} onSubmit={handleSubmit} onClose={onClose}>
+    <SettingForm title={title} onSubmit={handleSubmit} onClose={onClose}>
         <input
             readOnly
             type="text"
@@ -65,7 +64,6 @@ const ResetPasswordForm = ({
 
 ResetPasswordForm.propTypes = {
     title: PropTypes.string.isRequired,
-    visible: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
 };
 

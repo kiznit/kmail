@@ -27,9 +27,9 @@ const styles = {
 };
 
 
-const SettingForm = ({ children, classes, onClose, onSubmit, title, visible }) => (
+const SettingForm = ({ children, classes, onClose, onSubmit, title }) => (
     <Dialog
-        open={visible}
+        open
         onEscapeKeyDown={onClose}
         aria-labelledby="form-title"
     >
@@ -70,7 +70,6 @@ SettingForm.propTypes = {
     onClose: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
-    visible: PropTypes.bool.isRequired,
 };
 
 
