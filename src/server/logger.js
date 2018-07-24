@@ -9,16 +9,19 @@ const transports = [
     new (winston.transports.Console)({
         level: 'debug',
         handleExceptions: true,
-        json: false,
-        colorize: true,
-        prettyPrint: true,
-        // label: name,
-        timestamp,
     }),
 ];
 
 
-const logger = new (winston.Logger)({
+const format = winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.colorize({ all: true }),
+    winston.format.printf(info => `${info.timestamp} ${info.level}: ${info.message}`),
+);
+
+
+const logger = winston.createLogger({
+    format,
     transports,
     exitOnError: false,
 });

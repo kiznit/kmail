@@ -15,6 +15,8 @@ export default (env = {}) => {
 
         target: 'web',
 
+        mode: isDev ? 'development' : 'production',
+
         stats: 'errors-only',
 
         entry: {
@@ -41,6 +43,19 @@ export default (env = {}) => {
             alias: {
                 components: path.resolve('src/components/'),
                 features: path.resolve('src/features/'),
+            },
+        },
+
+        optimization: {
+            splitChunks: {
+                cacheGroups: {
+                    // Put node_modules code in its own bundle
+                    vendors: {
+                        test: /[\\/]node_modules[\\/]/,
+                        name: 'vendors',
+                        chunks: 'all',
+                    },
+                },
             },
         },
 
@@ -93,12 +108,6 @@ export default (env = {}) => {
                 path: 'dist/server',
                 filename: 'assets.json',
                 prettyPrint: true,
-            }),
-
-            // Put node_modules code in its own bundle
-            new webpack.optimize.CommonsChunkPlugin({
-                name: 'vendor',
-                minChunks: module => /node_modules/.test(module.resource),
             }),
 
             ...(isDev

@@ -41,7 +41,7 @@ const render = async (req, res) => {
 
     const component = route.component || route;
 
-    const scripts = [assets.vendor.js, assets.client.js];
+    const scripts = [assets.vendors.js, assets.client.js];
 
     const componentTree = (
         <Html scripts={scripts} appState={store.getState()} csrfToken={req.csrfToken()}>
