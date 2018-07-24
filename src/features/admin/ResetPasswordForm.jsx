@@ -12,11 +12,10 @@ const ResetPasswordForm = ({
     handleBlur,
     handleChange,
     handleSubmit,
-    touched,
-    values,
     onClose,
     title,
-    ...otherProps
+    touched,
+    values,
 }) => (
     <SettingForm title={title} onSubmit={handleSubmit} onClose={onClose}>
         <input
@@ -29,32 +28,32 @@ const ResetPasswordForm = ({
         />
         <TextInput
             autoFocus
+            autoComplete="current-password"
+            label="Current password"
             name="currentPassword"
             onBlur={handleBlur}
             onChange={handleChange}
             value={values.currentPassword}
-            autoComplete="current-password"
-            label="Current password"
             error={errors.currentPassword}
             touched={touched.currentPassword}
         />
         <TextInput
+            autoComplete="new-password"
+            label="New password"
             name="newPassword"
             onBlur={handleBlur}
             onChange={handleChange}
             value={values.newPassword}
-            autoComplete="new-password"
-            label="New password"
             error={errors.newPassword}
             touched={touched.newPassword}
         />
         <TextInput
+            autoComplete="new-password"
+            label="Repeat new password"
             name="repeatPassword"
             onBlur={handleBlur}
             onChange={handleChange}
             value={values.repeatPassword}
-            autoComplete="new-password"
-            label="Repeat new password"
             error={errors.repeatPassword}
             touched={touched.repeatPassword}
         />
@@ -63,8 +62,15 @@ const ResetPasswordForm = ({
 
 
 ResetPasswordForm.propTypes = {
-    title: PropTypes.string.isRequired,
+    errors: PropTypes.objectOf(PropTypes.string).isRequired,
+    handleBlur: PropTypes.func.isRequired,
+    handleChange: PropTypes.func.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
+    title: PropTypes.string.isRequired,
+    touched: PropTypes.objectOf(PropTypes.bool).isRequired,
+    username: PropTypes.string.isRequired,
+    values: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 

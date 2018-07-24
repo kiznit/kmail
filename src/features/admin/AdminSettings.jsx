@@ -12,7 +12,6 @@ import ResetPasswordForm from './ResetPasswordForm';
 
 const AdminSettings = ({ inboundMail, outboundMail }) => (
     <div>
-    {/*
         <SettingsCategory title="Mail">
             <Setting
                 primary="Inbound mail server"
@@ -25,7 +24,6 @@ const AdminSettings = ({ inboundMail, outboundMail }) => (
                 form={props => <MailServerForm {...props} {...outboundMail} />}
             />
         </SettingsCategory>
-    */}
         <SettingsCategory title="Security">
             <Setting
                 primary="Admin password"
