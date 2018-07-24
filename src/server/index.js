@@ -19,9 +19,9 @@ if (__DEV__) {
     const compiler = webpack(config);
 
     startupPromises.push(new Promise((resolve, reject) => {
-        compiler.plugin('done', (stats) => {
+        compiler.plugin('done', stats => {
             if (stats.hasErrors()) {
-                reject(new Error("Compilation of client code failed."));
+                reject(new Error('Compilation of client code failed.'));
             } else {
                 resolve();
             }
@@ -67,7 +67,7 @@ Promise.all(startupPromises)
 
         return null;
     })
-    .catch((error) => {
+    .catch(error => {
         console.error(error);
         process.exit(1);
     });

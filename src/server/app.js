@@ -122,7 +122,7 @@ app.post('/api/login', (req, res, next) => {
             return res.status(status || HttpStatus.UNAUTHORIZED).json(info);
         }
 
-        req.login(user, (loginError) => {
+        req.login(user, loginError => {
             if (loginError) {
                 return next(loginError);
             }
@@ -137,7 +137,7 @@ app.post('/api/login', (req, res, next) => {
 
 app.post('/api/logout', (req, res, next) => {
     req.logout();
-    req.session.destroy((error) => {
+    req.session.destroy(error => {
         if (error) {
             return next(error);
         }

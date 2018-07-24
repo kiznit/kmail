@@ -4,7 +4,7 @@ import pkg from '../../package.json';
 
 
 if (__BROWSER__) {
-    throw new Error("Do not import 'config.js' from inside the client-side code.");
+    throw new Error('Do not import "config.js" from inside the client-side code.');
 }
 
 // dotenv allows you to provide environment variables in a local '.env' file.

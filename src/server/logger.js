@@ -2,9 +2,6 @@ import split from 'split';
 import winston from 'winston';
 
 
-const timestamp = () => new Date().toISOString();
-
-
 const transports = [
     new (winston.transports.Console)({
         level: 'debug',
