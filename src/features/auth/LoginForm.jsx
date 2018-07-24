@@ -14,6 +14,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 
+import Form from 'components/Form';
 import NoScript from 'components/NoScript';
 import TextInput from 'components/TextInput';
 
@@ -86,68 +87,59 @@ class Login extends React.Component {
         return (
             <div className={classes.root}>
                 <Paper className={classes.paper} elevation={24}>
-                    <form onSubmit={handleSubmit}>
-                        <div className={classes.header}>
-                            <div className={classes.title}>
-                                <DialogTitle id="form-title">
-                                    {title}
-                                </DialogTitle>
-                            </div>
+                    <Form title={title} onSubmit={handleSubmit}>
+                        <DialogContentText>
+                            Please enter your username and password.
+                        </DialogContentText>
+                        <TextInput
+                            autoFocus
+                            autoComplete="username"
+                            label="Username"
+                            name="username"
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            value={values.username}
+                            error={errors.username}
+                            touched={touched.username}
+                        />
+                        <TextInput
+                            autoComplete="current-password"
+                            type="password"
+                            label="Password"
+                            name="password"
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            value={values.password}
+                            error={errors.password}
+                            touched={touched.password}
+                        />
+                        <div style={{ marginTop: '16px', display: 'block' }}>
+                            <Button
+                                fullWidth
+                                type="submit"
+                                disabled={isSubmitting}
+                                style={{ height: '50px' }}
+                                variant="raised"
+                                color="primary"
+                            >
+                                Log in
+                                {
+                                    isSubmitting && (
+                                        <div style={{ marginLeft: '10px', marginTop: '2px' }}>
+                                            <CircularProgress style={{ width: '20px', height: '20px' }} />
+                                        </div>
+                                    )
+                                }
+                            </Button>
                         </div>
-                        <DialogContent>
-                            <DialogContentText>
-                                Please enter your username and password.
-                            </DialogContentText>
-                            <TextInput
-                                autoFocus
-                                autoComplete="username"
-                                label="Username"
-                                name="username"
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                value={values.username}
-                                error={errors.username}
-                                touched={touched.username}
-                            />
-                            <TextInput
-                                autoComplete="current-password"
-                                type="password"
-                                label="Password"
-                                name="password"
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                value={values.password}
-                                error={errors.password}
-                                touched={touched.password}
-                            />
-                            <div style={{ marginTop: '16px', display: 'block' }}>
-                                <Button
-                                    fullWidth
-                                    type="submit"
-                                    disabled={isSubmitting}
-                                    style={{ height: '50px' }}
-                                    variant="raised"
-                                    color="primary"
-                                >
-                                    Log in
-                                    {
-                                        isSubmitting && (
-                                            <div style={{ marginLeft: '10px', marginTop: '2px' }}>
-                                                <CircularProgress style={{ width: '20px', height: '20px' }} />
-                                            </div>
-                                        )
-                                    }
-                                </Button>
-                            </div>
-                            <div>
-                                <NoScript>
-                                    <p>
-                                        {"Warning: This webmail service requires Javascript! In order to use it please enable Javascript in your browser's settings."}
-                                    </p>
-                                </NoScript>
-                            </div>
-                        </DialogContent>
-                    </form>
+                        <div>
+                            <NoScript>
+                                <p>
+                                    {"Warning: This webmail service requires Javascript! In order to use it please enable Javascript in your browser's settings."}
+                                </p>
+                            </NoScript>
+                        </div>
+                    </Form>
                 </Paper>
                 { showErrorDialog && loginError && this.renderError() }
             </div>
