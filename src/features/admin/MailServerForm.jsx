@@ -55,6 +55,7 @@ const MailServerForm = ({
         <TextInput
             label="Port"
             type="number"
+            inputProps={{ min: 0, max: 65535 }}
             name="port"
             onBlur={handleBlur}
             onChange={handleChange}

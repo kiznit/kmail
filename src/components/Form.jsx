@@ -26,7 +26,7 @@ const styles = {
 
 
 const Form = ({ actions, children, classes, onClose, onSubmit, title }) => (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} noValidate>
         <div className={classes.header}>
             <div className={classes.title}>
                 <DialogTitle id="form-title">
