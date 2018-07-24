@@ -40,12 +40,14 @@ const SettingForm = ({ children, classes, onClose, onSubmit, title }) => (
                         {title}
                     </DialogTitle>
                 </div>
-                { onClose &&
-                    <div className={classes.closeButton}>
-                        <IconButton onClick={onClose}>
-                            <Icon>close</Icon>
-                        </IconButton>
-                    </div>
+                {
+                    onClose && (
+                        <div className={classes.closeButton}>
+                            <IconButton onClick={onClose}>
+                                <Icon>close</Icon>
+                            </IconButton>
+                        </div>
+                    )
                 }
             </div>
             <DialogContent>
@@ -54,7 +56,7 @@ const SettingForm = ({ children, classes, onClose, onSubmit, title }) => (
             <DialogActions>
                 <Button key="cancel" color="primary" onClick={onClose}>
                     Cancel
-                </Button>,
+                </Button>
                 <Button key="submit" type="submit" color="primary" variant="contained">
                     Submit
                 </Button>
