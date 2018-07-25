@@ -49,7 +49,7 @@ const MailServerForm = ({
             name="port"
             onBlur={handleBlur}
             onChange={handleChange}
-            value={String(values.port)}
+            value={values.port}
             error={errors.port}
             touched={touched.port}
         />
@@ -63,29 +63,17 @@ MailServerForm.propTypes = {
     handleChange: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
-    port: PropTypes.number,
-    security: PropTypes.number,
     title: PropTypes.string.isRequired,
     touched: PropTypes.objectOf(PropTypes.bool).isRequired,
-    url: PropTypes.string,
-    values: PropTypes.objectOf(PropTypes.string).isRequired,
+    values: PropTypes.shape({
+        port: PropTypes.number,
+        security: PropTypes.number,
+        url: PropTypes.string,
+    }).isRequired,
 };
 
 
-MailServerForm.defaultProps = {
-    port: 0,
-    security: 1,
-    url: 'mail.server.com',
-};
-
-
-export default withFormik({
-    mapPropsToValues: props => ({
-        port: props.port,
-        url: props.url,
-        security: props.security,
-    }),
-
+const WrappedMailServerForm = withFormik({
     validationSchema: Yup.object().shape({
         port: Yup.number()
             .integer('Must be an integer')
@@ -105,3 +93,20 @@ export default withFormik({
         onClose();
     },
 })(MailServerForm);
+
+
+WrappedMailServerForm.propTypes = {
+    port: PropTypes.number,
+    security: PropTypes.number,
+    url: PropTypes.string,
+};
+
+
+WrappedMailServerForm.defaultProps = {
+    port: 0,
+    security: 2,
+    url: 'mail.server.com',
+};
+
+
+export default WrappedMailServerForm;
