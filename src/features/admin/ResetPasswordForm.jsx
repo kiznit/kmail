@@ -21,13 +21,14 @@ const ResetPasswordForm = ({
         <input
             readOnly
             type="text"
+            autoComplete="username"
             name="username"
             value={values.username}
-            autoComplete="username"
             style={{ display: 'none' }}
         />
         <TextInput
             autoFocus
+            type="password"
             autoComplete="current-password"
             label="Current password"
             name="currentPassword"
@@ -39,6 +40,7 @@ const ResetPasswordForm = ({
         />
         <TextInput
             autoComplete="new-password"
+            type="password"
             label="New password"
             name="newPassword"
             onBlur={handleBlur}
@@ -49,6 +51,7 @@ const ResetPasswordForm = ({
         />
         <TextInput
             autoComplete="new-password"
+            type="password"
             label="Repeat new password"
             name="repeatPassword"
             onBlur={handleBlur}
