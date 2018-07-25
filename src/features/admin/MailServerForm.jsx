@@ -44,8 +44,7 @@ const MailServerForm = ({
                 onBlur={handleBlur('security')}
                 onChange={handleChange('security')}
                 value={values.security}
-                error={errors.security}
-                touched={touched.security}
+                error={!!errors.security && touched.security}
             >
                 <MenuItem value={0}>None</MenuItem>
                 <MenuItem value={1}>SSL/TLS</MenuItem>
