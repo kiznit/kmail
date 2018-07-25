@@ -3,13 +3,9 @@ import React from 'react';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-
-import SettingForm from 'features/settings/SettingForm';
+import Select, { Option } from 'components/Select';
 import TextInput from 'components/TextInput';
+import SettingForm from 'features/settings/SettingForm';
 
 
 const MailServerForm = ({
@@ -33,24 +29,19 @@ const MailServerForm = ({
             error={errors.url}
             touched={touched.url}
         />
-        <FormControl fullWidth margin="dense">
-            <InputLabel htmlFor="select-security">Security</InputLabel>
-            <Select
-                label="Security"
-                inputProps={{
-                    id: 'select-security',
-                    name: 'security',
-                }}
-                onBlur={handleBlur('security')}
-                onChange={handleChange('security')}
-                value={values.security}
-                error={!!errors.security && touched.security}
-            >
-                <MenuItem value={0}>None</MenuItem>
-                <MenuItem value={1}>SSL/TLS</MenuItem>
-                <MenuItem value={2}>STARTTLS</MenuItem>
-            </Select>
-        </FormControl>
+        <Select
+            label="Security"
+            name="security"
+            onBlur={handleBlur}
+            onChange={handleChange}
+            value={values.security}
+            error={errors.security}
+            touched={touched.security}
+        >
+            <Option value={0}>None</Option>
+            <Option value={1}>SSL/TLS</Option>
+            <Option value={2}>STARTTLS</Option>
+        </Select>
         <TextInput
             label="Port"
             type="number"
