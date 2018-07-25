@@ -64,7 +64,7 @@ Select.propTypes = {
     onBlur: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
     touched: PropTypes.bool,
-    value: PropTypes.string.isRequired,
+    value: PropTypes.number.isRequired,
 };
 
 
