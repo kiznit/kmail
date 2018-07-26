@@ -2,7 +2,7 @@
   "client": {
     "js": "/js/client.js"
   },
-  "vendor": {
-    "js": "/js/vendor.js"
+  "vendors": {
+    "js": "/js/vendors.js"
   }
 }
