@@ -155,7 +155,7 @@ app.get('*', async (req, res, next) => {
         next();
     }
     catch(error) {
-        console.log("*** ERROR:", error);
+        logger.error(error);
         next(error);
     }
 });
