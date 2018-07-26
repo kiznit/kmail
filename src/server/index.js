@@ -58,7 +58,11 @@ Promise.all(startupPromises)
 
         server.listen(port, 'localhost', () => {
             const addr = server.address();
-            console.log(`Server listening at http://${addr.address}:${addr.port}`);
+            if (server.address && server.port) {
+                console.log(`Server listening at http://${addr.address}:${addr.port}`);
+            } else {
+                console.log(`Server listening on pseudo-port ${port}`);
+            }
         });
 
         if (module.hot) {
