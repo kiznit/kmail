@@ -155,9 +155,15 @@ app.get('*', async (req, res, next) => {
         next();
     }
     catch(error) {
-        logger.error(error);
         next(error);
     }
+});
+
+
+// Error handler
+app.use((error, req, res, next) => {
+    logger.error(error);
+    next(error);
 });
 
 
