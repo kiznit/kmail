@@ -3,7 +3,7 @@ import winston from 'winston';
 
 
 const transports = [
-    new (winston.transports.Console)({
+    new winston.transports.Console({
         level: 'debug',
         handleExceptions: true,
     }),
