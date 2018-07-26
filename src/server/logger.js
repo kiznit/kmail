@@ -3,10 +3,10 @@ import winston from 'winston';
 
 
 const transports = [
-    new winston.transports.Console({
-        level: 'debug',
-        handleExceptions: true,
-    }),
+    // new winston.transports.Console({
+    //     level: 'debug',
+    //     handleExceptions: true,
+    // }),
 ];
 
 
