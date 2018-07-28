@@ -162,7 +162,9 @@ app.get('*', async (req, res, next) => {
 
 // Error handler
 app.use((error, req, res, next) => {
-    logger.error(error);
+    if (!__TEST__) {
+        logger.error(error);
+    }
     next(error);
 });
 
