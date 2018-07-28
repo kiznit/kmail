@@ -61,7 +61,7 @@ Promise.all(startupPromises)
             if (server.address && server.port) {
                 console.log(`Server listening at http://${addr.address}:${addr.port}`);
             } else {
-                console.log(`Server listening on pseudo-port ${port}`);
+                console.log(`Server listening on ${port}`);
             }
         });
 
