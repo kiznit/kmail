@@ -97,7 +97,7 @@ export default (env = {}) => {
 
             // Put node_modules code in its own bundle
             new webpack.optimize.CommonsChunkPlugin({
-                name: 'vendor',
+                name: 'vendors',
                 minChunks: module => /node_modules/.test(module.resource),
             }),
 
