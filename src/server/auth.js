@@ -1,5 +1,8 @@
+import bcrypt from 'bcrypt';
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
+
+import config from './config';
 
 
 passport.use(
@@ -33,4 +36,9 @@ passport.deserializeUser((userId, done) => {
 });
 
 
-export { passport };
+const hashPassword = async password => bcrypt.hash(password, Math.max(config.bcryptRounds || 0, 12));
+
+const verifyPassword = async (plaintext, hash) => bcrypt.compare(plaintext, hash);
+
+
+export { hashPassword, passport, verifyPassword };

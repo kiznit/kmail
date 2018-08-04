@@ -16,7 +16,9 @@ dotenv.config();
 
 // Default configuration for all environments
 const defaultConfig = {
+    adminPassword: '1234',  // Initial admin password
     appName: pkg.name,
+    bcryptRounds: 12,       // About 230 ms on my Intel(R) Core(TM) i7-4770K CPU @ 3.50GHz
     env: getenv('NODE_ENV'),
     loggerFormat: 'combined',
     https: false,
