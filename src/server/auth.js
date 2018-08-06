@@ -1,44 +1,61 @@
 import bcrypt from 'bcrypt';
+import HttpStatus from 'http-status-codes';
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 
 import config from './config';
+import { db } from './data';
+
+
+const hashPassword = async password => bcrypt.hash(password, Math.max(config.bcryptRounds || 0, 12));
+
+const verifyPassword = async (plaintext, hash) => bcrypt.compare(plaintext, hash);
 
 
 passport.use(
     new LocalStrategy(
         (username, password, done) => {
-            if (username !== 'admin' || password !== '1234') {
-                return done(null, null, { message: `The password is invalid for user ${username}.` });
+            if (!username || !password) {
+                return done(null, null, { message: 'Missing credentials' }, HttpStatus.BAD_REQUEST);
             }
 
-            const user = {
-                username,
-            };
+            db('users')
+                .where({ username })
+                .first()
+                .then(user => {
+                    if (!user || !user.password) {
+                        return done(null, null, { message: `The password is invalid for user ${username}.` });
+                    }
 
-            return done(null, user);
+                    return verifyPassword(password, user.password)
+                        .then(verified => {
+                            if (!verified) {
+                                return done(null, null, { message: `The password is invalid for user ${username}.` });
+                            }
+
+                            return done(null, user);
+                        });
+                })
+                .catch(done);
         },
     ),
 );
 
 
 passport.serializeUser((user, done) => {
-    //console.log('*** serializeUser()');
-    const userId = user;    // todo: fix
-    done(null, userId);
+    // The return value will be stored at 'req.session.passport.user'
+    return done(null, user.id);
 });
 
 
 passport.deserializeUser((userId, done) => {
-    //console.log('*** deserializeUser():', userId);
-    const user = userId;    // todo: fix
-    done(null, user);
+    // The returned value will be stored at 'req.user'
+    db('users')
+        .where({ id: userId })
+        .first()
+        .then(user => done(null, user))
+        .catch(done);
 });
-
-
-const hashPassword = async password => bcrypt.hash(password, Math.max(config.bcryptRounds || 0, 12));
-
-const verifyPassword = async (plaintext, hash) => bcrypt.compare(plaintext, hash);
 
 
 export { hashPassword, passport, verifyPassword };

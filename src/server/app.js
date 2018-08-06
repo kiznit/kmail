@@ -127,8 +127,9 @@ app.post('/api/login', (req, res, next) => {
                 return next(loginError);
             }
 
-            // Success
-            return res.json(user);
+            return res.json({
+                username: user.username,
+            });
         });
 
         return null;

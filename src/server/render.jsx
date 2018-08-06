@@ -2,23 +2,22 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
 import App from 'components/App';
-import Auth from 'features/auth/Auth';
 import Html from 'components/Html';
+import Auth from 'features/auth/Auth';
+import { LOGIN } from 'features/auth/actions';
 
 import assets from './assets.json'; // eslint-disable-line import/no-unresolved
 import router from '../router';
 import configureStore from '../store';
 
-import { LOGIN } from 'features/auth/actions';
 
-
-const initializeStore = async (req) => {
+const initializeStore = async req => {
     const store = configureStore();
 
     if (req.isAuthenticated()) {
         await store.dispatch({
             type: LOGIN,
-            promise: Promise.resolve(req.session.passport.user),
+            promise: Promise.resolve(req.user),
         });
     }
 
@@ -56,7 +55,7 @@ const render = async (req, res) => {
     const html = renderToStaticMarkup(componentTree);
 
     res.status(route.status || 200);
-    res.setHeader('Content-Type', 'text/html');
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.write('<!DOCTYPE html>');
     res.write(html);
     res.end();

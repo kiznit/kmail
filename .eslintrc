@@ -34,7 +34,7 @@
         "no-multi-spaces": [2, { "ignoreEOLComments": true }],
         "no-unused-vars": [1, { "vars": "all", "args": "none" }],
         "object-curly-newline": [2, { "consistent": true }],
-        "quotes": [1, "single"],
+        "quotes": [1, "single", { "avoidEscape": true }],
         "spaced-comment": [1, "always"],
 
         // Import
