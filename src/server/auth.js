@@ -53,7 +53,7 @@ passport.deserializeUser((userId, done) => {
     db('users')
         .where({ id: userId })
         .first()
-        .then(user => done(null, user))
+        .then(user => done(null, user || null)) // The 'null' is important here: it will logout the user. Returning 'undefined' doesn't work.
         .catch(done);
 });
 
