@@ -1,6 +1,8 @@
 import request from 'supertest';
 import app from './app';
 
+import { passport } from './auth';
+
 
 // Some regexs to validate cookies
 const RE_COOKIE_CSRF = /^kmail.session=[\w-]{24}; Path=\/; HttpOnly; SameSite=Strict$/;
@@ -155,5 +157,33 @@ describe('auth - CSRF', () => {
             .send({ username: 'admin', password: '1234' })
             .set('X-CSRF-Token', csrfToken2)
             .expect(200);
+    });
+});
+
+
+describe('auth - deserializeUser', () => {
+    test('deserializeUser can find user', done => {
+        passport.deserializeUser(1, (err, result) => {
+            if (err) {
+                done(err);
+            }
+
+            expect(err).to.be.null;
+            expect(result).to.have.property('id', 1);
+            expect(result).to.have.property('username', 'admin');
+            done();
+        });
+    });
+
+    test("deserializeUser can't find user", done => {
+        passport.deserializeUser(999, (err, result) => {
+            if (err) {
+                done(err);
+            }
+
+            expect(err).to.be.null;
+            expect(result).to.be.false;
+            done();
+        });
     });
 });
