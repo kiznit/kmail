@@ -24,19 +24,19 @@ passport.use(
                 .first()
                 .then(user => {
                     if (!user || !user.password) {
-                        return done(null, null, { message: `The password is invalid for user ${username}.` });
+                        return [null, { message: `The password is invalid for user ${username}.` }];
                     }
 
                     return verifyPassword(password, user.password)
                         .then(verified => {
                             if (!verified) {
-                                return done(null, null, { message: `The password is invalid for user ${username}.` });
+                                return [null, { message: `The password is invalid for user ${username}.` }];
                             }
 
-                            return done(null, user);
+                            return user;
                         });
                 })
-                .catch(done);
+                .asCallback(done, { spread: true });
         },
     ),
 );
