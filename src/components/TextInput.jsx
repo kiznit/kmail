@@ -7,12 +7,13 @@ import TextField from '@material-ui/core/TextField';
 const TextInput = ({
     error,
     helperText,
+    submitCount,
     touched,
     ...props
 }) => (
     <TextField
         {...props}
-        error={!!error && touched}
+        error={!!error && touched && submitCount > 0}
         helperText={(touched && error) || helperText || ' '} // The space prevents the TextField from changing height on errors}
     />
 );
@@ -25,6 +26,7 @@ TextInput.propTypes = {
     margin: PropTypes.string,
     onBlur: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
+    submitCount: PropTypes.number.isRequired,
     touched: PropTypes.bool,
     value: PropTypes.oneOfType([
         PropTypes.number,

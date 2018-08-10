@@ -13,6 +13,7 @@ const ResetPasswordForm = ({
     handleChange,
     handleSubmit,
     onClose,
+    submitCount,
     title,
     touched,
     values,
@@ -34,6 +35,7 @@ const ResetPasswordForm = ({
             name="currentPassword"
             onBlur={handleBlur}
             onChange={handleChange}
+            submitCount={submitCount}
             value={values.currentPassword}
             error={errors.currentPassword}
             touched={touched.currentPassword}
@@ -45,6 +47,7 @@ const ResetPasswordForm = ({
             name="newPassword"
             onBlur={handleBlur}
             onChange={handleChange}
+            submitCount={submitCount}
             value={values.newPassword}
             error={errors.newPassword}
             touched={touched.newPassword}
@@ -56,6 +59,7 @@ const ResetPasswordForm = ({
             name="repeatPassword"
             onBlur={handleBlur}
             onChange={handleChange}
+            submitCount={submitCount}
             value={values.repeatPassword}
             error={errors.repeatPassword}
             touched={touched.repeatPassword}
@@ -70,6 +74,7 @@ ResetPasswordForm.propTypes = {
     handleChange: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
+    submitCount: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     touched: PropTypes.objectOf(PropTypes.bool).isRequired,
     username: PropTypes.string.isRequired,

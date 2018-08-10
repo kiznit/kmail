@@ -14,6 +14,7 @@ const MailServerForm = ({
     handleChange,
     handleSubmit,
     onClose,
+    submitCount,
     title,
     touched,
     values,
@@ -25,6 +26,7 @@ const MailServerForm = ({
             name="url"
             onBlur={handleBlur}
             onChange={handleChange}
+            submitCount={submitCount}
             value={values.url}
             error={errors.url}
             touched={touched.url}
@@ -49,6 +51,7 @@ const MailServerForm = ({
             name="port"
             onBlur={handleBlur}
             onChange={handleChange}
+            submitCount={submitCount}
             value={values.port}
             error={errors.port}
             touched={touched.port}
@@ -63,6 +66,7 @@ MailServerForm.propTypes = {
     handleChange: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
+    submitCount: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     touched: PropTypes.objectOf(PropTypes.bool).isRequired,
     values: PropTypes.shape({
