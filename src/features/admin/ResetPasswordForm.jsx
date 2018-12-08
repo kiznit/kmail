@@ -1,10 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 
 import TextInput from 'components/TextInput';
 import SettingForm from 'features/settings/SettingForm';
+
+import { changePassword } from './actions';
 
 
 const ResetPasswordForm = ({
@@ -82,29 +85,43 @@ ResetPasswordForm.propTypes = {
 };
 
 
-export default withFormik({
-    mapPropsToValues: props => ({
-        username: props.username,
-        currentPassword: '',
-        newPassword: '',
-        repeatPassword: '',
-    }),
-
-    validationSchema: Yup.object().shape({
-        currentPassword: Yup.string().required('Enter your current password'),
-        newPassword: Yup.string().required('Enter a new password'),
-        repeatPassword: Yup.string()
-            .required('Enter your new password again')
-            .oneOf([Yup.ref('newPassword')], 'Passwords do not match'),
-    }),
+const mapDispatchToProps = dispatch => ({
+    changePassword: (username, currentPassword, newPassword) => dispatch(changePassword(username, currentPassword, newPassword)),
+});
 
 
-    handleSubmit: (values, { props }) => {
-        const { onClose } = props;
+export default connect(null, mapDispatchToProps)(
+    withFormik({
+        mapPropsToValues: props => ({
+            username: props.username,
+            currentPassword: '',
+            newPassword: '',
+            repeatPassword: '',
+        }),
 
-        //todo
-        console.log("handleSubmit(): values =", values);
+        validationSchema: Yup.object().shape({
+            currentPassword: Yup.string().required('Enter your current password'),
+            newPassword: Yup.string().required('Enter a new password'),
+            repeatPassword: Yup.string()
+                .required('Enter your new password again')
+                .oneOf([Yup.ref('newPassword')], 'Passwords do not match'),
+        }),
 
-        onClose();
-    },
-})(ResetPasswordForm);
+
+        handleSubmit: (values, { props, setSubmitting }) => {
+            const { username, currentPassword, newPassword } = values;
+            const { changePassword, onClose } = props;
+
+            return changePassword(username, currentPassword, newPassword)
+                .then(result => {
+                    if (result.error) {
+                        //TODO
+                        setSubmitting(false);
+                    } else {
+                        setSubmitting(false);
+                        onClose();
+                    }
+                });
+        },
+    })(ResetPasswordForm)
+);

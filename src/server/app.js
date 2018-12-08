@@ -13,7 +13,7 @@ import session from 'express-session';
 import config from './config';
 import { db } from './data';
 import logger from './logger';
-import { passport } from './auth';
+import { passport, hashPassword, verifyPassword } from './auth';
 import { render } from './render';
 
 const app = express();
@@ -146,6 +146,32 @@ app.post('/api/logout', (req, res, next) => {
         res.clearCookie(sessionCookie.key, sessionCookie);
         return res.json({});
     });
+});
+
+
+app.post('/api/changepassword', (req, res, next) => {
+    const { username, currentPassword, newPassword } = req.body;
+
+    if (!username || !currentPassword || !newPassword) {
+        return res.status(HttpStatus.BAD_REQUEST).send();
+    }
+
+    if (username !== req.user.username) {
+        return res.status(HttpStatus.UNAUTHORIZED).send('Invalid password');
+    }
+
+    verifyPassword(currentPassword, req.user.password)
+        .then(verified => {
+            if (!verified) {
+                return res.status(HttpStatus.UNAUTHORIZED).send('Invalid password');
+            }
+
+//todo: must update req.user as well...
+            hashPassword(newPassword)
+                .then(password => db('users').where({ username }).update({ password }))
+                .then(() => res.status(HttpStatus.OK).send())
+                .asCallback(next);
+        });
 });
 
 
