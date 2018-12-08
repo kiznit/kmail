@@ -6,5 +6,8 @@ export default function createTheme() {
         palette: {
             primary: color,
         },
+        typography: {
+            suppressWarning: true,
+        },
     });
 }

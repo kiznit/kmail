@@ -15,6 +15,8 @@ export default (env = {}) => {
 
         target: 'web',
 
+        mode: isDev ? 'development' : 'production',
+
         stats: 'errors-only',
 
         entry: {
@@ -79,6 +81,19 @@ export default (env = {}) => {
             ],
         },
 
+        optimization: {
+            splitChunks: {
+                cacheGroups: {
+                    // Put node_modules code in its own bundle (but not css!)
+                    vendors: {
+                        name: 'vendors',
+                        chunks: 'all',
+                        test: /node_modules.+(?<!css)$/,
+                    },
+                },
+            },
+        },
+
         plugins: [
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': isDev ? '"development"' : '"production"',
@@ -93,12 +108,6 @@ export default (env = {}) => {
                 path: 'dist/server',
                 filename: 'assets.json',
                 prettyPrint: true,
-            }),
-
-            // Put node_modules code in its own bundle
-            new webpack.optimize.CommonsChunkPlugin({
-                name: 'vendors',
-                minChunks: module => /node_modules/.test(module.resource),
             }),
 
             ...(isDev

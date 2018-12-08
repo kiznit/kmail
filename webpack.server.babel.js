@@ -15,6 +15,8 @@ export default (env = {}) => {
 
         target: 'node',
 
+        mode: isDev ? 'development' : 'production',
+
         watch: isDev,
 
         stats: 'errors-only',
