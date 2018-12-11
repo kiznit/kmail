@@ -2,6 +2,7 @@
 import path from 'path';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import nodeExternals from 'webpack-node-externals';
+import webpack from 'webpack';
 
 
 const log = (...args) => {
@@ -18,6 +19,8 @@ export default (env, argv) => {
         name: 'server',
 
         target: 'node',
+
+        devtool: isDev ? 'eval-source-map' : 'source-map',
 
         entry: {
             server: [
@@ -66,6 +69,19 @@ export default (env, argv) => {
         },
 
         plugins: [
+            new webpack.DefinePlugin({
+                'process.env.NODE_ENV': isDev ? '"development"' : '"production"',
+                __BROWSER__: false,
+                __DEV__: isDev,
+                __TEST__: false,
+            }),
+
+            new webpack.BannerPlugin({
+                banner: 'require("source-map-support").install();',
+                raw: true,
+                entryOnly: false,
+            }),
+
             ...(isDev
                 ? [
                 ] : [

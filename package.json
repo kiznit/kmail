@@ -6,7 +6,7 @@
   "author": "Thierry Tremblay <kiznit@users.noreply.github.com>",
   "license": "MIT",
   "scripts": {
-    "start": "node ./dist/server/server.js",
+    "start": "cross-env NODE_ENV=production node ./dist/server/server.js",
     "build": "yarn clean && yarn build-server && yarn build-client && yarn build-static",
     "build-client": "webpack --config webpack.client.babel.js --mode production",
     "build-server": "webpack --config webpack.server.babel.js --mode production",
@@ -15,6 +15,7 @@
     "lint": "eslint --ext .js,.jsx *.js src"
   },
   "dependencies": {
+    "cross-env": "^5.2.0",
     "express": "^4.16.4",
     "preact": "^8.4.2",
     "preact-compat": "^3.18.4",

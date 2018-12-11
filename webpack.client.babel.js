@@ -1,6 +1,7 @@
 /* eslint import/no-extraneous-dependencies: 1 */
 import path from 'path';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import webpack from 'webpack';
 
 
 const log = (...args) => {
@@ -17,6 +18,8 @@ export default (env, argv) => {
         name: 'client',
 
         target: 'web',
+
+        devtool: isDev ? 'eval-source-map' : 'source-map',
 
         entry: {
             client: [
@@ -59,6 +62,13 @@ export default (env, argv) => {
         },
 
         plugins: [
+            new webpack.DefinePlugin({
+                'process.env.NODE_ENV': isDev ? '"development"' : '"production"',
+                __BROWSER__: true,
+                __DEV__: isDev,
+                __TEST__: false,
+            }),
+
             ...(isDev
                 ? [
                 ] : [
