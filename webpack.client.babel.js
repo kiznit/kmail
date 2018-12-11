@@ -1,5 +1,6 @@
 /* eslint import/no-extraneous-dependencies: 1 */
 import path from 'path';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 
 const log = (...args) => {
@@ -54,6 +55,19 @@ export default (env, argv) => {
                 },
             ],
         },
+
+        plugins: [
+            ...(isDev
+                ? [
+                ] : [
+                    new BundleAnalyzerPlugin({
+                        analyzerMode: 'static',
+                        reportFilename: '../../bundle_client.html',
+                        openAnalyzer: false,
+                    }),
+                ]
+            ),
+        ],
 
         optimization: {
             splitChunks: {

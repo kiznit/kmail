@@ -1,5 +1,6 @@
 /* eslint import/no-extraneous-dependencies: 1 */
 import path from 'path';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import nodeExternals from 'webpack-node-externals';
 
 
@@ -61,6 +62,19 @@ export default (env, argv) => {
                 },
             ],
         },
+
+        plugins: [
+            ...(isDev
+                ? [
+                ] : [
+                    new BundleAnalyzerPlugin({
+                        analyzerMode: 'static',
+                        reportFilename: '../bundle_server.html',
+                        openAnalyzer: false,
+                    }),
+                ]
+            ),
+        ],
 
         // Do not replace node globals with polyfills
         // https://webpack.js.org/configuration/node/
