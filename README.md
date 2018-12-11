@@ -18,6 +18,7 @@ What I want:
 * Babel 7
 * ESLint 5 based on Airbnb style
 * Express 4
+* Preact 8 (and not React!)
 * Webpack 4
 
 ## Command line

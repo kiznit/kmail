@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import App from 'components/App';
 
@@ -16,7 +15,7 @@ const render = () => {
         </App>
     );
 
-    ReactDOM.hydrate(components, container);
+    React.render(components, document.body, container); /* eslint-disable-line react/no-deprecated */
 };
 
 
