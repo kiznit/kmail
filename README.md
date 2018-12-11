@@ -16,9 +16,9 @@ What I want:
 ## What is included
 
 * Babel 7
-* ESLint 5 based on Airbnb style
+* ESLint 5 (Airbnb style used as base)
 * Express 4
-* Preact 8 (and not React!)
+* Preact 8 (Not React!)
 * Webpack 4
 
 ## Command line
