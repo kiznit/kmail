@@ -16,9 +16,9 @@ What I want:
 ## What is included
 
 * Babel 7
+* ESLint 5 based on Airbnb style
 * Express 4
 * Webpack 4
-
 
 ## Command line
 
@@ -35,3 +35,7 @@ Yarn. I use yarn. NPM has caused too much grief in my life. I moved to yarn and 
 ### Clean build
 
     yarn clean
+
+### Linter
+
+    yarn lint

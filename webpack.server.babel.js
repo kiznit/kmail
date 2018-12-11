@@ -1,11 +1,11 @@
+/* eslint import/no-extraneous-dependencies: 1 */
 import path from 'path';
 import nodeExternals from 'webpack-node-externals';
 
 
 const log = (...args) => {
-    console.log("WEBPACK SERVER CONFIG:", ...args);
-}
-
+    console.log('WEBPACK SERVER CONFIG:', ...args);
+};
 
 
 export default (env, argv) => {
@@ -35,8 +35,8 @@ export default (env, argv) => {
 
         // List of files that should not be included in the bundle
         externals: [
-            './assets.json',    // Needs to be dynamically loaded by server code
-            nodeExternals(),    // Ignore all modules in node_modules
+            './assets.json', // Needs to be dynamically loaded by server code
+            nodeExternals(), // Ignore all modules in node_modules
         ],
 
         module: {
@@ -52,5 +52,5 @@ export default (env, argv) => {
                 },
             ],
         },
-    }
-}
+    };
+};
