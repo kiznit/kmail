@@ -18,6 +18,7 @@ What I want:
 * Babel 7
 * ESLint 5 (Airbnb style used as base)
 * Express 4
+* Jest / Chai / Sinon (Unit tests)
 * Preact 8 (Not React!)
 * Webpack 4
 
