@@ -9,7 +9,7 @@ const log = (...args) => {
 
 
 export default (env, argv) => {
-    const isDev = argv.mode !== 'production';
+    const isDev = !argv || argv.mode !== 'production';
 
     log(isDev ? 'development' : 'production');
 
@@ -20,7 +20,7 @@ export default (env, argv) => {
 
         entry: {
             server: [
-                './src/server.js',
+                './src/server.jsx',
             ],
         },
 
@@ -31,6 +31,9 @@ export default (env, argv) => {
 
         resolve: {
             extensions: ['.js', '.jsx'],
+            alias: {
+                components: path.resolve('src/components/'),
+            },
         },
 
         // List of files that should not be included in the bundle
@@ -49,6 +52,12 @@ export default (env, argv) => {
                     test: /\.jsx?$/,
                     exclude: /node_modules/,
                     loader: 'babel-loader',
+                    options: {
+                        presets: [
+                            '@babel/preset-env',
+                            '@babel/preset-react',
+                        ],
+                    },
                 },
             ],
         },
