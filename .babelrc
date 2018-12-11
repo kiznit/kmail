@@ -1,7 +1,7 @@
 /*
     This configuration file is not used by server or client code!
     It is used when parsing the webpack.xxx.babel.js files.
-    It is also used for any other tool / script ran from the command line.
+    It is also used by other command line tools (jest, ...)
 */
 
 {
