@@ -1,0 +1,15 @@
+/*
+    This configuration file is not used by server or client code!
+    It is used when parsing the webpack.xxx.babel.js files.
+    It can also be used for any other tool / script ran from the command line.
+*/
+
+{
+    presets: [
+        ["@babel/preset-env", {
+            targets: {
+                node: "current"
+            }
+        }]
+    ]
+}
