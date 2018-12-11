@@ -1,5 +1,6 @@
 import express from 'express';
 import http from 'http';
+import path from 'path';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
@@ -11,8 +12,10 @@ const app = express();
 
 
 const render = () => {
+    const scripts = ['/js/vendors.js', '/js/client.js'];
+
     const components = (
-        <Html>
+        <Html scripts={scripts}>
             <App>
                 <div>
                     Hi this is the server code!
@@ -25,6 +28,11 @@ const render = () => {
 };
 
 
+// Static content
+app.use('/', express.static(path.resolve(__dirname, '../public')));
+
+
+// Dynamic content
 app.get('*', (req, res) => {
     const html = render();
     res.status(200);

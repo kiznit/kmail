@@ -1,10 +1,9 @@
 /* eslint import/no-extraneous-dependencies: 1 */
 import path from 'path';
-import nodeExternals from 'webpack-node-externals';
 
 
 const log = (...args) => {
-    console.log('WEBPACK SERVER CONFIG:', ...args);
+    console.log('WEBPACK CLIENT CONFIG:', ...args);
 };
 
 
@@ -14,18 +13,18 @@ export default (env, argv) => {
     log(isDev ? 'development' : 'production');
 
     return {
-        name: 'server',
+        name: 'client',
 
-        target: 'node',
+        target: 'web',
 
         entry: {
-            server: [
-                './src/server.jsx',
+            client: [
+                './src/client.jsx',
             ],
         },
 
         output: {
-            path: path.resolve(__dirname, 'dist/server'),
+            path: path.resolve(__dirname, 'dist/public/js'),
             filename: '[name].js',
         },
 
@@ -35,12 +34,6 @@ export default (env, argv) => {
                 components: path.resolve('src/components/'),
             },
         },
-
-        // List of files that should not be included in the bundle
-        externals: [
-            './assets.json', // Needs to be dynamically loaded by server code
-            nodeExternals(), // Ignore all modules in node_modules
-        ],
 
         module: {
             // Make missing exports an error instead of warning
@@ -62,15 +55,17 @@ export default (env, argv) => {
             ],
         },
 
-        // Do not replace node globals with polyfills
-        // https://webpack.js.org/configuration/node/
-        node: {
-            console: false,
-            global: false,
-            process: false,
-            Buffer: false,
-            __filename: false,
-            __dirname: false,
+        optimization: {
+            splitChunks: {
+                cacheGroups: {
+                    // Put node_modules code in its own bundle (but not css!)
+                    vendors: {
+                        name: 'vendors',
+                        chunks: 'all',
+                        test: /node_modules.+(?<!css)$/,
+                    },
+                },
+            },
         },
     };
 };
