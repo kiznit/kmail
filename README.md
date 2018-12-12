@@ -20,7 +20,7 @@ What I want:
 * ESLint 5 (Airbnb style used as base)
 * Express 4 (Web framework)
 * Jest + Chai + Sinon (Unit tests)
-* Preact 8 (Not React!)
+* React 16.6
 * Webpack 4 (Module bundler)
 
 ## Command line

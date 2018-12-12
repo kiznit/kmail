@@ -53,8 +53,6 @@ module.exports = {
     // A map from regular expressions to module names that allow to stub out resources,
     // like images or styles with a single module.
     moduleNameMapper: {
-        '^react$': 'preact-compat',
-        '^react-dom(.*)': 'preact-compat$1',
     },
 
     // modulePathIgnorePatterns: // [array<string>]
