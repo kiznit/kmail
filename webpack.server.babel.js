@@ -24,7 +24,7 @@ export default (env, argv) => {
 
         entry: {
             server: [
-                './src/server.jsx',
+                './src/server/index.js',
             ],
         },
 
