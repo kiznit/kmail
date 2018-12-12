@@ -23,6 +23,7 @@ export default (env, argv) => {
 
         entry: {
             client: [
+                ...(isDev ? ['webpack-hot-middleware/client?name=client&reload=true'] : []),
                 './src/client.jsx',
             ],
         },
@@ -30,6 +31,7 @@ export default (env, argv) => {
         output: {
             path: path.resolve(__dirname, 'dist/public/js'),
             filename: '[name].js',
+            publicPath: '/js/',
         },
 
         resolve: {
@@ -54,6 +56,9 @@ export default (env, argv) => {
                             '@babel/preset-env',
                             '@babel/preset-react',
                         ],
+                        plugins: [
+                            ...(isDev ? ['react-hot-loader/babel'] : []),
+                        ],
                     },
                 },
             ],
@@ -69,6 +74,10 @@ export default (env, argv) => {
 
             ...(isDev
                 ? [
+                    new webpack.optimize.OccurrenceOrderPlugin(),
+                    new webpack.HotModuleReplacementPlugin(),
+                    new webpack.NoEmitOnErrorsPlugin(),
+                    new webpack.NamedModulesPlugin(),
                 ] : [
                     new BundleAnalyzerPlugin({
                         analyzerMode: 'static',

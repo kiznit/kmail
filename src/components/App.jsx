@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { hot } from 'react-hot-loader';
 
 
 const App = ({ children }) => (
-    <fragment>
+    <div>
         { React.Children.only(children) }
-    </fragment>
+    </div>
 );
 
 
@@ -14,4 +15,4 @@ App.propTypes = {
 };
 
 
-export default App;
+export default hot(module)(App);

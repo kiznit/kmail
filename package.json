@@ -6,7 +6,7 @@
   "author": "Thierry Tremblay <kiznit@users.noreply.github.com>",
   "license": "MIT",
   "scripts": {
-    "start-dev": "yarn clean && yarn build-static && yarn build-server --mode development && yarn build-client --mode development && cross-env NODE_ENV=development node ./dist/server/server.js",
+    "start-dev": "yarn clean && yarn build-static && yarn build-server --mode development && cross-env NODE_ENV=development node ./dist/server/server.js",
     "start": "cross-env NODE_ENV=production node ./dist/server/server.js",
     "build": "yarn clean && yarn build-server && yarn build-client && yarn build-static",
     "build-client": "webpack --config webpack.client.babel.js --mode production",
@@ -26,6 +26,7 @@
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
+    "react-hot-loader": "^4.3.12",
     "sinon": "^7.2.0",
     "sinon-chai": "^3.3.0"
   },
@@ -49,6 +50,8 @@
     "webpack": "^4.27.1",
     "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "^3.1.2",
+    "webpack-dev-middleware": "^3.4.0",
+    "webpack-hot-middleware": "^2.24.3",
     "webpack-node-externals": "^1.7.2"
   }
 }

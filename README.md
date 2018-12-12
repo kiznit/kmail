@@ -17,15 +17,20 @@ What I want:
 ## What is included
 
 * Babel 7 (Transpile ES6 code)
+* Hot module reloading (client-side)
 * ESLint 5 (Airbnb style used as base)
 * Express 4 (Web framework)
-* Jest + Chai + Sinon (Unit tests)
-* React 16.6
+* Jest + Chai + Sinon + Supertest (Unit tests)
+* React 16
 * Webpack 4 (Module bundler)
 
 ## Command line
 
 Yarn. I use yarn. NPM has caused too much grief in my life. I moved to yarn and never looked back. You can install yarn with ```npm install -g yarn```.
+
+### Build and run development code
+
+    yarn start-dev
 
 ### Build production code
 
