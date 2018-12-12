@@ -6,6 +6,7 @@
   "author": "Thierry Tremblay <kiznit@users.noreply.github.com>",
   "license": "MIT",
   "scripts": {
+    "start-dev": "yarn clean && yarn build-static && yarn build-server --mode development && yarn build-client --mode development && cross-env NODE_ENV=development node ./dist/server/server.js",
     "start": "cross-env NODE_ENV=production node ./dist/server/server.js",
     "build": "yarn clean && yarn build-server && yarn build-client && yarn build-static",
     "build-client": "webpack --config webpack.client.babel.js --mode production",
