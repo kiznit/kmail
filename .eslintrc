@@ -14,10 +14,17 @@
         jest: true,
     },
 
+    "globals": {
+        "__BROWSER__": true,
+        "__DEV__": true,
+        "__TEST__": true
+    },
+
     extends: "airbnb",
 
     rules: {
         arrow-body-style: 0,
+        arrow-parens: 0,
         comma-dangle: [2, "always-multiline"],
         indent: [2, 4],
         max-len: [1, { code: 120, ignoreComments: true }],

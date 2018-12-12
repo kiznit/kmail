@@ -8,7 +8,13 @@ const app = express();
 
 
 // Static content
-app.use('/', express.static(path.resolve(__dirname, '../public')));
+const publicPath = __TEST__ ? '../../public' : '../public';
+app.use('/', express.static(path.resolve(__dirname, publicPath)));
+
+
+// Simple /ping route - can be used by load balancers or deployment systems
+// to verify if the server is up and running.
+app.get('/ping', (req, res) => res.json());
 
 
 // Dynamic content
