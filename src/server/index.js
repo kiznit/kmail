@@ -18,7 +18,6 @@ if (__DEV__) {
     const webpack = require('webpack');
     const config = require('../../webpack.client.babel').default();
     config.mode = 'development';
-    console.log('process.env.NODE_ENV:', process.env.NODE_ENV);
     const compiler = webpack(config);
 
     startupPromises.push(new Promise((resolve, reject) => {
