@@ -3,7 +3,7 @@ import React from 'react';
 import App from 'components/App';
 
 
-const container = document.getElementById('react-root');
+const container = document.getElementById('data-react-root');
 
 
 const render = () => {

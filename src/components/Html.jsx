@@ -24,7 +24,7 @@ const Html = ({ title, description, scripts, children }) => {
                 <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=1" />
             </head>
             <body>
-                <div id="react-root" dangerouslySetInnerHTML={{ __html: html }} />
+                <div id="data-react-root" dangerouslySetInnerHTML={{ __html: html }} />
                 { scripts.map(script => <script key={script} src={script} />) }
             </body>
         </html>
