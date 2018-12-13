@@ -21,6 +21,8 @@ export default (env, argv) => {
 
         target: 'node',
 
+        stats: isDev ? 'errors-only' : 'normal',
+
         devtool: isDev ? 'eval-source-map' : 'source-map',
 
         watch: isDev, // We need this for hot module reloading

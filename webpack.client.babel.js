@@ -19,6 +19,8 @@ export default (env, argv) => {
 
         target: 'web',
 
+        stats: isDev ? 'errors-only' : 'normal',
+
         devtool: isDev ? 'eval-source-map' : 'source-map',
 
         entry: {

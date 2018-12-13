@@ -47,6 +47,7 @@ if (__DEV__) {
     webpackDevMiddleware = WebpackDevMiddleware(compiler, {
         publicPath: config.output.publicPath,
         mode: 'development',
+        stats: config.stats,
     });
 
     // Client hot module reloading
