@@ -16,8 +16,8 @@ const Html = ({ title, description, scripts, children }) => {
                 <meta charSet="utf-8" />
                 <meta httpEquiv="x-ua-compatible" content="ie=edge" />
                 <meta name="robots" content="noindex,nofollow" />
-                <title>{title}</title>
-                <meta name="description" content={description} />
+                { title && <title>{title}</title> }
+                { description && <meta name="description" content={description} /> }
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 { scripts.map(script => <link key={script} rel="preload" href={script} as="script" />) }
                 <link rel="icon" href="/favicon.ico?v=1" />
@@ -35,15 +35,15 @@ const Html = ({ title, description, scripts, children }) => {
 Html.propTypes = {
     children: PropTypes.node.isRequired,
     description: PropTypes.string,
-    scripts: PropTypes.arrayOf(PropTypes.string.isRequired),
+    scripts: PropTypes.arrayOf(PropTypes.string),
     title: PropTypes.string,
 };
 
 
 Html.defaultProps = {
-    description: '',
+    description: null,
     scripts: [],
-    title: 'Untitled',
+    title: null,
 };
 
 
