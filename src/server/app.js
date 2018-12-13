@@ -19,11 +19,11 @@ app.get('/ping', (req, res) => res.json());
 
 // Dynamic content
 app.get('/', (req, res) => {
-    const html = render();
+    const markup = render();
     res.status(200);
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.write('<!DOCTYPE html>');
-    res.write(html);
+    res.write(markup);
     res.end();
 });
 
