@@ -6,7 +6,7 @@
   "author": "Thierry Tremblay <kiznit@users.noreply.github.com>",
   "license": "MIT",
   "scripts": {
-    "start-dev": "yarn clean && yarn build-static && yarn build-server --mode development && cross-env NODE_ENV=development node ./dist/server/server.js",
+    "start-dev": "yarn clean && yarn build-static && cross-env NODE_ENV=development yarn build-server --mode development",
     "start": "cross-env NODE_ENV=production node ./dist/server/server.js",
     "build": "yarn clean && yarn build-server && yarn build-client && yarn build-static",
     "build-client": "webpack --config webpack.client.babel.js --mode production",
@@ -46,6 +46,7 @@
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
     "opn-cli": "^4.0.0",
+    "start-server-webpack-plugin": "^2.2.5",
     "supertest": "^3.3.0",
     "webpack": "^4.27.1",
     "webpack-bundle-analyzer": "^3.0.3",

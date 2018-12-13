@@ -1,5 +1,6 @@
 /* eslint import/no-extraneous-dependencies: 1 */
 import path from 'path';
+import StartServerPlugin from 'start-server-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import nodeExternals from 'webpack-node-externals';
 import webpack from 'webpack';
@@ -22,8 +23,14 @@ export default (env, argv) => {
 
         devtool: isDev ? 'eval-source-map' : 'source-map',
 
+        watch: isDev, // We need this for hot module reloading
+
         entry: {
             server: [
+                ...(isDev
+                    ? ['webpack/hot/poll?1000'] // We need this for hot module reloading
+                    : []
+                ),
                 './src/server/index.js',
             ],
         },
@@ -43,7 +50,9 @@ export default (env, argv) => {
         // List of files that should not be included in the bundle
         externals: [
             './assets.json', // Needs to be dynamically loaded by server code
-            nodeExternals(), // Ignore all modules in node_modules
+            nodeExternals({ // Ignore all modules in node_modules
+                whitelist: ['webpack/hot/poll?1000'],
+            }),
         ],
 
         module: {
@@ -60,6 +69,9 @@ export default (env, argv) => {
                         presets: [
                             '@babel/preset-env',
                             '@babel/preset-react',
+                        ],
+                        plugins: [
+                            ...(isDev ? ['react-hot-loader/babel'] : []),
                         ],
                     },
                 },
@@ -82,6 +94,10 @@ export default (env, argv) => {
 
             ...(isDev
                 ? [
+                    new StartServerPlugin('server.js'),
+                    new webpack.HotModuleReplacementPlugin(),
+                    new webpack.NoEmitOnErrorsPlugin(),
+                    new webpack.NamedModulesPlugin(),
                 ] : [
                     new BundleAnalyzerPlugin({
                         analyzerMode: 'static',
