@@ -32,5 +32,14 @@
         object-curly-newline: 0,
         react/jsx-indent: [2, 4],
         react/jsx-indent-props: [2, 4],
-    }
+    },
+
+    overrides: [
+        {
+            files: ["*.spec.js", "*.spec.jsx"],
+            rules: {
+                no-unused-expressions: "off",
+            }
+        }
+    ]
 }

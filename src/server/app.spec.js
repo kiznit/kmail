@@ -14,9 +14,8 @@ describe('app', () => {
         return request(app)
             .get('/ping')
             .expect(200)
-            .expect('Content-Type', 'application/json; charset=utf-8')
             .expect(response => {
-                expect(response.body).to.equal('');
+                expect(response.body).to.be.empty;
             });
     });
 
