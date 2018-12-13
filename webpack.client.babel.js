@@ -26,7 +26,7 @@ export default (env, argv) => {
         entry: {
             client: [
                 ...(isDev ? ['webpack-hot-middleware/client?name=client&reload=true'] : []),
-                './src/client.jsx',
+                './src/client/index.jsx',
             ],
         },
 
