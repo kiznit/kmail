@@ -30,7 +30,7 @@ const Html = ({ title, description, scripts, appState, children }) => {
             </head>
             <body>
                 <div id="app-root" dangerouslySetInnerHTML={{ __html: markup }} />
-                <script dangerouslySetInnerHTML={{ __html: `window.INITIAL_APP_STATE=${JSON.stringify(appState)};` }} />
+                <script dangerouslySetInnerHTML={{ __html: `window.INITIAL_REDUX_STATE=${JSON.stringify(appState)};` }} />
                 { scripts.map(script => <script key={script} src={script} />) }
             </body>
         </html>

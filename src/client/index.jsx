@@ -7,7 +7,7 @@ import configureStore from '../redux/store';
 
 
 const container = document.getElementById('app-root');
-const store = configureStore(global.INITIAL_APP_STATE);
+const store = configureStore(window.INITIAL_REDUX_STATE);
 
 
 const render = App => {
