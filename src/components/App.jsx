@@ -1,17 +1,19 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Provider as Redux } from 'react-redux';
 import { hot } from 'react-hot-loader';
 
 
-const App = ({ children }) => (
-    <div>
+const App = ({ children, store }) => (
+    <Redux store={store}>
         { React.Children.only(children) }
-    </div>
+    </Redux>
 );
 
 
 App.propTypes = {
-    children: PropTypes.element.isRequired,
+    children: PropTypes.node.isRequired,
+    store: Redux.propTypes.store.isRequired,
 };
 
 

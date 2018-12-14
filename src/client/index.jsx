@@ -2,15 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from 'components/App';
 
+import configureStore from '../redux/store';
 
-const container = document.getElementById('data-react-root');
+
+const container = document.getElementById('app-root');
+const store = configureStore(global.INITIAL_APP_STATE);
 
 
 const render = () => {
     const components = (
-        <App>
+        <App store={store}>
             <div>
-                Hi this is the client code!
+                Hi this is the App component!
             </div>
         </App>
     );

@@ -3,7 +3,7 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 
 
-const Html = ({ title, description, scripts, children }) => {
+const Html = ({ title, description, scripts, appState, children }) => {
     const html = renderToString(
         <div>
             { children }
@@ -24,7 +24,8 @@ const Html = ({ title, description, scripts, children }) => {
                 <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=1" />
             </head>
             <body>
-                <div id="data-react-root" dangerouslySetInnerHTML={{ __html: html }} />
+                <div id="app-root" dangerouslySetInnerHTML={{ __html: html }} />
+                <script dangerouslySetInnerHTML={{ __html: `window.INITIAL_APP_STATE=${JSON.stringify(appState)};` }} />
                 { scripts.map(script => <script key={script} src={script} />) }
             </body>
         </html>
@@ -33,6 +34,7 @@ const Html = ({ title, description, scripts, children }) => {
 
 
 Html.propTypes = {
+    appState: PropTypes.shape({}).isRequired,
     children: PropTypes.node.isRequired,
     description: PropTypes.string,
     scripts: PropTypes.arrayOf(PropTypes.string),

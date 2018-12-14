@@ -17,7 +17,8 @@
     globals: {
         __BROWSER__: true,
         __DEV__: true,
-        __TEST__: true
+        __TEST__: true,
+        __REDUX_DEVTOOLS_EXTENSION__: true
     },
 
     extends: "airbnb",
@@ -27,8 +28,10 @@
         arrow-parens: 0,
         comma-dangle: [2, "always-multiline"],
         global-require: 0,
-        indent: [2, 4],
+        indent: [2, 4, SwitchCase: 1],
         max-len: [1, { code: 120, ignoreComments: true }],
+        no-underscore-dangle: 0,
+        no-unused-vars: [2, { vars: "all", args: "none" }],
         object-curly-newline: 0,
         react/jsx-indent: [2, 4],
         react/jsx-indent-props: [2, 4],

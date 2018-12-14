@@ -22,6 +22,8 @@ What I want:
 * Express 4 (Web framework)
 * Jest + Chai + Sinon + Supertest (Unit tests)
 * React 16
+* Redux 4
+* React-Redux 6
 * Webpack 4 (Module bundler)
 
 ## Command line
