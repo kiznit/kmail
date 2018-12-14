@@ -56,7 +56,9 @@ export default (env, argv) => {
                     loader: 'babel-loader',
                     options: {
                         presets: [
-                            '@babel/preset-env',
+                            ['@babel/preset-env', {
+                                useBuiltIns: 'entry',
+                            }],
                             '@babel/preset-react',
                         ],
                         plugins: [

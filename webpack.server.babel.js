@@ -70,7 +70,11 @@ export default (env, argv) => {
                     loader: 'babel-loader',
                     options: {
                         presets: [
-                            '@babel/preset-env',
+                            ['@babel/preset-env', {
+                                targets: {
+                                    node: 'current',
+                                },
+                            }],
                             '@babel/preset-react',
                         ],
                         plugins: [
