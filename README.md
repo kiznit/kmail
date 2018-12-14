@@ -17,6 +17,7 @@ What I want:
 ## What is included
 
 * Babel 7 (Transpile ES6 code)
+* Cache busting for production build
 * Hot module reloading (client-side and server-side)
 * ESLint 5 (Airbnb style used as base)
 * Express 4 (Web framework)

@@ -40,6 +40,7 @@ export default (env, argv) => {
         output: {
             path: path.resolve(__dirname, 'dist/server'),
             filename: '[name].js',
+            libraryTarget: 'commonjs2', // This is required so that we can dynamically include assets.json
         },
 
         resolve: {
@@ -51,8 +52,8 @@ export default (env, argv) => {
 
         // List of files that should not be included in the bundle
         externals: [
-            './assets.json', // Needs to be dynamically loaded by server code
-            nodeExternals({ // Ignore all modules in node_modules
+            './assets.json',    // Needs to be dynamically loaded by server code
+            nodeExternals({     // Ignore all modules in node_modules
                 whitelist: ['webpack/hot/poll?1000'],
             }),
         ],

@@ -4,6 +4,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import App from 'components/App';
 import Html from 'components/Html';
 
+import assets from './assets.json';
 import configureStore from '../redux/store';
 
 
@@ -13,7 +14,7 @@ const initializeStore = () => {
 
 
 const render = () => {
-    const scripts = ['/js/vendors.js', '/js/client.js'];
+    const scripts = [assets.vendors.js, assets.client.js];
     const store = initializeStore();
 
     const components = (

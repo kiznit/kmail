@@ -1,0 +1,8 @@
+{
+  "client": {
+    "js": "/js/client.js"
+  },
+  "vendors": {
+    "js": "/js/vendors.js"
+  }
+}

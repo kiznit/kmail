@@ -1,6 +1,7 @@
 /* eslint import/no-extraneous-dependencies: 1 */
 import path from 'path';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import AssetsPlugin from 'assets-webpack-plugin';
 import webpack from 'webpack';
 
 
@@ -32,7 +33,7 @@ export default (env, argv) => {
 
         output: {
             path: path.resolve(__dirname, 'dist/public/js'),
-            filename: '[name].js',
+            filename: isDev ? '[name].js' : '[name].[chunkhash].js',
             publicPath: '/js/',
         },
 
@@ -72,6 +73,12 @@ export default (env, argv) => {
                 __BROWSER__: true,
                 __DEV__: isDev,
                 __TEST__: false,
+            }),
+
+            new AssetsPlugin({
+                path: 'dist/server',
+                filename: 'assets.json',
+                prettyPrint: true,
             }),
 
             ...(isDev
