@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Provider as Redux } from 'react-redux';
-import { hot } from 'react-hot-loader';
 
 
 const App = ({ children, store }) => (
@@ -17,4 +16,4 @@ App.propTypes = {
 };
 
 
-export default hot(module)(App);
+export default App;

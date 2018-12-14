@@ -61,9 +61,6 @@ export default (env, argv) => {
                             }],
                             '@babel/preset-react',
                         ],
-                        plugins: [
-                            ...(isDev ? ['react-hot-loader/babel'] : []),
-                        ],
                     },
                 },
             ],

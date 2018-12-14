@@ -10,7 +10,7 @@ const container = document.getElementById('app-root');
 const store = configureStore(global.INITIAL_APP_STATE);
 
 
-const render = () => {
+const render = App => {
     const components = (
         <App store={store}>
             <div>
@@ -23,4 +23,11 @@ const render = () => {
 };
 
 
-render();
+render(App);
+
+
+if (module.hot) {
+    module.hot.accept('components/App', () => {
+        render(require('components/App').default);
+    });
+}

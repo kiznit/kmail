@@ -76,9 +76,6 @@ Promise.all(startupPromises)
         if (module.hot) {
             module.hot.accept('./app', () => {
                 server.removeListener('request', currentApp);
-                // Not sure why I need to explicitly require('./app') each time, but I do.
-                // When I was doing "import app from './app" at the top of the file, 'app'
-                // would automatically be re-imported. Not so with require().
                 currentApp = appWithHmr(require('./app').default);
                 server.on('request', currentApp);
             });
