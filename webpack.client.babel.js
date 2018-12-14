@@ -1,4 +1,4 @@
-/* eslint import/no-extraneous-dependencies: 1 */
+/* eslint-disable import/no-extraneous-dependencies */
 import path from 'path';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import AssetsPlugin from 'assets-webpack-plugin';
@@ -48,9 +48,9 @@ export default (env, argv) => {
             // Make missing exports an error instead of warning
             strictExportPresence: true,
 
-            // Process .js and .jsx files through babel
             rules: [
                 {
+                    // Process .js and .jsx files through babel
                     test: /\.jsx?$/,
                     exclude: /node_modules/,
                     loader: 'babel-loader',

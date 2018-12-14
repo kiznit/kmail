@@ -1,4 +1,4 @@
-/* eslint import/no-extraneous-dependencies: 1 */
+/* eslint-disable import/no-extraneous-dependencies */
 import path from 'path';
 import StartServerPlugin from 'start-server-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
@@ -30,7 +30,7 @@ export default (env, argv) => {
         entry: {
             server: [
                 ...(isDev
-                    ? ['webpack/hot/poll?1000'] // We need this for hot module reloading
+                    ? ['webpack/hot/poll?1000']
                     : []
                 ),
                 './src/server/index.js',
@@ -62,9 +62,9 @@ export default (env, argv) => {
             // Make missing exports an error instead of warning
             strictExportPresence: true,
 
-            // Process .js and .jsx files through babel
             rules: [
                 {
+                    // Process .js and .jsx files through babel
                     test: /\.jsx?$/,
                     exclude: /node_modules/,
                     loader: 'babel-loader',
