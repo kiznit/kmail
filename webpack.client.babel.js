@@ -108,5 +108,9 @@ export default (env, argv) => {
                 },
             },
         },
+
+        performance: {
+            assetFilter: filename => filename.indexOf('vendors.'),
+        },
     };
 };
