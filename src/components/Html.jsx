@@ -1,13 +1,17 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
+import { createGenerateClassName, JssProvider, SheetsRegistry } from 'react-jss';
 
 
 const Html = ({ title, description, scripts, appState, children }) => {
-    const html = renderToString(
-        <div>
+    const generateClassName = createGenerateClassName();
+    const sheets = new SheetsRegistry();
+
+    const markup = renderToString(
+        <JssProvider generateClassName={generateClassName} registry={sheets}>
             { children }
-        </div>
+        </JssProvider>
     );
 
     return (
@@ -22,9 +26,10 @@ const Html = ({ title, description, scripts, appState, children }) => {
                 { scripts.map(script => <link key={script} rel="preload" href={script} as="script" />) }
                 <link rel="icon" href="/favicon.ico?v=1" />
                 <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=1" />
+                <style id="jss-server-side" dangerouslySetInnerHTML={{ __html: sheets.toString() }} />
             </head>
             <body>
-                <div id="app-root" dangerouslySetInnerHTML={{ __html: html }} />
+                <div id="app-root" dangerouslySetInnerHTML={{ __html: markup }} />
                 <script dangerouslySetInnerHTML={{ __html: `window.INITIAL_APP_STATE=${JSON.stringify(appState)};` }} />
                 { scripts.map(script => <script key={script} src={script} />) }
             </body>

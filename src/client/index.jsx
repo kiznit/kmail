@@ -19,7 +19,13 @@ const render = App => {
         </App>
     );
 
-    ReactDOM.hydrate(components, container);
+    ReactDOM.hydrate(components, container, () => {
+        // Remove the server-side injected CSS (we don't need it anymore).
+        const jssStyles = document.getElementById('jss-server-side');
+        if (jssStyles && jssStyles.parentNode) {
+            jssStyles.parentNode.removeChild(jssStyles);
+        }
+    });
 };
 
 
