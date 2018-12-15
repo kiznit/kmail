@@ -33,6 +33,6 @@ initHmr
         }
     })
     .catch(error => {
-        console.error(error);
-        process.exit(1);
+        console.error(error.stack);
+        process.exitCode = 1;
     });
