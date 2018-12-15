@@ -1,10 +1,15 @@
 import express from 'express';
+import helmet from 'helmet';
 import path from 'path';
 
 import render from './render';
 
 
 const app = express();
+
+
+// Helmet helps you secure your Express apps by setting various HTTP headers. It's not a silver bullet, but it can help!
+app.use(helmet());
 
 
 // Static content
