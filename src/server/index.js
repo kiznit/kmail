@@ -24,6 +24,29 @@ initHmr
             }
         });
 
+
+        // Graceful shutdown
+        const shutdown = () => {
+            console.log('Shutting down...');
+
+            // Stop the server from accepting new requests and finish existing ones.
+            server.close(err => {
+                if (err) {
+                    throw err;
+                }
+
+                // Here you would want to close connections to all resources (databases, ...)
+
+                process.exitCode = 0;
+            });
+        };
+
+        process.on('SIGINT', shutdown);
+        process.on('SIGTERM', shutdown);
+        process.on('message', message => message === 'shutdown' && shutdown());
+
+
+        // Server-side hot module reloading
         if (module.hot) {
             module.hot.accept('./app', () => {
                 server.removeListener('request', currentApp);
