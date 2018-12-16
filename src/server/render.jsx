@@ -19,11 +19,7 @@ const render = () => {
 
     const components = (
         <Html scripts={scripts} appState={store.getState()}>
-            <App store={store}>
-                <div>
-                    Hi this is the App component!
-                </div>
-            </App>
+            <App store={store} />
         </Html>
     );
 

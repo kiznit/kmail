@@ -15,11 +15,11 @@ const styles = {
 };
 
 
-const App = ({ children, classes, store }) => (
+const App = ({ classes, store }) => (
     <Redux store={store}>
         <ThemeProvider theme={theme}>
             <h1 className={classes.blue}>
-                { React.Children.only(children) }
+                Hi this is the App Component!
             </h1>
         </ThemeProvider>
     </Redux>
@@ -27,7 +27,6 @@ const App = ({ children, classes, store }) => (
 
 
 App.propTypes = {
-    children: PropTypes.node.isRequired,
     classes: PropTypes.objectOf(PropTypes.string).isRequired,
     store: Redux.propTypes.store.isRequired,
 };

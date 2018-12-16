@@ -12,11 +12,7 @@ const store = configureStore(window.INITIAL_REDUX_STATE);
 
 const render = App => {
     const components = (
-        <App store={store}>
-            <div>
-                Hi this is the App component!
-            </div>
-        </App>
+        <App store={store} />
     );
 
     ReactDOM.hydrate(components, container, () => {
