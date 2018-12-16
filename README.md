@@ -1,5 +1,5 @@
-# react-redux-ssr-hmr starter kit
-React start project with server-side rendering and hot module reloading (client and server)
+# React Redux Starter Kit
+React + Redux starter kit with server-side rendering and hot module reloading (client and server).
 
 ## Why another React Starter Project?
 
@@ -12,7 +12,6 @@ What I want:
 * Server-side rendering (SSR): React code should execute on the server and render the initial page to reduce perceived latency (bundles can take a while to load).
 * Hot module reloading (HMR): Client-side hot reloading of changed code is a given. What's not common is server-side HMR. I want both.
 * Unit tests and code coverage.
-
 
 ## What is included
 
