@@ -1,23 +1,35 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { hot } from 'react-hot-loader';
-import { Provider as ReduxProvider } from 'react-redux';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { Provider as Redux } from 'react-redux';
+import injectSheet, { ThemeProvider } from 'react-jss';
 
 
-const App = ({ children, store }) => (
-    <CssBaseline>
-        <ReduxProvider store={store}>
-            { React.Children.only(children) }
-        </ReduxProvider>
-    </CssBaseline>
+// TODO: define a theme
+const theme = {
+};
+
+const styles = {
+    blue: {
+        color: '#0000FF',
+    },
+};
+
+
+const App = ({ classes, store }) => (
+    <Redux store={store}>
+        <ThemeProvider theme={theme}>
+            <h1 className={classes.blue}>
+                Hi this is the App Component!
+            </h1>
+        </ThemeProvider>
+    </Redux>
 );
 
 
 App.propTypes = {
-    children: PropTypes.element.isRequired,
-    store: ReduxProvider.propTypes.store,   // eslint-disable-line react/no-typos,react/require-default-props
+    classes: PropTypes.objectOf(PropTypes.string).isRequired,
+    store: Redux.propTypes.store.isRequired,
 };
 
 
-export default hot(module)(App);
+export default injectSheet(styles)(App);

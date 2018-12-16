@@ -1,51 +1,51 @@
 {
-    "env": {
-        "browser": true,
-        "es6": true,
-        "jest": true,
-        "node": true
-    },
-    "globals": {
-        "__BROWSER__": true,
-        "__DEV__": true,
-        "__TEST__": true
-    },
-    "extends": "airbnb",
-    "parser": "babel-eslint",
-    "settings": {
-        "import/resolver": {
-            "webpack": {
-                "config": "webpack.server.babel.js"
+    settings: {
+        import/resolver: {
+            webpack: {
+                config: "webpack.server.babel.js"
             }
         }
     },
-    "rules": {
-        // Javascript
-        "arrow-body-style": [1, "as-needed"],
-        "arrow-parens": [1, "as-needed"],
-        "brace-style": [1],
-        "comma-dangle": [2, "always-multiline"],
-        "function-paren-newline": [2, "consistent"],
-        "indent": [2, 4, { "SwitchCase": 1 }],
-        "keyword-spacing": [2, { "overrides": { "catch": { "after": false }} }],
-        "linebreak-style": [0], // TODO: must fix my GIT to not add CRLF
-        "max-len": [1, { "code": 120, "ignoreTrailingComments": true, "ignoreTemplateLiterals": true }],
-        "no-else-return": [0],
-        "no-multi-spaces": [2, { "ignoreEOLComments": true }],
-        "no-unused-vars": [1, { "vars": "all", "args": "none" }],
-        "object-curly-newline": [2, { "consistent": true }],
-        "quotes": [1, "single", { "avoidEscape": true }],
-        "spaced-comment": [1, "always"],
 
-        // Import
-        "import/prefer-default-export": [1],
+    env: {
+        browser: true,
+        es6: true,
+        node: true,
+        jest: true,
+    },
 
-        // React
-        "react/forbid-prop-types": [1],
-        "react/jsx-curly-brace-presence": [1],
-        "react/jsx-indent": [2, 4],
-        "react/jsx-indent-props": [2, 4],
-        "react/jsx-one-expression-per-line": [0],
-        "react/require-default-props": [0],
-    }
+    globals: {
+        __BROWSER__: true,
+        __DEV__: true,
+        __TEST__: true,
+        __REDUX_DEVTOOLS_EXTENSION__: true
+    },
+
+    extends: "airbnb",
+
+    rules: {
+        arrow-body-style: 0,
+        arrow-parens: 0,
+        comma-dangle: [2, "always-multiline"],
+        global-require: 0,
+        indent: [2, 4, SwitchCase: 1],
+        max-len: [1, { code: 120, ignoreComments: true }],
+        no-multi-spaces: [2, { ignoreEOLComments: true }],
+        no-shadow: 1,
+        no-underscore-dangle: 0,
+        no-unused-vars: [2, { vars: "all", args: "none" }],
+        object-curly-newline: 0,
+        react/jsx-indent: [2, 4],
+        react/jsx-indent-props: [2, 4],
+        react/no-danger: 0,
+    },
+
+    overrides: [
+        {
+            files: ["*.spec.js", "*.spec.jsx"],
+            rules: {
+                no-unused-expressions: "off",
+            }
+        }
+    ]
 }

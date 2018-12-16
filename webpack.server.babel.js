@@ -1,52 +1,62 @@
-/* eslint import/no-extraneous-dependencies: 1 */
+/* eslint-disable import/no-extraneous-dependencies */
 import path from 'path';
-import webpack from 'webpack';
+import StartServerPlugin from 'start-server-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import nodeExternals from 'webpack-node-externals';
-import StartServerPlugin from 'start-server-webpack-plugin';
-import pkg from './package.json';
+import webpack from 'webpack';
 
 
-export default (env = {}) => {
-    const isDev = env.dev || false;
+const log = (...args) => {
+    console.log('WEBPACK SERVER CONFIG:', ...args);
+};
+
+
+export default (env, argv) => {
+    const isDev = !argv || argv.mode !== 'production';
+
+    log(isDev ? 'development' : 'production');
 
     return {
         name: 'server',
 
         target: 'node',
 
-        mode: isDev ? 'development' : 'production',
+        stats: isDev ? 'errors-only' : 'normal',
 
-        watch: isDev,
+        devtool: isDev ? 'eval-source-map' : 'source-map',
 
-        stats: 'errors-only',
+        watch: isDev, // We need this for hot module reloading
 
         entry: {
             server: [
                 ...(isDev
-                    ? ['webpack/hot/poll?1000']     // StartServerPlugin Hot Module Reloading
+                    ? ['webpack/hot/poll?1000']
                     : []
                 ),
-                ...(process.env.AZURE ? ['./deployment/azure'] : []),
-                './src/server',
+                './src/server/index.js',
             ],
         },
 
         output: {
             path: path.resolve(__dirname, 'dist/server'),
             filename: '[name].js',
-            libraryTarget: 'commonjs2',
+            libraryTarget: 'commonjs2', // This is required so that we can dynamically include assets.json
         },
-
-        devtool: isDev ? 'eval-source-map' : 'source-map',
 
         resolve: {
             extensions: ['.js', '.jsx'],
             alias: {
                 components: path.resolve('src/components/'),
-                features: path.resolve('src/features/'),
             },
         },
+
+        // List of files that should not be included in the bundle
+        externals: [
+            './assets.json',    // Needs to be dynamically loaded by server code
+            nodeExternals({     // Ignore all modules in node_modules
+                whitelist: ['webpack/hot/poll?1000'],
+            }),
+        ],
 
         module: {
             // Make missing exports an error instead of warning
@@ -54,41 +64,23 @@ export default (env = {}) => {
 
             rules: [
                 {
+                    // Process .js and .jsx files through babel
                     test: /\.jsx?$/,
-                    loader: 'babel-loader',
                     exclude: /node_modules/,
+                    loader: 'babel-loader',
                     options: {
-                        babelrc: false,
-                        cacheDirectory: isDev,
                         presets: [
-                            [
-                                'env', {
-                                    modules: false,
-                                    targets: {
-                                        node: pkg.engines.node.match(/(\d+\.?)+/)[0],
-                                    },
+                            ['@babel/preset-env', {
+                                targets: {
+                                    node: 'current',
                                 },
-                            ],
-                            'react',
-                            'stage-2',
-                        ],
-                        plugins: [
-                            'transform-async-to-bluebird',
-                            'transform-promise-to-bluebird',
-                            ...(isDev ? ['react-hot-loader/babel'] : []),
+                            }],
+                            '@babel/preset-react',
                         ],
                     },
                 },
             ],
         },
-
-        // Do not include node_modules in the bundle (we can't anyways, some dependencies are binaries)
-        externals: [
-            './assets.json',
-            nodeExternals({
-                whitelist: ['webpack/hot/poll?1000'],   // StartServerPlugin Hot Module Reloading
-            }),
-        ],
 
         plugins: [
             new webpack.DefinePlugin({
@@ -132,4 +124,3 @@ export default (env = {}) => {
         },
     };
 };
-

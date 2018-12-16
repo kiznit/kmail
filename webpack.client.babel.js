@@ -1,32 +1,33 @@
-/* eslint import/no-extraneous-dependencies: 1 */
+/* eslint-disable import/no-extraneous-dependencies */
 import path from 'path';
-import webpack from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import AssetsPlugin from 'assets-webpack-plugin';
-import UglifyPlugin from 'uglifyjs-webpack-plugin';
-import pkg from './package.json';
+import webpack from 'webpack';
 
 
-export default (env = {}) => {
-    const isDev = env.dev || false;
+const log = (...args) => {
+    console.log('WEBPACK CLIENT CONFIG:', ...args);
+};
+
+
+export default (env, argv) => {
+    const isDev = !argv || argv.mode !== 'production';
+
+    log(isDev ? 'development' : 'production');
 
     return {
         name: 'client',
 
         target: 'web',
 
-        mode: isDev ? 'development' : 'production',
+        stats: isDev ? 'errors-only' : 'normal',
 
-        stats: 'errors-only',
+        devtool: isDev ? 'eval-source-map' : 'source-map',
 
         entry: {
             client: [
-                ...(isDev
-                    ? ['eventsource-polyfill', 'webpack-hot-middleware/client?name=client&reload=true']
-                    : []
-                ),
-                './src/polyfills.js',
-                './src/client.jsx',
+                ...(isDev ? ['webpack-hot-middleware/client?name=client&reload=true'] : []),
+                './src/client/index.jsx',
             ],
         },
 
@@ -36,13 +37,10 @@ export default (env = {}) => {
             publicPath: '/js/',
         },
 
-        devtool: isDev ? 'eval-source-map' : 'source-map',
-
         resolve: {
             extensions: ['.js', '.jsx'],
             alias: {
                 components: path.resolve('src/components/'),
-                features: path.resolve('src/features/'),
             },
         },
 
@@ -52,34 +50,51 @@ export default (env = {}) => {
 
             rules: [
                 {
+                    // Process .js and .jsx files through babel
                     test: /\.jsx?$/,
-                    loader: 'babel-loader',
                     exclude: /node_modules/,
+                    loader: 'babel-loader',
                     options: {
-                        babelrc: false,
-                        cacheDirectory: isDev,
                         presets: [
-                            [
-                                'env', {
-                                    modules: false,
-                                    targets: {
-                                        browsers: pkg.browserslist,
-                                    },
-                                    useBuiltIns: 'entry',
-                                },
-                            ],
-                            'react',
-                            'stage-2',
-                        ],
-                        plugins: [
-                            'transform-async-to-bluebird',
-                            'transform-promise-to-bluebird',
-                            ...(isDev ? ['react-hot-loader/babel'] : []),
+                            ['@babel/preset-env', {
+                                useBuiltIns: 'entry',
+                            }],
+                            '@babel/preset-react',
                         ],
                     },
                 },
             ],
         },
+
+        plugins: [
+            new webpack.DefinePlugin({
+                'process.env.NODE_ENV': isDev ? '"development"' : '"production"',
+                __BROWSER__: true,
+                __DEV__: isDev,
+                __TEST__: false,
+            }),
+
+            new AssetsPlugin({
+                path: 'dist/server',
+                filename: 'assets.json',
+                prettyPrint: true,
+            }),
+
+            ...(isDev
+                ? [
+                    new webpack.optimize.OccurrenceOrderPlugin(),
+                    new webpack.HotModuleReplacementPlugin(),
+                    new webpack.NoEmitOnErrorsPlugin(),
+                    new webpack.NamedModulesPlugin(),
+                ] : [
+                    new BundleAnalyzerPlugin({
+                        analyzerMode: 'static',
+                        reportFilename: '../../bundle_client.html',
+                        openAnalyzer: false,
+                    }),
+                ]
+            ),
+        ],
 
         optimization: {
             splitChunks: {
@@ -94,57 +109,8 @@ export default (env = {}) => {
             },
         },
 
-        plugins: [
-            new webpack.DefinePlugin({
-                'process.env.NODE_ENV': isDev ? '"development"' : '"production"',
-                __BROWSER__: true,
-                __DEV__: isDev,
-                __TEST__: false,
-            }),
-
-            // Emit a file with assets paths
-            // https://github.com/sporto/assets-webpack-plugin#options
-            new AssetsPlugin({
-                path: 'dist/server',
-                filename: 'assets.json',
-                prettyPrint: true,
-            }),
-
-            ...(isDev
-                ? [
-                    new webpack.optimize.OccurrenceOrderPlugin(),
-                    new webpack.HotModuleReplacementPlugin(),
-                    new webpack.NoEmitOnErrorsPlugin(),
-                    new webpack.NamedModulesPlugin(),
-                ] : [
-                    new UglifyPlugin({
-                        sourceMap: true,
-                        uglifyOptions: {
-                            ie8: false,
-                            compress: {
-                                dead_code: true,
-                                keep_classnames: true,
-                                keep_fnames: true,
-                                unused: true,
-                                warnings: false,
-                            },
-                            mangle: {
-                                keep_classnames: true,
-                                keep_fnames: true,
-                            },
-                            output: {
-                                beautify: false,
-                                comments: false,
-                            },
-                        },
-                    }),
-                    new BundleAnalyzerPlugin({
-                        analyzerMode: 'static',
-                        reportFilename: '../../bundle_client.html',
-                        openAnalyzer: false,
-                    }),
-                ]
-            ),
-        ],
+        performance: {
+            assetFilter: filename => filename.indexOf('vendors.'),
+        },
     };
 };

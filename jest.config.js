@@ -24,7 +24,6 @@ module.exports = {
     // https://facebook.github.io/jest/docs/en/configuration.html#collectcoveragefrom-array
     collectCoverageFrom: [
         'src/**/*.{js,jsx}',
-        '!**/node_modules/**',
     ],
 
     // https://facebook.github.io/jest/docs/en/configuration.html#coveragedirectory-string
@@ -47,7 +46,7 @@ module.exports = {
 
     // The default extensions Jest will look for.
     // https://facebook.github.io/jest/docs/en/configuration.html#modulefileextensions-array-string
-    moduleFileExtensions: ['js', 'json', 'jsx', 'node'],
+    moduleFileExtensions: ['js', 'jsx'],
 
     // moduleDirectories: // [array<string>]
 
@@ -55,8 +54,6 @@ module.exports = {
     // like images or styles with a single module.
     moduleNameMapper: {
         '^./assets.json$': '<rootDir>/test/assets.json',
-        //'\\.(css|less|scss|sss)$': 'identity-obj-proxy',
-        //'\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': 'GlobalImageStub',
     },
 
     // modulePathIgnorePatterns: // [array<string>]
@@ -91,8 +88,6 @@ module.exports = {
 
     transform: {
         '\\.jsx?$': 'babel-jest',
-        //'\\.(jpe?g|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
-        //'<rootDir>/jest/fileTransformer.js',
     },
 
     // transformIgnorePatterns: // [array<string>]

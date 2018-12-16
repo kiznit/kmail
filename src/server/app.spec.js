@@ -14,9 +14,8 @@ describe('app', () => {
         return request(app)
             .get('/ping')
             .expect(200)
-            .expect('Content-Type', 'application/json; charset=utf-8')
             .expect(response => {
-                expect(response.body).to.equal('');
+                expect(response.body).to.be.empty;
             });
     });
 
@@ -32,5 +31,12 @@ describe('app', () => {
             .get('/robots.txt')
             .expect(200)
             .expect('Content-Type', 'text/plain; charset=UTF-8');
+    });
+
+    test('unknown path serves a 404', () => {
+        return request(app)
+            .get('/non-existing-page')
+            .expect(404)
+            .expect('Content-Type', 'text/html; charset=utf-8');
     });
 });
