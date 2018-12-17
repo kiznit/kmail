@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Provider as Redux } from 'react-redux';
 import injectSheet, { ThemeProvider } from 'react-jss';
+import Test from 'components/Test';
 
 
 // TODO: define a theme
@@ -18,9 +19,12 @@ const styles = {
 const App = ({ classes, store }) => (
     <Redux store={store}>
         <ThemeProvider theme={theme}>
-            <h1 className={classes.blue}>
-                Hi this is the App Component!
-            </h1>
+            <div>
+                <h1 className={classes.blue}>
+                    Hi this is the App Component!
+                </h1>
+                <Test />
+            </div>
         </ThemeProvider>
     </Redux>
 );
