@@ -5,15 +5,8 @@ import AssetsPlugin from 'assets-webpack-plugin';
 import webpack from 'webpack';
 
 
-const log = (...args) => {
-    console.log('WEBPACK CLIENT CONFIG:', ...args);
-};
-
-
 export default (env, argv) => {
     const isDev = !argv || argv.mode !== 'production';
-
-    log(isDev ? 'development' : 'production');
 
     return {
         name: 'client',

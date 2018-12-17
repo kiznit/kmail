@@ -6,15 +6,8 @@ import nodeExternals from 'webpack-node-externals';
 import webpack from 'webpack';
 
 
-const log = (...args) => {
-    console.log('WEBPACK SERVER CONFIG:', ...args);
-};
-
-
 export default (env, argv) => {
     const isDev = !argv || argv.mode !== 'production';
-
-    log(isDev ? 'development' : 'production');
 
     return {
         name: 'server',
