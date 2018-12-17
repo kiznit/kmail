@@ -18,7 +18,8 @@
         __BROWSER__: true,
         __DEV__: true,
         __TEST__: true,
-        __REDUX_DEVTOOLS_EXTENSION__: true
+        __REDUX_DEVTOOLS_EXTENSION__: true,
+        sinon: true,
     },
 
     extends: "airbnb",
