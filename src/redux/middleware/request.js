@@ -45,10 +45,12 @@ const middleware = ({ dispatch }) => next => action => {
             return response.text();
         });
 
-    return dispatch({
+    dispatch({
         ...rest,
         promise,
     });
+
+    return promise;
 };
 
 
