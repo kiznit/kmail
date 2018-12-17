@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 
-const Test = ({ handleSimpleAction, handlePromise, handlePromiseFail, handleFetch, handlePing }) => (
+const Test = ({ handleSimpleAction, handlePromise, handlePromiseFail, handleFetch, handleFetchFailed }) => (
     <div>
         <button type="button" onClick={handleSimpleAction}>
             Simple action
@@ -17,8 +17,8 @@ const Test = ({ handleSimpleAction, handlePromise, handlePromiseFail, handleFetc
         <button type="button" onClick={handleFetch}>
             Fetch
         </button>
-        <button type="button" onClick={handlePing}>
-            Ping
+        <button type="button" onClick={handleFetchFailed}>
+            Fetch 404
         </button>
     </div>
 );
@@ -29,7 +29,7 @@ Test.propTypes = {
     handlePromise: PropTypes.func.isRequired,
     handlePromiseFail: PropTypes.func.isRequired,
     handleFetch: PropTypes.func.isRequired,
-    handlePing: PropTypes.func.isRequired,
+    handleFetchFailed: PropTypes.func.isRequired,
 };
 
 
@@ -47,7 +47,7 @@ const mapDispatchToProps = dispatch => {
             event.preventDefault();
             dispatch({
                 type: 'PROMISE',
-                payload: new Promise((resolve, reject) => { resolve({ foo: 'bar' }); }),
+                promise: new Promise((resolve, reject) => { resolve({ foo: 'bar' }); }),
                 meta: 123,
             });
         },
@@ -55,7 +55,7 @@ const mapDispatchToProps = dispatch => {
             event.preventDefault();
             dispatch({
                 type: 'PROMISE',
-                payload: new Promise((resolve, reject) => { reject(new Error('Bad stuff')); }),
+                promise: new Promise((resolve, reject) => { reject(new Error('Bad stuff')); }),
                 meta: 123,
             });
         },
@@ -69,12 +69,12 @@ const mapDispatchToProps = dispatch => {
                 meta: 123,
             });
         },
-        handlePing: event => {
+        handleFetchFailed: event => {
             event.preventDefault();
             dispatch({
-                type: 'PING',
+                type: 'FETCH404',
                 request: {
-                    url: '/ping',
+                    url: '/non-existing-page',
                 },
                 meta: 123,
             });

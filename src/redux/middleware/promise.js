@@ -1,42 +1,64 @@
-// Redux middleware to handle promises
+/*
+    Redux middleware to handle promises
+
+    Accepts actions of the following shape:
+        {
+            type: 'TYPE'
+            promise: [promise]
+            ...rest
+        }
+
+    And generate actions like the following:
+
+        {
+            type: 'TYPE_PENDING',
+            ...rest,
+        }
+
+        {
+            type: 'TYPE_SUCCESS',
+            ...rest,
+            value: [resolved promise value]
+        }
+
+        {
+            type: 'TYPE_FAILURE',
+            ...rest,
+            error: [rejected promise error]
+        }
+*/
 
 const PENDING = 'PENDING';
 const SUCCESS = 'SUCCESS';
 const FAILURE = 'FAILURE';
 
 
-const isPromise = value =>
-    !!value && (typeof value === 'object' || typeof value === 'function') && typeof value.then === 'function';
-
-
 const middleware = ({ dispatch }) => next => action => {
-    if (!isPromise(action.payload)) {
+    const { type, promise, ...rest } = action;  /* eslint-disable-line no-unused-vars */
+
+    if (!promise) {
         return next(action);
     }
 
     dispatch({
-        ...action,
         type: `${action.type}_${PENDING}`,
-        payload: undefined,
+        ...rest,
     });
 
-    const promise = action.payload;
-
     return promise
-        .then(result => {
+        .then(value => {
             dispatch({
-                ...action,
                 type: `${action.type}_${SUCCESS}`,
-                payload: result,
+                ...rest,
+                value,
             });
             return promise;
         })
         .catch(error => {
             dispatch({
-                ...action,
                 type: `${action.type}_${FAILURE}`,
-                payload: error,
-                error: true,
+                ...rest,
+                error,
             });
             return Promise.reject(error);
         });
