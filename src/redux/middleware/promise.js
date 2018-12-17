@@ -8,7 +8,7 @@
             ...rest
         }
 
-    And generate actions like the following:
+    Generates actions like the following:
 
         {
             type: 'TYPE_PENDING',

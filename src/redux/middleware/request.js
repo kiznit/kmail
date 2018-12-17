@@ -11,7 +11,7 @@
             ...rest
         }
 
-    And transform them into actions to be handled by the promise middleware:
+    Transforms them into actions to be handled by the promise middleware:
 
         {
             type: 'TYPE',

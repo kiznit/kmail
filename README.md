@@ -24,6 +24,7 @@ What I want:
 * React 16
 * React-JSS 8
 * Redux 4
+* Redux middlewares: promise, request and thunk
 * React-Redux 6
 * Webpack 4 (Module bundler)
 
