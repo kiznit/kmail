@@ -20,12 +20,17 @@ const middleware = ({ dispatch }) => next => action => {
         payload: undefined,
     });
 
-    return action.payload
-        .then(result => dispatch({
-            ...action,
-            type: `${action.type}_${SUCCESS}`,
-            payload: result,
-        }))
+    const promise = action.payload;
+
+    return promise
+        .then(result => {
+            dispatch({
+                ...action,
+                type: `${action.type}_${SUCCESS}`,
+                payload: result,
+            });
+            return promise;
+        })
         .catch(error => {
             dispatch({
                 ...action,
