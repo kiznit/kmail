@@ -64,7 +64,7 @@ const mapDispatchToProps = dispatch => {
             dispatch({
                 type: 'FETCH',
                 request: {
-                    url: '/',
+                    endpoint: '/',
                 },
                 meta: 123,
             });
@@ -74,7 +74,7 @@ const mapDispatchToProps = dispatch => {
             dispatch({
                 type: 'FETCH404',
                 request: {
-                    url: '/non-existing-page',
+                    endpoint: '/non-existing-page',
                 },
                 meta: 123,
             });

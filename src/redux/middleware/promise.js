@@ -18,13 +18,14 @@
         {
             type: 'TYPE_SUCCESS',
             ...rest,
-            value: [resolved promise value]
+            payload: [resolved promise value]
         }
 
         {
             type: 'TYPE_FAILURE',
             ...rest,
-            error: [rejected promise error]
+            payload: [rejected promise error]
+            error: true,
         }
 */
 
@@ -46,11 +47,11 @@ const middleware = ({ dispatch }) => next => action => {
     });
 
     return promise
-        .then(value => {
+        .then(payload => {
             dispatch({
                 type: `${action.type}_${SUCCESS}`,
                 ...rest,
-                value,
+                payload,
             });
             return promise;
         })
@@ -58,7 +59,8 @@ const middleware = ({ dispatch }) => next => action => {
             dispatch({
                 type: `${action.type}_${FAILURE}`,
                 ...rest,
-                error,
+                payload: error,
+                error: true,
             });
             return Promise.reject(error);
         });

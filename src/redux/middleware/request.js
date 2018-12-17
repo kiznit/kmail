@@ -5,7 +5,8 @@
         {
             type: 'TYPE'
             request: {
-                url: ...
+                endpoint: ...
+                [fetch API options],
             },
             ...rest
         }
@@ -27,7 +28,9 @@ const middleware = ({ dispatch }) => next => action => {
         return next(action);
     }
 
-    const promise = fetch(action.request.url)
+    const { endpoint, options } = action.request;
+
+    const promise = fetch(endpoint, options)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Status ${response.status}: ${response.statusText}`);
