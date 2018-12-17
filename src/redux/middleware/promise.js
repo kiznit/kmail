@@ -7,16 +7,20 @@ const FAILURE = 'FAILURE';
 
 const isPromise = value => typeof value === 'object' && typeof value.then === 'function';
 
-const isAsyncFunction = value => typeof value === 'function' && typeof value.promise === 'function';
-
 
 const middleware = ({ dispatch }) => next => action => {
     let promise;
 
     if (isPromise(action.payload)) {
         promise = action.payload;
-    } else if (isAsyncFunction(action.payload)) {
-        promise = action.payload.promise;
+    } else if (typeof action.payload === 'function') {
+        promise = action.payload();
+        if (!isPromise(promise)) {
+            return next({
+                ...action,
+                payload: promise,
+            });
+        }
     } else {
         return next(action);
     }
