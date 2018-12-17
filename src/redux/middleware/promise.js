@@ -1,58 +1,39 @@
-// Redux middleware that transforms a Promise into a thunk
+// Redux middleware to handle promises
 
 const PENDING = 'PENDING';
 const SUCCESS = 'SUCCESS';
 const FAILURE = 'FAILURE';
 
 
-const isPromise = value => typeof value === 'object' && typeof value.then === 'function';
+const isPromise = value =>
+    !!value && (typeof value === 'object' || typeof value === 'function') && typeof value.then === 'function';
 
 
 const middleware = ({ dispatch }) => next => action => {
-    let promise;
-
-    if (isPromise(action.payload)) {
-        promise = action.payload;
-    } else if (typeof action.payload === 'function') {
-        promise = action.payload();
-        if (!isPromise(promise)) {
-            return next({
-                ...action,
-                payload: promise,
-            });
-        }
-    } else {
+    if (!isPromise(action.payload)) {
         return next(action);
     }
 
-    next({
+    dispatch({
         ...action,
         type: `${action.type}_${PENDING}`,
+        payload: undefined,
     });
 
-    return promise
-        .then(value => {
-            const resolvedAction = {
-                ...action,
-                type: `${action.type}_${SUCCESS}`,
-                payload: value,
-            };
-
-            dispatch(resolvedAction);
-
-            return { value, action: resolvedAction };
-        })
+    return action.payload
+        .then(result => dispatch({
+            ...action,
+            type: `${action.type}_${SUCCESS}`,
+            payload: result,
+        }))
         .catch(error => {
-            const rejectedAction = {
+            dispatch({
                 ...action,
                 type: `${action.type}_${FAILURE}`,
                 payload: error,
                 error: true,
-            };
-
-            dispatch(rejectedAction);
-
-            throw error;
+            });
+            return Promise.reject(error);
         });
 };
 
