@@ -50,7 +50,7 @@ export default (env, argv) => {
                     options: {
                         presets: [
                             ['@babel/preset-env', {
-                                useBuiltIns: 'entry',
+                                useBuiltIns: 'usage',
                             }],
                             '@babel/preset-react',
                         ],
