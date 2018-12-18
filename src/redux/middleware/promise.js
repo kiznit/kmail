@@ -46,8 +46,8 @@ const middleware = ({ dispatch }) => next => action => {
         ...rest,
     });
 
-    return promise
-        .then(payload => {
+    return promise.then(
+        payload => {
             dispatch({
                 type: `${action.type}_${SUCCESS}`,
                 ...rest,
@@ -55,8 +55,8 @@ const middleware = ({ dispatch }) => next => action => {
             });
 
             return payload;
-        })
-        .catch(error => {
+        },
+        error => {
             dispatch({
                 type: `${action.type}_${FAILURE}`,
                 ...rest,
@@ -65,7 +65,8 @@ const middleware = ({ dispatch }) => next => action => {
             });
 
             throw error;
-        });
+        }
+    );
 };
 
 

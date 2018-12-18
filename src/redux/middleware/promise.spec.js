@@ -6,7 +6,11 @@ describe('Redux promise middleware', () => {
     let dispatch;
 
     beforeEach(() => {
-        baseDispatch = sinon.spy();
+        baseDispatch = sinon.spy(action => {
+            if (action.type === 'THROW_SUCCESS') {
+                throw new Error('error while dispatching');
+            }
+        });
         dispatch = action => {
             const methods = { dispatch, getState: () => {} };
             return middleware(methods)(baseDispatch)(action);
@@ -58,5 +62,37 @@ describe('Redux promise middleware', () => {
                     bonus: 'property',
                 });
             });
+    });
+
+
+    test('If dispatch(ACTION_SUCCESS) throws, we don\'t want to swallow the exception', async () => {
+        let error;
+        let result;
+
+        try {
+            result = await dispatch({
+                type: 'THROW',
+                promise: Promise.resolve({ foo: 123 }),
+                bonus: 'property',
+            });
+        } catch (err) {
+            error = err;
+        }
+
+        expect(error).to.be.an('error');
+        expect(error.message).to.equal('error while dispatching');
+
+        expect(result).to.be.undefined;
+
+        expect(baseDispatch).to.have.been.calledTwice;
+        expect(baseDispatch).to.have.been.calledWithExactly({
+            type: 'THROW_PENDING',
+            bonus: 'property',
+        });
+        expect(baseDispatch).to.have.been.calledWithExactly({
+            type: 'THROW_SUCCESS',
+            payload: { foo: 123 },
+            bonus: 'property',
+        });
     });
 });
