@@ -28,7 +28,7 @@ const middleware = ({ dispatch }) => next => action => {
         return next(action);
     }
 
-    const { endpoint, options } = action.request;
+    const { endpoint, ...options } = action.request;
 
     const promise = fetch(endpoint, options)
         .then(response => {
