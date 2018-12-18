@@ -2,7 +2,6 @@ import middleware from './request';
 
 
 describe('Redux request middleware', () => {
-    const promise = Promise.resolve('fetch result');
     let baseDispatch;
     let dispatch;
 
@@ -41,7 +40,7 @@ describe('Redux request middleware', () => {
         expect(baseDispatch).to.have.been.calledOnce;
         expect(baseDispatch).to.have.been.calledWithExactly({
             type: 'ACTION',
-            promise,
+            promise: Promise.resolve(),
             bonus: 'property',
         });
     });
@@ -69,7 +68,7 @@ describe('Redux request middleware', () => {
         expect(baseDispatch).to.have.been.calledOnce;
         expect(baseDispatch).to.have.been.calledWithExactly({
             type: 'ACTION',
-            promise,
+            promise: Promise.resolve(),
             bonus: 'property',
         });
     });
@@ -96,7 +95,7 @@ describe('Redux request middleware', () => {
                 expect(baseDispatch).to.have.been.calledOnce;
                 expect(baseDispatch).to.have.been.calledWithExactly({
                     type: 'ACTION',
-                    promise,
+                    promise: Promise.resolve(),
                     bonus: 'property',
                 });
             });
