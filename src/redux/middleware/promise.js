@@ -35,21 +35,21 @@ const FAILURE = 'FAILURE';
 
 
 const middleware = ({ dispatch }) => next => action => {
-    const { type, promise, ...rest } = action;  /* eslint-disable-line no-unused-vars */
+    const { type, promise, ...rest } = action;
 
     if (!promise) {
         return next(action);
     }
 
     dispatch({
-        type: `${action.type}_${PENDING}`,
+        type: `${type}_${PENDING}`,
         ...rest,
     });
 
     return promise.then(
         payload => {
             dispatch({
-                type: `${action.type}_${SUCCESS}`,
+                type: `${type}_${SUCCESS}`,
                 ...rest,
                 payload,
             });
@@ -58,7 +58,7 @@ const middleware = ({ dispatch }) => next => action => {
         },
         error => {
             dispatch({
-                type: `${action.type}_${FAILURE}`,
+                type: `${type}_${FAILURE}`,
                 ...rest,
                 payload: error,
                 error: true,
