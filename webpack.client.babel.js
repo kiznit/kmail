@@ -20,6 +20,8 @@ export default (env, argv) => {
         entry: {
             client: [
                 ...(isDev ? ['webpack-hot-middleware/client?name=client&reload=true'] : []),
+                'regenerator-runtime/runtime',  // async / await support needs to be included before any use
+                'core-js/es6/promise',          // Some browsers (IE 11) don't have promise support
                 './src/client/index.jsx',
             ],
         },
@@ -28,6 +30,7 @@ export default (env, argv) => {
             path: path.resolve(__dirname, 'dist/public/js'),
             filename: isDev ? '[name].js' : '[name].[chunkhash].js',
             publicPath: '/js/',
+            chunkFilename: isDev ? '[name].js' : '[name].[chunkhash].js',
         },
 
         resolve: {
@@ -49,10 +52,11 @@ export default (env, argv) => {
                     loader: 'babel-loader',
                     options: {
                         presets: [
-                            ['@babel/preset-env', {
-                                useBuiltIns: 'usage',
-                            }],
+                            '@babel/preset-env',
                             '@babel/preset-react',
+                        ],
+                        plugins: [
+                            '@babel/plugin-syntax-dynamic-import',
                         ],
                     },
                 },
@@ -91,11 +95,12 @@ export default (env, argv) => {
 
         optimization: {
             splitChunks: {
+                chunks: 'all',
                 cacheGroups: {
                     // Put node_modules code in its own bundle (but not css!)
                     vendors: {
                         name: 'vendors',
-                        chunks: 'all',
+                        chunks: 'initial',
                         test: /node_modules.+(?<!css)$/,
                     },
                 },
@@ -103,7 +108,7 @@ export default (env, argv) => {
         },
 
         performance: {
-            assetFilter: filename => filename.indexOf('vendors.'),
+            assetFilter: filename => !filename.endsWith('.map'),
         },
     };
 };

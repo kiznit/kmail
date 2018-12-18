@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from 'components/App';
 
+import loadPolyfills from './polyfills';
 import configureStore from '../redux/store';
 
 
@@ -24,11 +25,12 @@ const render = App => {
 };
 
 
-render(App);
+loadPolyfills().then(() => {
+    render(App);
 
-
-if (module.hot) {
-    module.hot.accept('components/App', () => {
-        render(require('components/App').default);
-    });
-}
+    if (module.hot) {
+        module.hot.accept('components/App', () => {
+            render(require('components/App').default);
+        });
+    }
+});
