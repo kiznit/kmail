@@ -54,7 +54,7 @@ const middleware = ({ dispatch }) => next => action => {
                 payload,
             });
 
-            return promise;
+            return payload;
         })
         .catch(error => {
             dispatch({
@@ -64,7 +64,7 @@ const middleware = ({ dispatch }) => next => action => {
                 error: true,
             });
 
-            return promise;
+            throw error;
         });
 };
 
