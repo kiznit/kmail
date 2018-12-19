@@ -1,9 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import App from 'components/App';
 
 import loadPolyfills from './polyfills';
 import configureStore from '../redux/store';
+
+if (__DEV__) {
+    require('preact/debug');
+}
 
 
 const container = document.getElementById('app-root');
@@ -15,12 +18,8 @@ const render = App => {
         <App store={store} />
     );
 
-    ReactDOM.hydrate(components, container, () => {
-        // Remove the server-side injected CSS (we don't need it anymore).
-        const jssStyles = document.getElementById('jss-server-side');
-        if (jssStyles && jssStyles.parentNode) {
-            jssStyles.parentNode.removeChild(jssStyles);
-        }
+    // eslint-disable-next-line react/no-deprecated
+    React.render(components, document.body, container, () => {
     });
 };
 

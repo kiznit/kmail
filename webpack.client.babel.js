@@ -37,6 +37,9 @@ export default (env, argv) => {
             extensions: ['.js', '.jsx'],
             alias: {
                 components: path.resolve('src/components/'),
+                react: 'preact-compat',
+                'react-dom': 'preact-compat',
+                'react-redux': 'preact-redux',
             },
         },
 

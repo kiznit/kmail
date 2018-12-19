@@ -1,39 +1,28 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Provider as Redux } from 'react-redux';
-import injectSheet, { ThemeProvider } from 'react-jss';
 import Test from 'components/Test';
 
 
-// TODO: define a theme
-const theme = {
-};
-
-const styles = {
-    blue: {
-        color: '#0000FF',
-    },
-};
-
-
-const App = ({ classes, store }) => (
+const App = ({ store }) => (
     <Redux store={store}>
-        <ThemeProvider theme={theme}>
-            <div>
-                <h1 className={classes.blue}>
-                    Hi this is the App Component!
-                </h1>
-                <Test />
-            </div>
-        </ThemeProvider>
+        <div>
+            <h1>
+                Hi this is the App Component!
+            </h1>
+            <Test />
+        </div>
     </Redux>
 );
 
 
 App.propTypes = {
-    classes: PropTypes.objectOf(PropTypes.string).isRequired,
-    store: Redux.propTypes.store.isRequired,
+    store: PropTypes.shape({
+        subscribe: PropTypes.func.isRequired,
+        dispatch: PropTypes.func.isRequired,
+        getState: PropTypes.func.isRequired,
+    }).isRequired,
 };
 
 
-export default injectSheet(styles)(App);
+export default App;
