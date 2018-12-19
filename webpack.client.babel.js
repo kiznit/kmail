@@ -21,7 +21,7 @@ export default (env, argv) => {
             client: [
                 ...(isDev ? ['webpack-hot-middleware/client?name=client&reload=true'] : []),
                 'regenerator-runtime/runtime',  // async / await support needs to be included before any use
-                'core-js/es6/promise',          // Some browsers (IE 11) don't have promise support
+                'es6-promise',                  // Some browsers (IE 11) don't have promise support
                 './src/client/index.jsx',
             ],
         },
