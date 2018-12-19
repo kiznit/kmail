@@ -3,21 +3,17 @@ const loadPolyfills = () => {
 
     // fetch
     if (!('fetch' in window)) {
-        promises.push(import(/* webpackChunkName: "fetch-polyfill" */ 'isomorphic-fetch'));
+        promises.push(import(/* webpackChunkName: "polyfill-fetch" */ 'isomorphic-fetch'));
     }
 
     // ES6
+    // TODO: need to detect only what we use and is missing...
     if (!('startsWith' in String.prototype
         && 'endsWith' in String.prototype
         && 'includes' in Array.prototype
         && 'assign' in Object
         && 'keys' in Object)) {
-        promises.push(import(/* webpackChunkName: "es6-polyfills" */ '@babel/polyfill'));
-    }
-
-    // Intl
-    if (!('Intl' in window)) {
-        promises.push(import(/* webpackChunkName: "intl-polyfill" */ './intl'));
+        promises.push(import(/* webpackChunkName: "polyfill-es6" */ './es6'));
     }
 
     return Promise.all(promises);

@@ -43,6 +43,7 @@
         react/jsx-indent: [2, 4],
         react/jsx-indent-props: [2, 4],
         react/no-danger: 0,
+        spaced-comment: 0,
     },
 
     overrides: [
