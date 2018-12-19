@@ -18,6 +18,18 @@
     "test-cover": "yarn test --coverage",
     "coverage": "yarn test-cover && opn coverage/lcov-report/index.html"
   },
+  "keywords": [
+    "babel",
+    "hmr",
+    "isomorphic-rendering",
+    "javascript",
+    "nodejs",
+    "preact",
+    "react",
+    "redux",
+    "ssr",
+    "webpack"
+  ],
   "dependencies": {
     "chai": "^4.2.0",
     "core-js": "^2.6.1",

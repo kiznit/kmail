@@ -22,8 +22,8 @@ What I want:
 * Express 4 (Web framework)
 * Jest + Chai + Sinon + Supertest (Unit tests)
 * Preact 8.4 (much smaller than React)
-* Preact-redux 2 (Redux for Preat)
-* Redux middlewares: promise, request and thunk
+* Preact-Redux 2 (Redux for Preat)
+* Custom Redux middlewares: promise, request and thunk
 * React-Redux 6
 * Webpack 4 (Module bundler)
 
