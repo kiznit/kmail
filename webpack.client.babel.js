@@ -20,8 +20,7 @@ export default (env, argv) => {
         entry: {
             client: [
                 ...(isDev ? ['webpack-hot-middleware/client?name=client&reload=true'] : []),
-                'es6-promise/auto',                 // Some browsers (IE 11) don't have promises
-                'regenerator-runtime/runtime',      // ES7 async / await support
+                'es6-promise/auto',         // Some browsers (IE 11) don't have promises
                 './src/client/index.jsx',
             ],
         },
