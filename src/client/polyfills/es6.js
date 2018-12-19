@@ -1,2 +1,9 @@
-// TODO: here we should only import what we need from core-js, not the whole thing
-import '@babel/polyfill';
+// We only include things we need from core-js
+
+import 'core-js/es6/array';
+import 'core-js/es6/object';
+import 'core-js/es6/string';
+
+import 'core-js/fn/array/includes';
+import 'core-js/fn/object/values';
+import 'core-js/fn/object/entries';

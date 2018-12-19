@@ -19,8 +19,8 @@
     "coverage": "yarn test-cover && opn coverage/lcov-report/index.html"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.0.0",
     "chai": "^4.2.0",
+    "core-js": "^2.6.1",
     "cross-env": "^5.2.0",
     "es6-promise": "^4.2.5",
     "express": "^4.16.4",
