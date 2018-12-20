@@ -4,6 +4,27 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import AssetsPlugin from 'assets-webpack-plugin';
 import webpack from 'webpack';
 
+import builtInFeatures from '@babel/preset-env/data/built-in-features';
+import { defaultWebIncludes } from '@babel/preset-env/lib/default-includes';
+
+
+// The list of features and plugins that can be disabled is found
+// in two files inside the @babel/present-env package:
+//      @babel/present-env/data/built-in-features
+//      @babel/present-env/data/plugin-features
+// Start by excluding everything and then only include what is needed.
+// See src/client/polyfills/es6.js for how to approach this.
+
+// Add features you want included in the ES6 poyfill here.
+const builtInIncludeList = [
+];
+
+// Build the exclusion list for @babel/preset-env
+const builtInExcludeList = Object.keys(builtInFeatures)
+    .concat(defaultWebIncludes)
+    .filter(feature => !builtInIncludeList.includes(feature))
+    .concat(['transform-regenerator']);
+
 
 export default (env, argv) => {
     const isDev = !argv || argv.mode !== 'production';
@@ -56,11 +77,8 @@ export default (env, argv) => {
                         presets: [
                             ['@babel/preset-env', {
                                 useBuiltIns: 'entry',
-                                exclude: [
-                                    'es6.promise',              // No need, we use es6-promise
-                                    'transform-regenerator',    // Might need this for async/await
-                                    /es7\..+/,                  // Remove all ES7 features
-                                ],
+                                include: builtInIncludeList,    // Explicit to make sure everything in that list is valid
+                                exclude: builtInExcludeList,
                             }],
                             '@babel/preset-react',
                         ],
