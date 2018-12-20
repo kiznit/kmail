@@ -1,8 +1,10 @@
-import 'isomorphic-unfetch'; // So tiny that it's not worth putting this one in its own bundle
-
-
 const loadPolyfills = () => {
     const promises = [];
+
+    // fetch
+    if (!global.fetch) {
+        promises.push(import(/* webpackChunkName: "polyfill-fetch" */ 'isomorphic-fetch'));
+    }
 
     // ES6 polyfills
     const includeES6 = false;

@@ -21,16 +21,19 @@
 */
 
 
+const isRequest = request => !!request && typeof request.url === 'string';
+
+
 const middleware = ({ dispatch }) => next => action => {
     const { request, ...rest } = action;
 
-    if (!request) {
+    if (!isRequest(request)) {
         return next(action);
     }
 
-    const { endpoint, ...options } = action.request;
+    const { url, ...options } = action.request;
 
-    const promise = fetch(endpoint, options)
+    const promise = fetch(url, options)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Status ${response.status}: ${response.statusText}`);

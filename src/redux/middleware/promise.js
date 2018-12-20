@@ -34,10 +34,13 @@ const SUCCESS = 'SUCCESS';
 const FAILURE = 'FAILURE';
 
 
+const isPromise = promise => !!promise && typeof promise.then === 'function';
+
+
 const middleware = ({ dispatch }) => next => action => {
     const { type, promise, ...rest } = action;
 
-    if (!promise) {
+    if (!isPromise(promise)) {
         return next(action);
     }
 

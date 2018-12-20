@@ -26,12 +26,12 @@ describe('Redux request middleware', () => {
                 get: () => null,
             },
         };
-        global.fetch = (endpoint, options) => Promise.resolve(response);
+        global.fetch = (url, options) => Promise.resolve(response);
 
         const result = await dispatch({
             type: 'ACTION',
             request: {
-                endpoint: '/api/awesome',
+                url: '/api/awesome',
             },
             bonus: 'property',
         });
@@ -54,12 +54,12 @@ describe('Redux request middleware', () => {
                 get: () => 'application/json',
             },
         };
-        global.fetch = (endpoint, options) => Promise.resolve(response);
+        global.fetch = (url, options) => Promise.resolve(response);
 
         const result = await dispatch({
             type: 'ACTION',
             request: {
-                endpoint: '/api/awesome',
+                url: '/api/awesome',
             },
             bonus: 'property',
         });
@@ -80,12 +80,12 @@ describe('Redux request middleware', () => {
             status: 404,
             statusText: 'Not found',
         };
-        global.fetch = (endpoint, options) => Promise.resolve(response);
+        global.fetch = (url, options) => Promise.resolve(response);
 
         return dispatch({
             type: 'ACTION',
             request: {
-                endpoint: '/api/awesome',
+                url: '/api/awesome',
             },
             bonus: 'property',
         })
@@ -99,5 +99,32 @@ describe('Redux request middleware', () => {
                     bonus: 'property',
                 });
             });
+    });
+
+
+    test('Request can be specified with a Request object', async () => {
+        const response = {
+            ok: true,
+            text: () => 'Some body',
+            headers: {
+                get: () => null,
+            },
+        };
+
+        global.fetch = request => Promise.resolve(response);
+
+        const result = await dispatch({
+            type: 'ACTION',
+            request: new Request('/api/awesome'),
+            bonus: 'property',
+        });
+
+        expect(result).to.equal('Some body');
+        expect(baseDispatch).to.have.been.calledOnce;
+        expect(baseDispatch).to.have.been.calledWithExactly({
+            type: 'ACTION',
+            promise: Promise.resolve(),
+            bonus: 'property',
+        });
     });
 });
