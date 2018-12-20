@@ -4,14 +4,14 @@ import 'isomorphic-unfetch'; // So tiny that it's not worth putting this one in 
 const loadPolyfills = () => {
     const promises = [];
 
-    // ES6 - TODO: detect everything we need
-    if (!('startsWith' in String.prototype
-        && 'endsWith' in String.prototype
-        && 'includes' in Array.prototype
-        && 'assign' in Object
-        && 'keys' in Object
-        && 'values' in Object
-        && 'entries' in Object)) {
+    // ES6 - Update test to decide if ES6 polyfills should be included
+    const includeES6 = (
+        !Array.prototype.includes ||
+        !String.prototype.startsWith ||
+        !Object.entries ||
+        !Object.values);
+
+    if (includeES6) {
         promises.push(import(/* webpackChunkName: "polyfill-es6" */ './es6'));
     }
 
