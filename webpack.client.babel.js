@@ -54,7 +54,14 @@ export default (env, argv) => {
                     loader: 'babel-loader',
                     options: {
                         presets: [
-                            '@babel/preset-env',
+                            ['@babel/preset-env', {
+                                useBuiltIns: 'entry',
+                                exclude: [
+                                    'es6.promise',              // No need, we use es6-promise
+                                    'transform-regenerator',    // Might need this for async/await
+                                    /es7\..+/,                  // Remove all ES7 features
+                                ],
+                            }],
                             '@babel/preset-react',
                         ],
                         plugins: [

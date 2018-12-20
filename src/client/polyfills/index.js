@@ -4,7 +4,7 @@ import 'isomorphic-unfetch'; // So tiny that it's not worth putting this one in 
 const loadPolyfills = () => {
     const promises = [];
 
-    // ES6 - Update test to decide if ES6 polyfills should be included
+    // ES6 - Is this enough to properly detect which browsers need the ES6 polyfills?
     const includeES6 = (
         !Array.prototype.includes ||
         !String.prototype.startsWith ||
