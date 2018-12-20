@@ -24,7 +24,6 @@ What I want:
 * Preact 8.4 (much smaller than React)
 * Preact-Redux 2 (Redux for Preat)
 * Custom Redux middlewares: promise, request and thunk
-* React-Redux 6
 * Webpack 4 (Module bundler)
 
 ## Command line
