@@ -19,6 +19,7 @@
     "coverage": "yarn test-cover && opn coverage/lcov-report/index.html"
   },
   "keywords": [
+    "aphrodite",
     "babel",
     "hmr",
     "isomorphic-rendering",
@@ -31,6 +32,7 @@
     "webpack"
   ],
   "dependencies": {
+    "aphrodite": "^2.2.3",
     "chai": "^4.2.0",
     "core-js": "^2.6.1",
     "cross-env": "^5.2.0",

@@ -1,13 +1,22 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Provider as Redux } from 'react-redux';
+import { StyleSheet, css } from 'aphrodite';
+
 import Test from 'components/Test';
+
+
+const styles = StyleSheet.create({
+    blue: {
+        color: 'blue',
+    },
+});
 
 
 const App = ({ store }) => (
     <Redux store={store}>
         <div>
-            <h1>
+            <h1 className={css(styles.blue)}>
                 Hi this is the App Component!
             </h1>
             <Test />

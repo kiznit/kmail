@@ -1,4 +1,6 @@
 import React from 'react';
+import { StyleSheet } from 'aphrodite';
+
 import App from 'components/App';
 
 import loadPolyfills from './polyfills';
@@ -17,6 +19,9 @@ const render = App => {
     const components = (
         <App store={store} />
     );
+
+    // Rehydrate Aphodite with server-side CSS class names
+    StyleSheet.rehydrate(window.INITIAL_CSS_CLASSNAMES);
 
     // eslint-disable-next-line react/no-deprecated
     React.render(components, document.body, container, () => {

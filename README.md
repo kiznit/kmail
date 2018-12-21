@@ -23,6 +23,7 @@ What I want:
 * Jest + Chai + Sinon + Supertest (Unit tests)
 * Preact 8.4 (much smaller than React)
 * Preact-Redux 2 (Redux for Preat)
+* Aphrodite 2 for CSS-in-JS
 * Custom Redux middlewares: promise, request and thunk
 * Webpack 4 (Module bundler)
 
