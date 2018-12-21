@@ -15,13 +15,14 @@ const container = document.getElementById('app-root');
 const store = configureStore(window.INITIAL_REDUX_STATE);
 
 
-const render = App => {
+const render = () => {
+    // Rehydrate Aphodite with server-side CSS class names
+    StyleSheet.rehydrate(window.INITIAL_CSS_CLASSNAMES);
+
+    // Render React components tree
     const components = (
         <App store={store} />
     );
-
-    // Rehydrate Aphodite with server-side CSS class names
-    StyleSheet.rehydrate(window.INITIAL_CSS_CLASSNAMES);
 
     // eslint-disable-next-line react/no-deprecated
     React.render(components, document.body, container, () => {
@@ -30,7 +31,7 @@ const render = App => {
 
 
 loadPolyfills().then(() => {
-    render(App);
+    render();
 
     if (module.hot) {
         module.hot.accept('components/App', () => {
