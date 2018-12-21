@@ -31,22 +31,49 @@ const middleware = ({ dispatch }) => next => action => {
         return next(action);
     }
 
+    // We don't know if action.request is a normal object or a Request.
+    // We can handle both with destructuring.
     const { url, ...options } = action.request;
 
-    const promise = fetch(url, options)
-        .then(response => {
+    // We now build a Request so that we can report it in case of errors.
+    const req = new Request(url, options);
+
+    const promise = fetch(req).then(
+        response => {
             if (!response.ok) {
-                throw new Error(`Status ${response.status}: ${response.statusText}`);
+                const error = new Error(`Request failed with status code ${response.status}`);
+                error.request = req;
+                error.response = response;
+                throw error;
             }
+
+            response.request = req;
 
             const contentType = response.headers.get('content-type');
 
             if (contentType && contentType.indexOf('application/json') !== -1) {
-                return response.json();
+                return response.json()
+                    .then(data => {
+                        // We overwrite json() so that you can call it multiple times
+                        response.json = () => Promise.resolve(data);
+                        response.data = data;
+                        return response;
+                    });
             }
 
-            return response.text();
-        });
+            return response.text()
+                .then(text => {
+                    // We overwrite text() so that you can call it multiple times
+                    response.text = () => Promise.resolve(text);
+                    response.data = text;
+                    return response;
+                });
+        },
+        error => {
+            error.request = request;
+            throw error;
+        }
+    );
 
     dispatch({
         ...rest,

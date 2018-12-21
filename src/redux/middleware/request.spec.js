@@ -19,16 +19,11 @@ describe('Redux request middleware', () => {
 
 
     test('Transforms request action into promise action (text response)', async () => {
-        const response = {
-            ok: true,
-            text: () => 'Some body',
-            headers: {
-                get: () => null,
-            },
-        };
-        global.fetch = (url, options) => Promise.resolve(response);
+        global.fetch = (url, options) => Promise.resolve(
+            new Response('Some body', { status: 200, statusText: 'OK' })
+        );
 
-        const result = await dispatch({
+        const response = await dispatch({
             type: 'ACTION',
             request: {
                 url: '/api/awesome',
@@ -36,27 +31,27 @@ describe('Redux request middleware', () => {
             bonus: 'property',
         });
 
-        expect(result).to.equal('Some body');
+        expect(response.data).to.equal('Some body');
+        expect(response.request.method).to.equal('GET');
+        expect(response.request.url).to.equal('/api/awesome');
+
         expect(baseDispatch).to.have.been.calledOnce;
         expect(baseDispatch).to.have.been.calledWithExactly({
             type: 'ACTION',
             promise: Promise.resolve(),
             bonus: 'property',
         });
+
+        return expect(response.text()).to.eventually.equal('Some body');
     });
 
 
     test('Transforms request action into promise action (JSON response)', async () => {
-        const response = {
-            ok: true,
-            json: () => ({ foo: 123 }),
-            headers: {
-                get: () => 'application/json',
-            },
-        };
-        global.fetch = (url, options) => Promise.resolve(response);
+        global.fetch = (url, options) => Promise.resolve(
+            new Response('{ "foo": 123 }', { status: 200, statusText: 'OK', headers: { 'Content-Type': 'application/json' } })
+        );
 
-        const result = await dispatch({
+        const response = await dispatch({
             type: 'ACTION',
             request: {
                 url: '/api/awesome',
@@ -64,67 +59,71 @@ describe('Redux request middleware', () => {
             bonus: 'property',
         });
 
-        expect(result).to.deep.equal({ foo: 123 });
+        expect(response.data).to.deep.equal({ foo: 123 });
+        expect(response.request.method).to.equal('GET');
+        expect(response.request.url).to.equal('/api/awesome');
+
         expect(baseDispatch).to.have.been.calledOnce;
         expect(baseDispatch).to.have.been.calledWithExactly({
             type: 'ACTION',
             promise: Promise.resolve(),
             bonus: 'property',
         });
+
+        return expect(response.json()).to.eventually.deep.equal({ foo: 123 });
     });
 
 
     test('Transforms failed request action into promise action', async () => {
-        const response = {
-            ok: false,
-            status: 404,
-            statusText: 'Not found',
-        };
-        global.fetch = (url, options) => Promise.resolve(response);
+        global.fetch = (url, options) => Promise.resolve(
+            new Response('Bad stuff', { status: 404, statusText: 'NOT FOUND' })
+        );
 
-        return dispatch({
+        const promise = dispatch({
             type: 'ACTION',
             request: {
                 url: '/api/awesome',
             },
             bonus: 'property',
-        })
-            .then(() => { throw new Error('Unexpected'); })
-            .catch(err => {
-                expect(err.message).to.equal('Status 404: Not found');
-                expect(baseDispatch).to.have.been.calledOnce;
-                expect(baseDispatch).to.have.been.calledWithExactly({
-                    type: 'ACTION',
-                    promise: Promise.resolve(),
-                    bonus: 'property',
-                });
+        });
+
+        return expect(promise).to.eventually.be.rejected.then(error => {
+            expect(error.message).to.equal('Request failed with status code 404');
+            expect(error.request.method).to.equal('GET');
+            expect(error.request.url).to.equal('/api/awesome');
+            expect(error.response.status).to.equal(404);
+            expect(error.response.statusText).to.equal('NOT FOUND');
+
+            expect(baseDispatch).to.have.been.calledOnce;
+            expect(baseDispatch).to.have.been.calledWithExactly({
+                type: 'ACTION',
+                promise: Promise.resolve(),
+                bonus: 'property',
             });
+        });
     });
 
 
     test('Request can be specified with a Request object', async () => {
-        const response = {
-            ok: true,
-            text: () => 'Some body',
-            headers: {
-                get: () => null,
-            },
-        };
+        global.fetch = (url, options) => Promise.resolve(
+            new Response('Some body', { status: 200, statusText: 'OK' })
+        );
 
-        global.fetch = request => Promise.resolve(response);
-
-        const result = await dispatch({
+        const response = await dispatch({
             type: 'ACTION',
             request: new Request('/api/awesome'),
             bonus: 'property',
         });
 
-        expect(result).to.equal('Some body');
+        expect(response.data).to.equal('Some body');
+
         expect(baseDispatch).to.have.been.calledOnce;
         expect(baseDispatch).to.have.been.calledWithExactly({
             type: 'ACTION',
             promise: Promise.resolve(),
             bonus: 'property',
         });
+
+        return expect(response.text()).to.eventually.equal('Some body');
     });
 });
