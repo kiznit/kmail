@@ -70,6 +70,7 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
+    "eventsource-polyfill": "^0.9.6",
     "opn-cli": "^4.0.0",
     "start-server-webpack-plugin": "^2.2.5",
     "supertest": "^3.3.0",

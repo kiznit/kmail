@@ -41,7 +41,13 @@ export default (env, argv) => {
 
         entry: {
             client: [
-                ...(isDev ? ['webpack-hot-middleware/client?name=client&reload=true'] : []),
+                ...(isDev
+                    ? [
+                        'eventsource-polyfill', // Support HMR on IE 11
+                        'webpack-hot-middleware/client?name=client&reload=true',
+                    ] : [
+                    ]
+                ),
                 './src/client/index.js',
             ],
         },
