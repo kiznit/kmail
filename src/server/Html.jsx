@@ -20,10 +20,10 @@ const Html = ({ title, description, scripts, appState, children }) => {
                 { scripts.map(script => <link key={script} rel="preload" href={script} as="script" />) }
                 <link rel="icon" href="/favicon.ico?v=1" />
                 <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=1" />
-                <style id="css-server-side" dangerouslySetInnerHTML={{ __html: css.content }} />
+                <style id="data-css" dangerouslySetInnerHTML={{ __html: css.content }} />
             </head>
             <body>
-                <div id="app-root" dangerouslySetInnerHTML={{ __html: markup }} />
+                <div id="data-app-root" dangerouslySetInnerHTML={{ __html: markup }} />
                 <script dangerouslySetInnerHTML={{ __html: `window.INITIAL_CSS_CLASSNAMES=${JSON.stringify(css.renderedClassNames)};` }} />
                 <script dangerouslySetInnerHTML={{ __html: `window.INITIAL_REDUX_STATE=${JSON.stringify(appState)};` }} />
                 { scripts.map(script => <script key={script} src={script} />) }

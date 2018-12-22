@@ -9,7 +9,7 @@ if (__DEV__) {
 }
 
 
-const container = document.getElementById('app-root');
+const container = document.getElementById('data-app-root');
 const store = configureStore(window.INITIAL_REDUX_STATE);
 
 
