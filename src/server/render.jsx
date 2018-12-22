@@ -1,8 +1,8 @@
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
-import App from 'components/App';
-import Html from 'components/Html';
+import App from '../common/App';
+import Html from '../common/Html';
 
 import assets from './assets.json';
 import configureStore from '../redux/store';

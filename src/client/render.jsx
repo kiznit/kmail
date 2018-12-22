@@ -1,9 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'aphrodite';
 
-import App from 'components/App';
-
-import loadPolyfills from './polyfills';
+import App from '../common/App';
 import configureStore from '../redux/store';
 
 if (__DEV__) {
@@ -30,12 +28,11 @@ const render = () => {
 };
 
 
-loadPolyfills().then(() => {
-    render();
+if (module.hot) {
+    module.hot.accept('../common/App', () => {
+        render(require('../common/App').default);
+    });
+}
 
-    if (module.hot) {
-        module.hot.accept('components/App', () => {
-            render(require('components/App').default);
-        });
-    }
-});
+
+export default render;

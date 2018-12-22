@@ -17,6 +17,7 @@ import { defaultWebIncludes } from '@babel/preset-env/lib/default-includes';
 
 // Add features you want included in the ES6 poyfill here.
 const builtInIncludeList = [
+    'es6.object.assign',
 ];
 
 // Build the exclusion list for @babel/preset-env
@@ -41,8 +42,7 @@ export default (env, argv) => {
         entry: {
             client: [
                 ...(isDev ? ['webpack-hot-middleware/client?name=client&reload=true'] : []),
-                'es6-promise/auto',         // Some browsers (IE 11) don't have promises
-                './src/client/index.jsx',
+                './src/client/index.js',
             ],
         },
 
@@ -56,7 +56,6 @@ export default (env, argv) => {
         resolve: {
             extensions: ['.js', '.jsx'],
             alias: {
-                components: path.resolve('src/components/'),
                 react: 'preact-compat',
                 'react-dom': 'preact-compat',
                 'react-redux': 'preact-redux',

@@ -3,7 +3,7 @@ import React from 'react';
 import { Provider as Redux } from 'react-redux';
 import { StyleSheet, css } from 'aphrodite';
 
-import Test from 'components/Test';
+import Test from './Test';
 
 
 const styles = StyleSheet.create({

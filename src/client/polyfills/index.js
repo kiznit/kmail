@@ -7,7 +7,7 @@ const loadPolyfills = () => {
     }
 
     // ES6 polyfills
-    const includeES6 = false;
+    const includeES6 = !Object.assign;
     if (includeES6) {
         promises.push(import(/* webpackChunkName: "polyfill-es6" */ './es6'));
     }
