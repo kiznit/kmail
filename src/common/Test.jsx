@@ -2,22 +2,24 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
+import styles from './Test.css';
+
 
 const Test = ({ handleSimpleAction, handlePromise, handlePromiseFail, handleFetch, handleFetchFailed }) => (
     <div>
-        <button type="button" onClick={handleSimpleAction}>
+        <button type="button" className={styles.yellowDog} onClick={handleSimpleAction}>
             Simple action
         </button>
-        <button type="button" onClick={handlePromise}>
+        <button type="button" className={styles.yellowDog} onClick={handlePromise}>
             Fulfill promise
         </button>
-        <button type="button" onClick={handlePromiseFail}>
+        <button type="button" className={styles.yellowDog} onClick={handlePromiseFail}>
             Reject promise
         </button>
-        <button type="button" onClick={handleFetch}>
+        <button type="button" className={styles.yellowDog} onClick={handleFetch}>
             Fetch
         </button>
-        <button type="button" onClick={handleFetchFailed}>
+        <button type="button" className={styles.yellowDog} onClick={handleFetchFailed}>
             Fetch 404
         </button>
     </div>

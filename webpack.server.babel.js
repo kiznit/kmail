@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import path from 'path';
 import StartServerPlugin from 'start-server-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import nodeExternals from 'webpack-node-externals';
 import webpack from 'webpack';
@@ -77,7 +78,16 @@ export default (env, argv) => {
                 {
                     test: /\.css$/,
                     use: [
-                        'css-loader',
+                        MiniCssExtractPlugin.loader,
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                modules: true,
+                                localIdentName: isDev ? '[local]__[hash:base64]' : '[hash:base64]',
+                                camelCase: true,
+                                sourceMap: isDev,
+                            },
+                        },
                     ],
                 },
             ],
@@ -89,6 +99,17 @@ export default (env, argv) => {
                 __BROWSER__: false,
                 __DEV__: isDev,
                 __TEST__: false,
+            }),
+
+            // We don't actually want to extract the CSS here... We already do this
+            // in webpack.client.babel.js and do the PostCSS processing there. But
+            // if we don't add this plugin, building the server bundle crashes:
+            //
+            // TypeError: this[MODULE_TYPE] is not a function
+            //     at childCompiler.runAsChild (D:\dev3\react-redux-starter-kit\node_modules\mini-css-extract-plugin\dist\loader.js:141:24)
+
+            new MiniCssExtractPlugin({
+                filename: 'ignore-me.css',
             }),
 
             new webpack.BannerPlugin({

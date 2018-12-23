@@ -21,6 +21,7 @@ What I want:
 * ESLint 5 (Airbnb style used as base)
 * Express 4 (Web framework)
 * Jest + Chai + Sinon + Supertest (Unit tests)
+* PostCSS pipeline
 * Preact 8.4 (much smaller than React)
 * Preact-Redux 2 (Redux for Preat)
 * Custom Redux middlewares: promise, request and thunk

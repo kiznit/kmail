@@ -1,7 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import path from 'path';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import AssetsPlugin from 'assets-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import webpack from 'webpack';
 
 import builtInFeatures from '@babel/preset-env/data/built-in-features';
@@ -54,7 +55,7 @@ export default (env, argv) => {
 
         output: {
             path: path.resolve(__dirname, 'dist/public/js'),
-            filename: isDev ? '[name].js' : '[name].[chunkhash].js',
+            filename: isDev ? '[name].js' : '[name].[contenthash].js',
             publicPath: '/js/',
             chunkFilename: isDev ? '[name].js' : '[name].[chunkhash].js',
         },
@@ -95,7 +96,8 @@ export default (env, argv) => {
                 {
                     test: /\.css$/,
                     use: [
-                        'style-loader',
+                        ...(isDev ? ['css-hot-loader'] : []),
+                        MiniCssExtractPlugin.loader,
                         {
                             loader: 'css-loader',
                             options: {
@@ -104,7 +106,6 @@ export default (env, argv) => {
                                 localIdentName: isDev ? '[local]__[hash:base64]' : '[hash:base64]',
                                 camelCase: true,
                                 sourceMap: isDev,
-                                //exportOnlyLocals: true,
                             },
                         },
                         {
@@ -115,6 +116,9 @@ export default (env, argv) => {
                                     require('postcss-import'),      // Allows @import of css within css
                                     require('postcss-preset-env'),  // autoprefixer included in this one
                                     require('cssnano'),             // Minimizer
+                                    require('postcss-reporter')({   // Report warnings and errors
+                                        throwError: true,
+                                    }),
                                 ],
                             },
                         },
@@ -129,6 +133,10 @@ export default (env, argv) => {
                 __BROWSER__: true,
                 __DEV__: isDev,
                 __TEST__: false,
+            }),
+
+            new MiniCssExtractPlugin({
+                filename: isDev ? 'styles.css' : 'styles.[contenthash].css',
             }),
 
             new AssetsPlugin({

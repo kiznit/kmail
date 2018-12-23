@@ -3,7 +3,7 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 
 
-const Html = ({ title, description, scripts, appState, children }) => {
+const Html = ({ title, description, scripts, css, appState, children }) => {
     const markup = renderToString(children);
 
     return (
@@ -18,6 +18,7 @@ const Html = ({ title, description, scripts, appState, children }) => {
                 { scripts.map(script => <link key={script} rel="preload" href={script} as="script" />) }
                 <link rel="icon" href="/favicon.ico?v=1" />
                 <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=1" />
+                { css.map(stylesheet => <link key={stylesheet} rel="stylesheet" type="text/css" href={stylesheet} />) }
             </head>
             <body>
                 <div id="data-app-root" dangerouslySetInnerHTML={{ __html: markup }} />
@@ -32,6 +33,7 @@ const Html = ({ title, description, scripts, appState, children }) => {
 Html.propTypes = {
     appState: PropTypes.shape({}).isRequired,
     children: PropTypes.node.isRequired,
+    css: PropTypes.arrayOf(PropTypes.string),
     description: PropTypes.string,
     scripts: PropTypes.arrayOf(PropTypes.string),
     title: PropTypes.string,
@@ -39,6 +41,7 @@ Html.propTypes = {
 
 
 Html.defaultProps = {
+    css: [],
     description: null,
     scripts: [],
     title: null,

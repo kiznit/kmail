@@ -19,8 +19,7 @@ const render = () => {
     );
 
     // eslint-disable-next-line react/no-deprecated
-    React.render(components, document.body, container, () => {
-    });
+    React.render(components, document.body, container);
 };
 
 
