@@ -12,6 +12,17 @@ const loadPolyfills = () => {
         promises.push(import(/* webpackChunkName: "polyfill-es6" */ './es6'));
     }
 
+    // DOM Element.remove() for IE (used by HMR)
+    if (__DEV__) {
+        if (!Element.prototype.remove) {
+            Element.prototype.remove = function remove() {
+                if (this.parentNode) {
+                    this.parentNode.removeChild(this);
+                }
+            };
+        }
+    }
+
     return Promise.all(promises);
 };
 

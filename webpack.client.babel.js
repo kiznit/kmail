@@ -11,8 +11,8 @@ import { defaultWebIncludes } from '@babel/preset-env/lib/default-includes';
 
 // The list of features and plugins that can be disabled is found
 // in two files inside the @babel/present-env package:
-//      @babel/present-env/data/built-in-features
-//      @babel/present-env/data/plugin-features
+//      @babel/present-env/data/built-in-features.js
+//      @babel/present-env/data/plugin-features.js
 // Start by excluding everything and then only include what is needed.
 // See src/client/polyfills/es6.js for how to approach this.
 
