@@ -92,6 +92,34 @@ export default (env, argv) => {
                         ],
                     },
                 },
+                {
+                    test: /\.css$/,
+                    use: [
+                        'style-loader',
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                modules: true,
+                                importLoaders: 1,   // Run postcss-loader before css-loader
+                                localIdentName: isDev ? '[local]__[hash:base64]' : '[hash:base64]',
+                                camelCase: true,
+                                sourceMap: isDev,
+                                //exportOnlyLocals: true,
+                            },
+                        },
+                        {
+                            loader: 'postcss-loader',
+                            options: {
+                                sourceMap: isDev,
+                                plugins: [
+                                    require('postcss-import'),      // Allows @import of css within css
+                                    require('postcss-preset-env'),  // autoprefixer included in this one
+                                    require('cssnano'),             // Minimizer
+                                ],
+                            },
+                        },
+                    ],
+                },
             ],
         },
 

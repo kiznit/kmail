@@ -39,7 +39,6 @@ export default (env, argv) => {
         resolve: {
             extensions: ['.js', '.jsx'],
             alias: {
-                components: path.resolve('src/components/'),
                 react: 'preact-compat',
                 'react-dom': 'preact-compat',
                 'react-redux': 'preact-redux',
@@ -74,6 +73,12 @@ export default (env, argv) => {
                             '@babel/preset-react',
                         ],
                     },
+                },
+                {
+                    test: /\.css$/,
+                    use: [
+                        'css-loader',
+                    ],
                 },
             ],
         },

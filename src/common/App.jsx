@@ -4,11 +4,13 @@ import { Provider as Redux } from 'react-redux';
 
 import Test from './Test';
 
+import styles from './App.css';
+
 
 const App = ({ store }) => (
     <Redux store={store}>
         <div>
-            <h1>
+            <h1 className={styles.blueMoon}>
                 Hi this is the App Component!
             </h1>
             <Test />
