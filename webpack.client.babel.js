@@ -49,6 +49,7 @@ export default (env, argv) => {
                     ] : [
                     ]
                 ),
+                'bootstrap/dist/css/bootstrap-reboot.css',
                 './src/client/index.js',
             ],
         },
