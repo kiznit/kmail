@@ -73,6 +73,9 @@ export default (env, argv) => {
                             }],
                             '@babel/preset-react',
                         ],
+                        plugins: [
+                            '@babel/plugin-proposal-class-properties',
+                        ],
                     },
                 },
                 {

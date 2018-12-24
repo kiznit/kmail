@@ -23,13 +23,18 @@ app.get('/ping', (req, res) => res.status(200).end());
 
 
 // Dynamic content
-app.get('/', (req, res) => {
-    const markup = render();
-    res.status(200);
-    res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    res.write('<!DOCTYPE html>');
-    res.write(markup);
-    res.end();
+app.get('*', async (req, res, next) => {
+    try {
+        const markup = await render(req, res);
+        res.status(200);
+        res.setHeader('Content-Type', 'text/html; charset=utf-8');
+        res.write('<!DOCTYPE html>');
+        res.write(markup);
+        res.end();
+        next();
+    } catch (error) {
+        next(error);
+    }
 });
 
 

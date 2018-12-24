@@ -11,6 +11,7 @@ What I want:
 * React + Redux: Some plumbing for packages I use in every project.
 * Server-side rendering (SSR): React code should execute on the server and render the initial page to reduce perceived latency (bundles can take a while to load).
 * Hot module reloading (HMR): Client-side hot reloading of changed code is a given. What's not common is server-side HMR. I want both.
+* Server-side and client-side routing
 * Unit tests and code coverage.
 
 ## What is included
@@ -25,6 +26,7 @@ What I want:
 * Preact 8.4 (much smaller than React)
 * Preact-Redux 2 (Redux for Preat)
 * Custom Redux middlewares: promise, request and thunk
+* Universal-Router 7 for server and client-side routing
 * Webpack 4 (Module bundler)
 
 ## Command line
