@@ -56,7 +56,7 @@ export default (env, argv) => {
 
         output: {
             path: path.resolve(__dirname, 'dist/public/js'),
-            filename: isDev ? '[name].js' : '[name].[contenthash].js',
+            filename: isDev ? '[name].js' : '[name].[hash].js',
             publicPath: '/js/',
             chunkFilename: isDev ? '[name].js' : '[name].[chunkhash].js',
         },
@@ -104,7 +104,7 @@ export default (env, argv) => {
                             options: {
                                 modules: true,
                                 importLoaders: 1,   // Run postcss-loader before css-loader
-                                localIdentName: isDev ? '[local]__[hash:base64]' : '[hash:base64]',
+                                localIdentName: '[local]_[hash:5]',
                                 camelCase: true,
                                 sourceMap: isDev,
                             },
