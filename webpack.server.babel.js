@@ -83,7 +83,7 @@ export default (env, argv) => {
                             loader: 'css-loader',
                             options: {
                                 modules: true,
-                                localIdentName: '[local]__[hash:5]',
+                                localIdentName: '[local]_[hash:5]',
                                 camelCase: true,
                                 sourceMap: isDev,
                             },
