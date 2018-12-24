@@ -25,7 +25,7 @@ const render = async location => {
 
     // Render React components tree
     const components = (
-        <App store={store}>
+        <App history={history} store={store}>
             { content }
         </App>
     );

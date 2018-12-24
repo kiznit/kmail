@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// TODO: history should be made available through the App's context and not imported explicitly.
-import history from '../history';
-
 
 const isLeftClickEvent = event => event.button === 0;
 const isModifiedEvent = event => !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
@@ -32,9 +29,9 @@ class Link extends React.PureComponent {
         event.preventDefault();
 
         if (replace) {
-            history.replace(to);
+            this.context.history.replace(to);
         } else {
-            history.push(to);
+            this.context.history.push(to);
         }
     };
 
