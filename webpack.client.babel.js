@@ -115,7 +115,11 @@ export default (env, argv) => {
                                 sourceMap: isDev,
                                 plugins: [
                                     require('postcss-import'),      // Allows @import of css within css
-                                    require('postcss-preset-env'),  // autoprefixer included in this one
+                                    require('postcss-preset-env')({ // Polyfills + autoprefixer included in this one
+                                        autoprefixer: {
+                                            grid: 'autoplace',      // IE11 (limited) support for CSS grid
+                                        },
+                                    }),
                                     require('cssnano'),             // Minimizer
                                     require('postcss-reporter')({   // Report warnings and errors
                                         throwError: true,
