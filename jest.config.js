@@ -57,6 +57,7 @@ module.exports = {
         '^react$': 'preact-compat',
         '^react-dom(.*)': 'preact-compat$1',
         '^react-redux$': 'preact-redux',
+        '\\.css$': '<rootDir>/test/styleMock.js',
     },
 
     // modulePathIgnorePatterns: // [array<string>]
