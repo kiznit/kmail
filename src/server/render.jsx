@@ -15,11 +15,11 @@ const initializeStore = () => {
 
 const render = () => {
     const scripts = [assets.vendors.js, assets.client.js];
-    const css = [assets.client.css];
+    const stylesheets = [assets.client.css];
     const store = initializeStore();
 
     const components = (
-        <Html scripts={scripts} css={css} appState={store.getState()}>
+        <Html scripts={scripts} stylesheets={stylesheets} appState={store.getState()}>
             <App store={store} />
         </Html>
     );
