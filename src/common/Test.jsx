@@ -8,7 +8,7 @@ import styles from './Test.css';
 
 const Test = ({ handleSimpleAction, handlePromise, handlePromiseFail, handleFetch, handleFetchFailed }) => (
     <div>
-        <Link to="/">Back to home page</Link>
+        <Link href="/">Back to home page</Link>
         <div>
             <button type="button" className={styles.yellowDog} onClick={handleSimpleAction}>
                 Simple action
