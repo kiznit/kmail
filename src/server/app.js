@@ -13,8 +13,8 @@ app.use(helmet());
 
 
 // Static content
-const publicPath = __TEST__ ? '../../public' : '../public';
-app.use('/', express.static(path.resolve(__dirname, publicPath)));
+// const publicPath = __TEST__ ? '../../public' : '../public';
+// app.use('/', express.static(path.resolve(__dirname, publicPath)));
 
 
 // Simple /ping route - can be used by load balancers or deployment systems
