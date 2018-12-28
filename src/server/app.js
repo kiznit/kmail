@@ -2,6 +2,7 @@ import express from 'express';
 import helmet from 'helmet';
 import path from 'path';
 
+import api from './api';
 import render from './render';
 
 
@@ -16,11 +17,9 @@ app.use(helmet());
 const publicPath = __TEST__ ? '../../public' : '../public';
 app.use('/', express.static(path.resolve(__dirname, publicPath)));
 
-
 // Simple /ping route - can be used by load balancers or deployment systems
 // to verify if the server is up and running.
 app.get('/ping', (req, res) => res.status(200).end());
-
 
 // Azure uses 'x-arr-ssl' instead of 'x-forwarded-proto', so fix that.
 app.use((req, res, next) => {
@@ -30,6 +29,8 @@ app.use((req, res, next) => {
     next();
 });
 
+// API
+app.use('/api', api);
 
 // Dynamic content
 app.get('*', async (req, res, next) => {
