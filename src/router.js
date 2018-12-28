@@ -2,6 +2,7 @@ import React from 'react';
 import UniversalRouter from 'universal-router';
 
 import Link from './common/Link';
+import Status404 from './common/Status404';
 import Test from './common/Test';
 
 
@@ -11,7 +12,7 @@ import Test from './common/Test';
 const HelloWorld = () => (
     <div>
         <h1>Hello, world</h1>
-        <Link href="/test">Go to the test page</Link>
+        <Link href="/test2">Go to the test page</Link>
     </div>
 );
 
@@ -39,15 +40,16 @@ const routes = [
 // };
 
 
-// const errorHandler = error => {
-//     console.log(error);
-//     return error.status === 404
-//         ? <h1>Page Not Found</h1>
-//         : <h1>Oops! Something went wrong</h1>;
-// };
+const errorHandler = error => {
+    if (error.status === 404) {
+        return <Status404 />;
+    }
+
+    throw error;
+};
 
 
 export default new UniversalRouter(routes, {
     //resolveRoute,
-    //errorHandler,
+    errorHandler,
 });
