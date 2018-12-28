@@ -18,7 +18,7 @@ const publicPath = __TEST__ ? '../../public' : '../public';
 app.use('/', express.static(path.resolve(__dirname, publicPath)));
 
 // Simple /ping route - can be used by load balancers or deployment systems
-// to verify if the server is up and running.
+// to verify that the server is up and running.
 app.get('/ping', (req, res) => res.status(200).end());
 
 // Azure uses 'x-arr-ssl' instead of 'x-forwarded-proto', so fix that.
