@@ -6,7 +6,7 @@ import Html from './Html';
 import App from '../common/App';
 
 import assets from './assets.json';
-import routes from '../router';
+import router from '../router';
 import configureStore from '../redux/store';
 
 
@@ -19,11 +19,11 @@ const initializeStore = () => {
 };
 
 
-const router = new Router();
+const app = new Router();
 
-router.get('*', async (req, res, next) => {
+app.get('*', async (req, res, next) => {
     try {
-        const route = await routes.resolve({
+        const route = await router.resolve({
             pathname: req.path,
             query: req.query,
         });
@@ -55,4 +55,4 @@ router.get('*', async (req, res, next) => {
 });
 
 
-export default router;
+export default app;
