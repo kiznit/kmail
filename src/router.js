@@ -42,7 +42,10 @@ const routes = [
 
 const errorHandler = error => {
     if (error.status === 404) {
-        return <Status404 />;
+        return {
+            status: error.status,
+            content: <Status404 />,
+        };
     }
 
     throw error;

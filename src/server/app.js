@@ -35,8 +35,8 @@ app.use('/api', api);
 // Dynamic content
 app.get('*', async (req, res, next) => {
     try {
-        const markup = await render(req, res);
-        res.status(200);
+        const { markup, status } = await render(req, res);
+        res.status(status);
         res.setHeader('Content-Type', 'text/html; charset=utf-8');
         res.write('<!DOCTYPE html>');
         res.write(markup);

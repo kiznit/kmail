@@ -36,7 +36,10 @@ const render = async (req, res) => {
         </Html>
     );
 
-    return renderToStaticMarkup(components);
+    return {
+        markup: renderToStaticMarkup(components),
+        status: route.status || 200,
+    };
 };
 
 
