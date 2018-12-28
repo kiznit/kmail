@@ -75,7 +75,8 @@ describe('Redux promise middleware', () => {
                 promise: Promise.resolve({ foo: 123 }),
                 bonus: 'property',
             });
-        } catch (err) {
+        }
+        catch (err) {
             error = err;
         }
 

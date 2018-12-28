@@ -32,7 +32,8 @@ app.get('*', async (req, res, next) => {
         res.write(markup);
         res.end();
         next();
-    } catch (error) {
+    }
+    catch (error) {
         next(error);
     }
 });
