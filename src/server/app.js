@@ -3,7 +3,7 @@ import helmet from 'helmet';
 import path from 'path';
 
 import api from './api';
-import render from './render';
+import ssr from './render';
 
 
 const app = express();
@@ -33,20 +33,6 @@ app.use((req, res, next) => {
 app.use('/api', api);
 
 // Dynamic content
-app.get('*', async (req, res, next) => {
-    try {
-        const { markup, status } = await render(req, res);
-        res.status(status);
-        res.setHeader('Content-Type', 'text/html; charset=utf-8');
-        res.write('<!DOCTYPE html>');
-        res.write(markup);
-        res.end();
-        next();
-    }
-    catch (error) {
-        next(error);
-    }
-});
-
+app.use(ssr);
 
 export default app;
