@@ -12,7 +12,7 @@ import Test from './common/Test';
 const HelloWorld = () => (
     <div>
         <h1>Hello, world</h1>
-        <Link href="/test2">Go to the test page</Link>
+        <Link href="/test">Go to the test page</Link>
     </div>
 );
 
