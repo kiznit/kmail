@@ -1,20 +1,14 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import path from 'path';
 import StartServerPlugin from 'start-server-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import nodeExternals from 'webpack-node-externals';
 import webpack from 'webpack';
 
 
-const log = (...args) => {
-    console.log('WEBPACK SERVER CONFIG:', ...args);
-};
-
-
 export default (env, argv) => {
     const isDev = !argv || argv.mode !== 'production';
-
-    log(isDev ? 'development' : 'production');
 
     return {
         name: 'server',
@@ -46,7 +40,9 @@ export default (env, argv) => {
         resolve: {
             extensions: ['.js', '.jsx'],
             alias: {
-                components: path.resolve('src/components/'),
+                react: 'preact-compat',
+                'react-dom': 'preact-compat',
+                'react-redux': 'preact-redux',
             },
         },
 
@@ -77,7 +73,25 @@ export default (env, argv) => {
                             }],
                             '@babel/preset-react',
                         ],
+                        plugins: [
+                            '@babel/plugin-proposal-class-properties',
+                        ],
                     },
+                },
+                {
+                    test: /\.css$/,
+                    use: [
+                        MiniCssExtractPlugin.loader,
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                modules: true,
+                                localIdentName: '[local]_[hash:5]',
+                                camelCase: true,
+                                sourceMap: isDev,
+                            },
+                        },
+                    ],
                 },
             ],
         },
@@ -88,6 +102,17 @@ export default (env, argv) => {
                 __BROWSER__: false,
                 __DEV__: isDev,
                 __TEST__: false,
+            }),
+
+            // We don't actually want to extract the CSS here... We already do this
+            // in webpack.client.babel.js and do the PostCSS processing there. But
+            // if we don't add this plugin, building the server bundle crashes:
+            //
+            // TypeError: this[MODULE_TYPE] is not a function
+            //     at childCompiler.runAsChild (D:\dev3\react-redux-starter-kit\node_modules\mini-css-extract-plugin\dist\loader.js:141:24)
+
+            new MiniCssExtractPlugin({
+                filename: 'ignore-me.css',
             }),
 
             new webpack.BannerPlugin({

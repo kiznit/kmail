@@ -1,11 +1,17 @@
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
+import { Router } from 'express';
 
-import App from 'components/App';
-import Html from 'components/Html';
+import Html from './Html';
+import App from '../common/App';
 
 import assets from './assets.json';
+import routes from '../router';
 import configureStore from '../redux/store';
+
+
+const scripts = [assets.vendors.js, assets.client.js];
+const stylesheets = [assets.client.css];
 
 
 const initializeStore = () => {
@@ -13,18 +19,40 @@ const initializeStore = () => {
 };
 
 
-const render = () => {
-    const scripts = [assets.vendors.js, assets.client.js];
-    const store = initializeStore();
+const router = new Router();
 
-    const components = (
-        <Html scripts={scripts} appState={store.getState()}>
-            <App store={store} />
-        </Html>
-    );
+router.get('*', async (req, res, next) => {
+    try {
+        const route = await routes.resolve({
+            pathname: req.path,
+            query: req.query,
+        });
 
-    return renderToStaticMarkup(components);
-};
+        const content = route.content || route;
+
+        const store = initializeStore();
+
+        const components = (
+            <Html scripts={scripts} stylesheets={stylesheets} appState={store.getState()}>
+                <App store={store}>
+                    { content }
+                </App>
+            </Html>
+        );
+
+        const markup = renderToStaticMarkup(components);
+
+        res.status(route.status || 200);
+        res.setHeader('Content-Type', 'text/html; charset=utf-8');
+        res.write('<!DOCTYPE html>');
+        res.write(markup);
+        res.end();
+        next();
+    }
+    catch (error) {
+        next(error);
+    }
+});
 
 
-export default render;
+export default router;

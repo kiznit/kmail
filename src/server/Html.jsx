@@ -1,18 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { createGenerateClassName, JssProvider, SheetsRegistry } from 'react-jss';
 
 
-const Html = ({ title, description, scripts, appState, children }) => {
-    const generateClassName = createGenerateClassName();
-    const sheets = new SheetsRegistry();
-
-    const markup = renderToString(
-        <JssProvider generateClassName={generateClassName} registry={sheets}>
-            { children }
-        </JssProvider>
-    );
+const Html = ({ title, description, scripts, stylesheets, appState, children }) => {
+    const markup = renderToString(children);
 
     return (
         <html className="no-js" lang="en">
@@ -26,10 +18,10 @@ const Html = ({ title, description, scripts, appState, children }) => {
                 { scripts.map(script => <link key={script} rel="preload" href={script} as="script" />) }
                 <link rel="icon" href="/favicon.ico?v=1" />
                 <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=1" />
-                <style id="jss-server-side" dangerouslySetInnerHTML={{ __html: sheets.toString() }} />
+                { stylesheets.map(stylesheet => <link key={stylesheet} rel="stylesheet" type="text/css" href={stylesheet} />) }
             </head>
             <body>
-                <div id="app-root" dangerouslySetInnerHTML={{ __html: markup }} />
+                <div id="data-app-root" dangerouslySetInnerHTML={{ __html: markup }} />
                 <script dangerouslySetInnerHTML={{ __html: `window.INITIAL_REDUX_STATE=${JSON.stringify(appState)};` }} />
                 { scripts.map(script => <script key={script} src={script} />) }
             </body>
@@ -41,6 +33,7 @@ const Html = ({ title, description, scripts, appState, children }) => {
 Html.propTypes = {
     appState: PropTypes.shape({}).isRequired,
     children: PropTypes.node.isRequired,
+    stylesheets: PropTypes.arrayOf(PropTypes.string),
     description: PropTypes.string,
     scripts: PropTypes.arrayOf(PropTypes.string),
     title: PropTypes.string,
@@ -48,6 +41,7 @@ Html.propTypes = {
 
 
 Html.defaultProps = {
+    stylesheets: [],
     description: null,
     scripts: [],
     title: null,

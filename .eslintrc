@@ -1,50 +1,72 @@
 {
-    settings: {
-        import/resolver: {
-            webpack: {
-                config: "webpack.server.babel.js"
+    "parser": "babel-eslint",
+
+    "settings": {
+        "import/resolver": {
+            "webpack": {
+                "config": "webpack.server.babel.js"
             }
-        }
+        },
+
+        "polyfills": [
+            "fetch",
+            "promises"
+        ]
     },
 
-    env: {
-        browser: true,
-        es6: true,
-        node: true,
-        jest: true,
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true,
+        "jest": true
     },
 
-    globals: {
-        __BROWSER__: true,
-        __DEV__: true,
-        __TEST__: true,
-        __REDUX_DEVTOOLS_EXTENSION__: true
+    "globals": {
+        "__BROWSER__": true,
+        "__DEV__": true,
+        "__TEST__": true,
+        "__REDUX_DEVTOOLS_EXTENSION__": true,
+        "sinon": true
     },
 
-    extends: "airbnb",
+    "plugins": [
+        "compat"
+    ],
 
-    rules: {
-        arrow-body-style: 0,
-        arrow-parens: 0,
-        comma-dangle: [2, "always-multiline"],
-        global-require: 0,
-        indent: [2, 4, SwitchCase: 1],
-        max-len: [1, { code: 120, ignoreComments: true }],
-        no-multi-spaces: [2, { ignoreEOLComments: true }],
-        no-shadow: 1,
-        no-underscore-dangle: 0,
-        no-unused-vars: [2, { vars: "all", args: "none" }],
-        object-curly-newline: 0,
-        react/jsx-indent: [2, 4],
-        react/jsx-indent-props: [2, 4],
-        react/no-danger: 0,
+    "extends": "airbnb",
+
+    "rules": {
+        "arrow-body-style": 0,
+        "arrow-parens": 0,
+        "brace-style": 1,
+        "comma-dangle": [2, "always-multiline"],
+        "global-require": 0,
+        "implicit-arrow-linebreak": 0,
+        "indent": [2, 4, { "SwitchCase": 1 }],
+        "max-len": [1, { "code": 120, "ignoreComments": true }],
+        "no-multi-spaces": [2, { "ignoreEOLComments": true }],
+        "no-param-reassign": 1,
+        "no-return-assign": 1,
+        "no-shadow": 1,
+        "no-underscore-dangle": 0,
+        "no-unused-vars": [2, { "vars": "all", "args": "none" }],
+        "object-curly-newline": 0,
+        "operator-linebreak": 0,
+        "prefer-destructuring": 0,
+        "react/destructuring-assignment": 0,
+        "react/jsx-indent": [2, 4],
+        "react/jsx-indent-props": [2, 4],
+        "react/no-danger": 0,
+        "spaced-comment": 0,
+
+        "compat/compat": 2
     },
 
-    overrides: [
+    "overrides": [
         {
-            files: ["*.spec.js", "*.spec.jsx"],
-            rules: {
-                no-unused-expressions: "off",
+            "files": ["*.spec.js", "*.spec.jsx"],
+            "rules": {
+                "no-unused-expressions": "off"
             }
         }
     ]

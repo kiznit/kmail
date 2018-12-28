@@ -1,0 +1,22 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Jest",
+            "disableOptimisticBPs": true,
+            "program": "${workspaceRoot}\\node_modules\\jest\\bin\\jest.js",
+            "cwd": "${workspaceFolder}",
+            "args": [
+                "-i",
+                // "${relativeFile}", /* debug the currently opened file. */
+            ],
+            "protocol": "inspector",
+            "internalConsoleOptions": "neverOpen",
+            "outFiles": [
+                "${workspaceRoot}/dist/**/*"
+            ],
+        },
+    ]
+}
