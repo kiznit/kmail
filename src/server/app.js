@@ -22,6 +22,15 @@ app.use('/', express.static(path.resolve(__dirname, publicPath)));
 app.get('/ping', (req, res) => res.status(200).end());
 
 
+// Azure uses 'x-arr-ssl' instead of 'x-forwarded-proto', so fix that.
+app.use((req, res, next) => {
+    if (req.headers['x-arr-ssl'] && !req.headers['x-forwarded-proto']) {
+        req.headers['x-forwarded-proto'] = 'https';
+    }
+    next();
+});
+
+
 // Dynamic content
 app.get('*', async (req, res, next) => {
     try {
