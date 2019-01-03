@@ -6,7 +6,7 @@ describe('Redux request middleware', () => {
     let dispatch;
 
     beforeEach(() => {
-        baseDispatch = sinon.spy();
+        baseDispatch = sinon.spy(action => action.promise);
         dispatch = action => {
             const methods = { dispatch, getState: () => {} };
             return middleware(methods)(baseDispatch)(action);

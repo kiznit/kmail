@@ -75,12 +75,10 @@ const middleware = ({ dispatch }) => next => action => {
         }
     );
 
-    dispatch({
+    return dispatch({
         ...rest,
         promise,
     });
-
-    return promise;
 };
 
 
