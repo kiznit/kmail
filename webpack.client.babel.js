@@ -83,6 +83,7 @@ export default (env, argv) => {
                     options: {
                         presets: [
                             ['@babel/preset-env', {
+                                modules: false, // Don't transpile modules so HMR works properly
                                 useBuiltIns: 'entry',
                                 include: builtInIncludeList,    // Explicit to make sure everything in that list is valid
                                 exclude: builtInExcludeList,

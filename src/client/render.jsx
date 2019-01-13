@@ -59,7 +59,7 @@ export default () => {
 
 
 if (module.hot) {
-    module.hot.accept('../common/App', () => {
-        render(require('../common/App').default);
+    module.hot.accept(['../common/App', '../router'], () => {
+        render(history.location);
     });
 }

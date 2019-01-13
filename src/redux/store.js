@@ -9,7 +9,16 @@ const configureStore = (initialState) => {
     const composeEnhancers = (__BROWSER__ && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
     const middlewares = [promiseMiddleware, requestMiddleware, thunkMiddleware];
     const enhancer = composeEnhancers(applyMiddleware(...middlewares));
-    return createStore(reducers, initialState, enhancer);
+
+    const store = createStore(reducers, initialState, enhancer);
+
+    if (module.hot) {
+        module.hot.accept('./reducers', () => {
+            store.replaceReducer(reducers);
+        });
+    }
+
+    return store;
 };
 
 

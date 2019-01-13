@@ -67,6 +67,7 @@ export default (env, argv) => {
                     options: {
                         presets: [
                             ['@babel/preset-env', {
+                                modules: false, // Don't transpile modules so HMR works properly
                                 targets: {
                                     node: 'current',
                                 },
