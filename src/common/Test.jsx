@@ -6,7 +6,7 @@ import Link from './Link';
 import styles from './Test.css';
 
 
-const Test = ({ handleSimpleAction, handlePromise, handlePromiseFail, handleFetch, handleFetchFailed }) => (
+const Test = ({ handleSimpleAction, handlePromise, handlePromiseFail, handleFetch, handleFetchFailed, handlePost }) => (
     <div>
         <Link href="/">Back to home page</Link>
         <div>
@@ -25,6 +25,9 @@ const Test = ({ handleSimpleAction, handlePromise, handlePromiseFail, handleFetc
             <button type="button" className={styles.yellowDog} onClick={handleFetchFailed}>
                 Fetch 404
             </button>
+            <button type="button" className={styles.yellowDog} onClick={handlePost}>
+                Post
+            </button>
         </div>
     </div>
 );
@@ -36,6 +39,7 @@ Test.propTypes = {
     handlePromiseFail: PropTypes.func.isRequired,
     handleFetch: PropTypes.func.isRequired,
     handleFetchFailed: PropTypes.func.isRequired,
+    handlePost: PropTypes.func.isRequired,
 };
 
 
@@ -83,6 +87,16 @@ const mapDispatchToProps = dispatch => {
                     url: '/non-existing-page',
                 },
                 meta: 123,
+            });
+        },
+        handlePost: event => {
+            event.preventDefault();
+            dispatch({
+                type: 'POST',
+                request: {
+                    method: 'POST',
+                    url: '/login',
+                },
             });
         },
     };

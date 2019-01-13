@@ -58,20 +58,20 @@ describe('auth - CSRF', () => {
             });
     });
 
-    test('Posting without a CSRF token should fail', () => {
+    test('POST without a CSRF token should fail', () => {
         return agent
             .post('/login')
             .expect(403);
     });
 
-    test('Posting with an invalid CSRF token should fail', () => {
+    test('POST with an invalid CSRF token should fail', () => {
         return agent
             .post('/login')
             .set('X-CSRF-Token', 'Ch663UvN-Y1_42Yy4WJ3V-v0EhEfNDV7YI4c')
             .expect(403);
     });
 
-    test('Posting with a valid CSRF should work', () => {
+    test('POST with a valid CSRF should work', () => {
         return agent
             .post('/login')
             .set('X-CSRF-Token', csrfToken)

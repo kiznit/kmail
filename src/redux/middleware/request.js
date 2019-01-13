@@ -25,9 +25,9 @@ const isRequest = request => !!request && typeof request.url === 'string';
 
 
 const middleware = ({ dispatch }) => next => action => {
-    const { request, ...rest } = action;
+    const { request: userRequest, ...rest } = action;
 
-    if (!isRequest(request)) {
+    if (!isRequest(userRequest)) {
         return next(action);
     }
 
@@ -36,18 +36,23 @@ const middleware = ({ dispatch }) => next => action => {
     const { url, ...options } = action.request;
 
     // We now build a Request so that we can report it in case of errors.
-    const req = new Request(url, options);
+    const request = new Request(url, options);
 
-    const promise = fetch(req).then(
+    // Send CSRF token as needed
+    if (['GET', 'HEAD', 'OPTIONS'].indexOf(request.method) < 0) {
+        request.headers.append('X-CSRF-Token', global._csrfToken);
+    }
+
+    const promise = fetch(request).then(
         response => {
             if (!response.ok) {
                 const error = new Error(`Request failed with status code ${response.status}`);
-                error.request = req;
+                error.request = request;
                 error.response = response;
                 throw error;
             }
 
-            response.request = req;
+            response.request = request;
 
             const contentType = response.headers.get('content-type');
 

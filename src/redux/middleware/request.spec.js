@@ -126,4 +126,31 @@ describe('Redux request middleware', () => {
 
         return expect(response.text()).to.eventually.equal('Some body');
     });
+
+
+    test('POST requests include the CSRF token', async () => {
+        global._csrfToken = 'lVSIJb6Z-58ZIxed4PbRd2srZoqf_H4b3xwY';
+        global.fetch = (url, options) => Promise.resolve(
+            new Response('Some body', { status: 200, statusText: 'OK' })
+        );
+
+        const response = await dispatch({
+            type: 'ACTION',
+            request: {
+                method: 'POST',
+                url: '/login',
+            },
+        });
+
+        expect(response.data).to.equal('Some body');
+        expect(response.request.method).to.equal('POST');
+
+        expect(baseDispatch).to.have.been.calledOnce;
+        expect(baseDispatch).to.have.been.calledWithExactly({
+            type: 'ACTION',
+            promise: Promise.resolve(),
+        });
+
+        expect(response.request.headers.get('X-CSRF-Token')).to.equal(global._csrfToken);
+    });
 });
