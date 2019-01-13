@@ -3,7 +3,7 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 
 
-const Html = ({ title, description, scripts, stylesheets, appState, children }) => {
+const Html = ({ title, description, scripts, stylesheets, appState, csrfToken, children }) => {
     const markup = renderToString(children);
 
     return (
@@ -23,6 +23,7 @@ const Html = ({ title, description, scripts, stylesheets, appState, children }) 
             <body>
                 <div id="data-app-root" dangerouslySetInnerHTML={{ __html: markup }} />
                 <script dangerouslySetInnerHTML={{ __html: `window.INITIAL_REDUX_STATE=${JSON.stringify(appState)};` }} />
+                <script dangerouslySetInnerHTML={{ __html: `window._csrfToken = '${csrfToken}';` }} />
                 { scripts.map(script => <script key={script} src={script} />) }
             </body>
         </html>
@@ -33,6 +34,7 @@ const Html = ({ title, description, scripts, stylesheets, appState, children }) 
 Html.propTypes = {
     appState: PropTypes.shape({}).isRequired,
     children: PropTypes.node.isRequired,
+    csrfToken: PropTypes.string.isRequired,
     stylesheets: PropTypes.arrayOf(PropTypes.string),
     description: PropTypes.string,
     scripts: PropTypes.arrayOf(PropTypes.string),

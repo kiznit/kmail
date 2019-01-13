@@ -33,7 +33,7 @@ app.get('*', async (req, res, next) => {
         const store = initializeStore();
 
         const components = (
-            <Html scripts={scripts} stylesheets={stylesheets} appState={store.getState()}>
+            <Html scripts={scripts} stylesheets={stylesheets} appState={store.getState()} csrfToken={req.csrfToken()}>
                 <App store={store}>
                     { content }
                 </App>

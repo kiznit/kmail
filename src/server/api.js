@@ -1,8 +1,8 @@
 import { Router } from 'express';
 
-const app = new Router();
+const api = new Router();
 
 // TODO: implement API endpoints here
-app.get('/test', (req, res) => res.status(200).send('Succesfull test!').end());
+api.get('/test', (req, res) => res.status(200).send('Succesfull test!').end());
 
-export default app;
+export default api;

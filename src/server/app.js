@@ -3,6 +3,7 @@ import helmet from 'helmet';
 import path from 'path';
 
 import api from './api';
+import auth from './auth';
 import ssr from './render';
 
 
@@ -27,6 +28,9 @@ app.use((req, res, next) => {
     }
     next();
 });
+
+// Auth
+app.use(auth);
 
 // API
 app.use('/api', api);
