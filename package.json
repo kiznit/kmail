@@ -1,8 +1,8 @@
 {
-  "name": "react-redux-ssr-hmr",
+  "name": "kmail",
   "version": "0.0.1",
-  "description": "Thierry's React/Redux/SSR/HMR Starter Kit",
-  "repository": "git://github.com/kiznit/react-redux-ssr-hmr.git",
+  "description": "Kzinti's email",
+  "repository": "git://github.com/kiznit/kmail",
   "author": "Thierry Tremblay <kiznit@users.noreply.github.com>",
   "license": "MIT",
   "scripts": {
