@@ -4,6 +4,7 @@ import path from 'path';
 
 import api from './api';
 import auth from './auth';
+import config from './config';
 import ssr from './render';
 
 
@@ -28,6 +29,10 @@ app.use((req, res, next) => {
     }
     next();
 });
+
+// Proxy
+app.set('trust proxy', config.trustProxy);
+
 
 // Auth
 app.use(auth);
