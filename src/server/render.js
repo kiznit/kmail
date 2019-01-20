@@ -42,6 +42,10 @@ app.get('*', async (req, res, next) => {
 
         const markup = renderToStaticMarkup(components);
 
+        if (!__DEV__) {
+            res.set('Cache-Control', 'no-cache, no-store');
+        }
+
         res.status(route.status || 200);
         res.setHeader('Content-Type', 'text/html; charset=utf-8');
         res.write('<!DOCTYPE html>');
