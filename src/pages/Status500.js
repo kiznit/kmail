@@ -11,6 +11,16 @@ const Status500 = ({ error }) => (
         <p>
             {error.message}
         </p>
+        { __DEV__ && (
+            <p>
+                {(error.stack || '').split('\n').map((item, key) => (
+                    <span>
+                        {item}
+                        <br />
+                    </span>
+                ))}
+            </p>
+        )}
         <Link href="/">
             Go back to the home page
         </Link>

@@ -10,11 +10,11 @@ const routes = [
 ];
 
 
-const errorHandler = error => {
+const errorHandler = (error, context) => {
     if (error.status === 404) {
         return {
             status: error.status,
-            content: <Status404 />,
+            content: <Status404 url={context.pathname} />,
         };
     }
 

@@ -4,6 +4,7 @@ import { Router } from 'express';
 
 import Html from './Html';
 import App from '../common/App';
+import Status500 from '../pages/Status500';
 
 import assets from './assets.json';
 import router from '../router';
@@ -22,6 +23,9 @@ const initializeStore = () => {
 const app = new Router();
 
 app.get('*', async (req, res, next) => {
+    let markup;
+    let status;
+
     try {
         const route = await router.resolve({
             pathname: req.path,
@@ -40,13 +44,16 @@ app.get('*', async (req, res, next) => {
             </Html>
         );
 
-        const markup = renderToStaticMarkup(components);
+        markup = renderToStaticMarkup(components);
+        status = route.status || 200;
+    }
+    catch (error) {
+        markup = renderToStaticMarkup(<Status500 error={error} />);
+        status = 500;
+    }
 
-        if (!__DEV__) {
-            res.set('Cache-Control', 'no-cache, no-store');
-        }
-
-        res.status(route.status || 200);
+    try {
+        res.status(status);
         res.setHeader('Content-Type', 'text/html; charset=utf-8');
         res.write('<!DOCTYPE html>');
         res.write(markup);
