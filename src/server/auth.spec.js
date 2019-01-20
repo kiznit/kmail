@@ -2,7 +2,7 @@ import request from 'supertest';
 import app from './app';
 
 
-const RE_COOKIE_CSRF = /^_csrf=[\w-]{24}; Path=\/$/;
+const RE_COOKIE_CSRF = /^.+\.csrf=[\w-]{24}; Path=\/; HttpOnly; SameSite=Lax$/;
 
 
 // There is a bug in Jest where it doesn't merge multiple 'set-cookie' headers properly.

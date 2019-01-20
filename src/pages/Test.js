@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import Link from './Link';
+import Link from '../common/Link';
 import styles from './Test.css';
 
 
