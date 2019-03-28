@@ -6,7 +6,7 @@ import chaiThings from 'chai-things';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 
-import knex from '../src/server/knex';
+import knex, { initKnex } from '../src/server/knex';
 
 
 // Configure Chai
@@ -24,6 +24,11 @@ global.expect = chai.expect;
 
 // I prefer Sinon over Jest's mocking capabilities, so let's use that.
 global.sinon = sinon;
+
+
+beforeAll(() => {
+    return initKnex;
+});
 
 
 afterAll(() => {
