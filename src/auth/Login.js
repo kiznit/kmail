@@ -7,11 +7,28 @@ import { Formik, Form, Field } from 'formik';
 import * as actions from './actions';
 import styles from './Login.css';
 
+
+const FormError = ({ children }) => (
+    <p className="text-danger">
+        {children}
+    </p>
+);
+
+FormError.propTypes = {
+    children: PropTypes.node.isRequired,
+};
+
+
 const FormTitle = ({ children }) => (
     <div className="form-group">
         <h4>{children}</h4>
     </div>
 );
+
+FormTitle.propTypes = {
+    children: PropTypes.node.isRequired,
+};
+
 
 const FormInput = ({
     field,
@@ -31,7 +48,7 @@ const FormInput = ({
         <small id="fieldHelp" className="form-text text-muted">
             {
                 touched[field.name] && errors[field.name]
-                    ? <p className="text-danger">{errors[field.name]}</p>
+                    ? <FormError>{errors[field.name]}</FormError>
                     : description
             }
         </small>
@@ -77,14 +94,24 @@ const Login = ({ onSubmit }) => (
                                 }
                                 return errors;
                             }}
-                            onSubmit={({ username, password }, { setSubmitting }) => {
+                            onSubmit={({ username, password }, { setSubmitting, setStatus }) => {
+                                setStatus(null);
                                 return onSubmit(username, password)
-                                    .then(() => setSubmitting(false)) // TODO: do we need this? perhaps not...
-                                    .catch(err => setSubmitting(false));    // TODO: display error message somewhere in login form
+                                    .then(() => {
+                                        // TODO: do we need this? perhaps not...
+                                        setSubmitting(false);
+                                    })
+                                    .catch(error => {
+                                        setStatus({ error });
+                                        setSubmitting(false);
+                                    });
                             }}
                         >
-                            {({ values, errors, touched, handleSubmit, isSubmitting }) => (
+                            {({ values, status, errors, touched, handleSubmit, isSubmitting }) => (
                                 <Form>
+                                    {
+                                        status && status.error && <FormError>{status.error.message}</FormError>
+                                    }
                                     <Field
                                         autoFocus
                                         name="username"
