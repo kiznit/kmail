@@ -1,14 +1,11 @@
 import React from 'react';
-import queryString from 'query-string';
+import ReactDOM from 'react-dom';
+import querystring from 'querystring';
 
 import history from '../history';
 import router from '../router';
 import App from '../common/App';
 import configureStore from '../redux/store';
-
-if (__DEV__) {
-    require('preact/debug');
-}
 
 
 const container = document.getElementById('data-app-root');
@@ -19,20 +16,19 @@ const render = async (location, action) => {
     try {
         const route = await router.resolve({
             pathname: location.pathname,
-            query: queryString.parse(location.search),
+            query: querystring.parse(location.search.substr(1)),
         });
 
         const content = route.content || route;
 
         // Render React components tree
         const components = (
-            <App history={history} store={store}>
+            <App store={store}>
                 { content }
             </App>
         );
 
-        // eslint-disable-next-line react/no-deprecated
-        React.render(components, document.body, container);
+        ReactDOM.hydrate(components, container);
     }
     catch (error) {
         if (__DEV__) {

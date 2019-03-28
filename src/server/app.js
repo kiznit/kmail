@@ -1,3 +1,4 @@
+import bodyParser from 'body-parser';
 import express from 'express';
 import helmet from 'helmet';
 import path from 'path';
@@ -5,6 +6,7 @@ import path from 'path';
 import api from './api';
 import auth from './auth';
 import config from './config';
+import session from './session';
 import ssr from './render';
 
 
@@ -33,6 +35,11 @@ app.use((req, res, next) => {
 // Proxy
 app.set('trust proxy', config.trustProxy);
 
+// Session
+app.use(session);
+
+// Body parser
+app.use(bodyParser.json());
 
 // Auth
 app.use(auth);

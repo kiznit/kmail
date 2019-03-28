@@ -2,4 +2,5 @@
 /coverage
 /dist
 /node_modules
+/database.sqlite3
 /yarn-error.log

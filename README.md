@@ -23,8 +23,8 @@ What I want:
 * Express 4 (Web framework)
 * Jest + Chai + Sinon + Supertest (Unit tests)
 * PostCSS pipeline
-* Preact 8.4 (much smaller than React)
-* Preact-Redux 2 (Redux for Preat)
+* React 16.8
+* React-Redux 5 (TODO: update to v7 when it is released)
 * Custom Redux middlewares: promise, request and thunk
 * Universal-Router 7 for server and client-side routing
 * Webpack 4 (Module bundler)

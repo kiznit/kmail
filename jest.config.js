@@ -54,9 +54,6 @@ module.exports = {
     // like images or styles with a single module.
     moduleNameMapper: {
         '^./assets.json$': '<rootDir>/test/assets.json',
-        '^react$': 'preact-compat',
-        '^react-dom(.*)': 'preact-compat$1',
-        '^react-redux$': 'preact-redux',
         '\\.css$': '<rootDir>/test/styleMock.js',
     },
 

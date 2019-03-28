@@ -3,7 +3,7 @@ import React from 'react';
 
 
 const Layout = ({ children }) => (
-    <div>
+    <div className="container-fluid">
         {children}
     </div>
 );

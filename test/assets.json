@@ -1,5 +1,6 @@
 {
   "client": {
+    "css": "/js/styles.css",
     "js": "/js/client.js"
   },
   "vendors": {

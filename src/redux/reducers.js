@@ -1,15 +1,8 @@
-// Here you should import all your reducers and combine them
+import { combineReducers } from 'redux';
+
+import auth from '../auth/reducer';
 
 
-const defaultState = {
-    id: 123,
-    foo: 'bar',
-};
-
-
-export default (state = defaultState, action) => {
-    switch (action.type) {
-        default:
-            return defaultState;
-    }
-};
+export default combineReducers({
+    auth,
+});

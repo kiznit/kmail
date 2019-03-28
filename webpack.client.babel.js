@@ -5,28 +5,6 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import webpack from 'webpack';
 
-import builtInFeatures from '@babel/preset-env/data/built-in-features';
-import { defaultWebIncludes } from '@babel/preset-env/lib/default-includes';
-
-
-// The list of features and plugins that can be disabled is found
-// in two files inside the @babel/present-env package:
-//      @babel/present-env/data/built-in-features.js
-//      @babel/present-env/data/plugin-features.js
-// Start by excluding everything and then only include what is needed.
-// See src/client/polyfills/es6.js for how to approach this.
-
-// Add features you want included in the ES6 poyfill here.
-const builtInIncludeList = [
-    'es6.object.assign',
-];
-
-// Build the exclusion list for @babel/preset-env
-const builtInExcludeList = Object.keys(builtInFeatures)
-    .concat(defaultWebIncludes)
-    .filter(feature => !builtInIncludeList.includes(feature))
-    .concat(['transform-regenerator']);
-
 
 export default (env, argv) => {
     const isDev = !argv || argv.mode !== 'production';
@@ -38,7 +16,7 @@ export default (env, argv) => {
 
         stats: isDev ? 'errors-only' : 'normal',
 
-        devtool: isDev ? 'eval-source-map' : 'source-map',
+        devtool: 'source-map',
 
         entry: {
             client: [
@@ -49,7 +27,7 @@ export default (env, argv) => {
                     ] : [
                     ]
                 ),
-                'bootstrap/dist/css/bootstrap-reboot.css',
+                'bootstrap/dist/css/bootstrap.min.css',
                 './src/client/index.js',
             ],
         },
@@ -64,9 +42,6 @@ export default (env, argv) => {
         resolve: {
             extensions: ['.js', '.jsx'],
             alias: {
-                react: 'preact-compat',
-                'react-dom': 'preact-compat',
-                'react-redux': 'preact-redux',
             },
         },
 
@@ -85,8 +60,6 @@ export default (env, argv) => {
                             ['@babel/preset-env', {
                                 modules: false, // Don't transpile modules so HMR works properly
                                 useBuiltIns: 'entry',
-                                include: builtInIncludeList,    // Explicit to make sure everything in that list is valid
-                                exclude: builtInExcludeList,
                             }],
                             '@babel/preset-react',
                         ],
@@ -97,7 +70,9 @@ export default (env, argv) => {
                     },
                 },
                 {
+                    // Transform CSS
                     test: /\.css$/,
+                    exclude: /node_modules/,
                     use: [
                         ...(isDev ? ['css-hot-loader'] : []),
                         MiniCssExtractPlugin.loader,
@@ -129,6 +104,14 @@ export default (env, argv) => {
                                 ],
                             },
                         },
+                    ],
+                },
+                {
+                    // Third-party CSS
+                    test: /node_modules[/\\].+\.css$/,
+                    use: [
+                        MiniCssExtractPlugin.loader,
+                        'css-loader',
                     ],
                 },
             ],

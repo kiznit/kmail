@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import HistoryContext from './HistoryContext';
 
 
 const isLeftClickEvent = event => event.button === 0;
@@ -8,6 +9,8 @@ const isModifiedEvent = event => !!(event.metaKey || event.altKey || event.ctrlK
 
 
 class Link extends React.PureComponent {
+    static contextType = HistoryContext;
+
     handleClick = event => {
         const { href, onClick, replace, target } = this.props;
 

@@ -6,6 +6,8 @@ import chaiThings from 'chai-things';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 
+import knex from '../src/server/knex';
+
 
 // Configure Chai
 chai.config.includeStack = true;
@@ -22,3 +24,8 @@ global.expect = chai.expect;
 
 // I prefer Sinon over Jest's mocking capabilities, so let's use that.
 global.sinon = sinon;
+
+
+afterAll(() => {
+    return knex.destroy();  // This is a promise
+});

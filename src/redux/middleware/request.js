@@ -23,6 +23,8 @@
 
 const isRequest = request => !!request && typeof request.url === 'string';
 
+const isString = x => (typeof x === 'string' || x instanceof String);
+
 
 const middleware = ({ dispatch }) => next => action => {
     const { request: userRequest, ...rest } = action;
@@ -34,6 +36,13 @@ const middleware = ({ dispatch }) => next => action => {
     // We don't know if action.request is a normal object or a Request.
     // We can handle both with destructuring.
     const { url, ...options } = action.request;
+
+    // Handle JSON body
+    if (options.body && !isString(options.body)) {
+        options.body = JSON.stringify(options.body);
+        options.headers = options.headers || new Headers();
+        options.headers.append('Content-Type', 'application/json');
+    }
 
     // We now build a Request so that we can report it in case of errors.
     const request = new Request(url, options);

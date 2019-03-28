@@ -5,6 +5,7 @@ import { Router } from 'express';
 import Html from './Html';
 import App from '../common/App';
 import Status500 from '../pages/Status500';
+import { AUTH_LOGIN } from '../auth/actions';
 
 import assets from './assets.json';
 import router from '../router';
@@ -15,8 +16,17 @@ const scripts = [assets.vendors.js, assets.client.js];
 const stylesheets = [assets.client.css];
 
 
-const initializeStore = () => {
-    return configureStore();
+const initializeStore = async req => {
+    const store = configureStore();
+
+    if (req.isAuthenticated()) {
+        await store.dispatch({
+            type: AUTH_LOGIN,
+            promise: Promise.resolve({ data: req.user }),
+        });
+    }
+
+    return store;
 };
 
 
@@ -34,7 +44,7 @@ app.get('*', async (req, res, next) => {
 
         const content = route.content || route;
 
-        const store = initializeStore();
+        const store = await initializeStore(req);
 
         const components = (
             <Html scripts={scripts} stylesheets={stylesheets} appState={store.getState()} csrfToken={req.csrfToken()}>

@@ -17,20 +17,67 @@ dotenv.config();
 const defaultConfig = {
     appName: pkg.name,          // Application name, used for cookies and internal identification
     https: false,               // Is the server running over HTTPS?
+    sessionSecret: 'Secret',    // Session secret
     trustProxy: false,          // Should we trust the 'x-forwarded-for' header?
 };
 
 
+const devConfig = {
+    database: {
+        client: 'sqlite3',
+        connection: {
+            filename: 'database.sqlite3',
+        },
+        useNullAsDefault: true,
+    },
+};
+
+
+const testConfig = {
+    database: {
+        client: 'sqlite3',
+        connection: {
+            filename: ':memory:',
+        },
+        useNullAsDefault: true,
+    },
+};
+
+
 const getConfig = env => {
+    if (env === 'test') {
+        return {
+            ...defaultConfig,
+            ...testConfig,
+        };
+    }
+
     if (env === 'development') {
-        return defaultConfig;
+        return {
+            ...defaultConfig,
+            ...devConfig,
+        };
     }
 
     // Production
     return {
         ...defaultConfig,
-        https: getenv.boolish('HTTPS', true),
-        trustProxy: getenv.boolish('TRUSTPROXY', false),
+        https: getenv.boolish('KMAIL_HTTPS', true),
+        sessionSecret: getenv('KMAIL_SECRET'),
+        trustProxy: getenv.boolish('KMAIL_TRUSTPROXY', false),
+
+        database: {
+            client: 'mssql',
+            connection: {
+                server: getenv('KMAIL_DB_SERVER'),
+                user: getenv('KMAIL_DB_USER'),
+                password: getenv('KMAIL_DB_PASSWORD'),
+                database: getenv('KMAIL_DB_NAME', pkg.name),
+                options: {
+                    encrypt: true,
+                },
+            },
+        },
     };
 };
 
