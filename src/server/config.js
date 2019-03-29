@@ -19,6 +19,7 @@ const defaultConfig = {
     https: false,               // Is the server running over HTTPS?
     sessionSecret: 'Secret',    // Session secret
     trustProxy: false,          // Should we trust the 'x-forwarded-for' header?
+    bcryptRounds: 12,           // About 230 ms on my Intel(R) Core(TM) i7-4770K CPU @ 3.50GHz
 };
 
 

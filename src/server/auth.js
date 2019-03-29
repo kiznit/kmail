@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import cookieParser from 'cookie-parser';
 import csrf from 'csurf';
 import { Router } from 'express';
@@ -5,6 +6,68 @@ import Imap from 'imap';
 import passport from 'passport';
 
 import config from './config';
+import knex from './knex';
+
+
+const hashPassword = async password => bcrypt.hash(password, Math.max(config.bcryptRounds || 0, 12));
+
+const verifyPassword = async (plaintextPassword, hash) => bcrypt.compare(plaintextPassword, hash).then(verified => {
+    if (!verified) {
+        throw new Error('Invalid password');
+    }
+    return verified;
+});
+
+
+const findUser = username => knex('users').where({ username }).first();
+
+const insertUser = (username, plaintextPassword) => hashPassword(plaintextPassword)
+    .then(password => knex('users').insert({ username, password }));
+
+const updateUser = (username, plaintextPassword) => hashPassword(plaintextPassword)
+    .then(password => knex('users').where({ username }).update({ password }));
+
+
+const loginImap = (username, password) => new Promise((resolve, reject) => {
+    const imap = new Imap({
+        connTimeout: 10000,
+        authTimeout: 10000,
+        host: 'mail.webfaction.com',
+        port: 993,
+        tls: true,
+        user: username,
+        password,
+    });
+
+    imap.once('ready', () => {
+        resolve(imap);
+    });
+
+    imap.once('error', error => {
+        reject(error);
+    });
+
+    imap.connect();
+});
+
+
+//TODO: do I want to change this logic to always authenticate to imap?
+const login = (username, password) => findUser(username).then(
+    user => {
+        if (user) {
+            return verifyPassword(password, user.password).then(
+                () => user,
+                error => loginImap(username, password).then(
+                    () => updateUser(username, password)
+                )
+            );
+        }
+
+        return loginImap(username, password).then(
+            imap => insertUser(username, password)
+        );
+    }
+);
 
 
 class ImapStrategy extends passport.Strategy {
@@ -21,37 +84,16 @@ class ImapStrategy extends passport.Strategy {
             return null;
         }
 
-        return new Promise((resolve, reject) => {
-            const imap = new Imap({
-                connTimeout: 10000,
-                authTimeout: 10000,
-                host: 'mail.webfaction.com',
-                port: 993,
-                tls: true,
-                user: username,
-                password,
-            });
-
-            imap.once('ready', () => {
-                resolve({
-                    username,
-                });
-            });
-
-            imap.once('error', error => {
-                reject(error);
-            });
-
-            imap.connect();
-        })
-            .then(user => {
-                this.success(user);
+        return login(username, password).then(
+            () => {
+                this.success({ username });
                 return null;
-            })
-            .catch(error => {
+            },
+            error => {
                 const message = error.message;
                 this.fail({ message }, 401);
-            });
+            }
+        );
     }
 }
 
