@@ -1,8 +1,76 @@
+import Imap from 'imap';
+import { inspect } from 'util';
+
 import { Router } from 'express';
+import { getImap } from './imap';
+
 
 const api = new Router();
 
-// TODO: implement API endpoints here
-api.get('/test', (req, res) => res.status(200).send('Succesfull test!').end());
+// Make sure API calls are not cached by the browser
+api.get('/*', (req, res, next) => {
+    res.setHeader('Last-Modified', new Date().toUTCString());
+    next();
+});
+
+
+api.get('/inbox', (req, res) => {
+    if (!req.user) {
+        return res.json([]);
+    }
+
+    const imap = getImap(req.user.username);
+
+    if (!imap) {
+        return res.json([]);
+    }
+
+    const emails = [];
+
+    imap.openBox('INBOX', true, (err, box) => {
+        const f = imap.seq.fetch('1:10', {
+            bodies: 'HEADER.FIELDS (FROM TO SUBJECT DATE)',
+            struct: true,
+        });
+
+        f.on('message', (msg, seqno) => {
+            //console.log('Message #%d', seqno);
+            const email = {};
+
+            //const prefix = `(#${seqno}) `;
+            msg.on('body', (stream, info) => {
+                let buffer = '';
+                stream.on('data', chunk => {
+                    buffer += chunk.toString('utf8');
+                });
+                stream.once('end', () => {
+                    //console.log(`${prefix}Parsed header: ${inspect(Imap.parseHeader(buffer))}`);
+                    const headers = Imap.parseHeader(buffer);
+                    email.subject = headers.subject[0];
+                    email.from = headers.from[0];
+                    email.to = headers.to[0].split(',').map(x => x.trim());
+                });
+            });
+            msg.once('attributes', attrs => {
+                //console.log(`${prefix}Attributes: ${inspect(attrs, false, 8)}`);
+                email.uid = attrs.uid;
+                email.date = attrs.date;
+                email.flags = attrs.flags;
+            });
+            msg.once('end', () => {
+                //console.log(`${prefix}Finished`);
+                emails.push(email);
+            });
+        });
+        f.once('error', err => {
+            //console.log('Fetch error:', err);
+        });
+        f.once('end', () => {
+            //console.log('Done fetching all messages!');
+            res.json(emails);
+        });
+    });
+});
+
 
 export default api;

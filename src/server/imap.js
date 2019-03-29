@@ -1,5 +1,8 @@
 import Imap from 'imap';
 
+//TODO: we probably want to index connections by session id and not by username
+const connections = {};
+
 
 const loginImap = (username, password) => new Promise((resolve, reject) => {
     const imap = new Imap({
@@ -13,6 +16,7 @@ const loginImap = (username, password) => new Promise((resolve, reject) => {
     });
 
     imap.once('ready', () => {
+        connections[username] = imap;
         resolve(imap);
     });
 
@@ -20,8 +24,15 @@ const loginImap = (username, password) => new Promise((resolve, reject) => {
         reject(error);
     });
 
+    imap.once('close', hadError => {
+        delete connections[username];
+    });
+
     imap.connect();
 });
 
 
-export { loginImap };
+const getImap = username => connections[username];
+
+
+export { getImap, loginImap };
