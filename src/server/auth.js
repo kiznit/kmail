@@ -2,13 +2,14 @@ import bcrypt from 'bcrypt';
 import cookieParser from 'cookie-parser';
 import csrf from 'csurf';
 import { Router } from 'express';
-import Imap from 'imap';
 import passport from 'passport';
 
 import config from './config';
 import knex from './knex';
+import { loginImap } from './imap';
 
 
+/*
 const hashPassword = async password => bcrypt.hash(password, Math.max(config.bcryptRounds || 0, 12));
 
 const verifyPassword = async (plaintextPassword, hash) => bcrypt.compare(plaintextPassword, hash).then(verified => {
@@ -28,30 +29,6 @@ const updateUser = (username, plaintextPassword) => hashPassword(plaintextPasswo
     .then(password => knex('users').where({ username }).update({ password }));
 
 
-const loginImap = (username, password) => new Promise((resolve, reject) => {
-    const imap = new Imap({
-        connTimeout: 10000,
-        authTimeout: 10000,
-        host: 'mail.webfaction.com',
-        port: 993,
-        tls: true,
-        user: username,
-        password,
-    });
-
-    imap.once('ready', () => {
-        resolve(imap);
-    });
-
-    imap.once('error', error => {
-        reject(error);
-    });
-
-    imap.connect();
-});
-
-
-//TODO: do I want to change this logic to always authenticate to imap?
 const login = (username, password) => findUser(username).then(
     user => {
         if (user) {
@@ -68,6 +45,10 @@ const login = (username, password) => findUser(username).then(
         );
     }
 );
+*/
+
+
+const login = (username, password) => loginImap(username, password);
 
 
 class ImapStrategy extends passport.Strategy {
