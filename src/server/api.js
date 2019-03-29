@@ -28,7 +28,8 @@ api.get('/inbox', (req, res) => {
     const emails = [];
 
     imap.openBox('INBOX', true, (err, box) => {
-        const f = imap.seq.fetch('1:10', {
+        //console.log("box.messages:", JSON.stringify(box.messages, null, 4));
+        const f = imap.seq.fetch(`${box.messages.total - 15}:*`, {
             bodies: 'HEADER.FIELDS (FROM TO SUBJECT DATE)',
             struct: true,
         });
@@ -37,7 +38,7 @@ api.get('/inbox', (req, res) => {
             //console.log('Message #%d', seqno);
             const email = {};
 
-            //const prefix = `(#${seqno}) `;
+            const prefix = `(#${seqno}) `;
             msg.on('body', (stream, info) => {
                 let buffer = '';
                 stream.on('data', chunk => {
@@ -46,9 +47,9 @@ api.get('/inbox', (req, res) => {
                 stream.once('end', () => {
                     //console.log(`${prefix}Parsed header: ${inspect(Imap.parseHeader(buffer))}`);
                     const headers = Imap.parseHeader(buffer);
-                    email.subject = headers.subject[0];
-                    email.from = headers.from[0];
-                    email.to = headers.to[0].split(',').map(x => x.trim());
+                    email.subject = headers.subject ? headers.subject[0] : '';
+                    email.from = headers.from ? headers.from[0] : '';
+                    email.to = headers.to ? headers.to[0].split(',').map(x => x.trim()) : '';
                 });
             });
             msg.once('attributes', attrs => {
@@ -67,6 +68,7 @@ api.get('/inbox', (req, res) => {
         });
         f.once('end', () => {
             //console.log('Done fetching all messages!');
+            emails.sort((a, b) => b.date - a.date);
             res.json(emails);
         });
     });
