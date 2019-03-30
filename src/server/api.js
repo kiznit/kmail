@@ -29,7 +29,7 @@ api.get('/inbox', (req, res) => {
 
     imap.openBox('INBOX', true, (err, box) => {
         //console.log("box.messages:", JSON.stringify(box.messages, null, 4));
-        const f = imap.seq.fetch(`${box.messages.total - 15}:*`, {
+        const f = imap.seq.fetch(`${box.messages.total - 20}:*`, {
             bodies: 'HEADER.FIELDS (FROM TO SUBJECT DATE)',
             struct: true,
         });

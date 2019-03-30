@@ -11,7 +11,7 @@ const EmailPropTypes = PropTypes.shape({
 
 
 const EmailList = ({ emails }) => (
-    <table className="table table-dark table-hover">
+    <table className="table table-sm table-dark table-hover">
         <thead>
             <tr>
                 <th scope="col">Subject</th>
